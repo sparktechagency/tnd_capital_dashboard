@@ -27,7 +27,7 @@ export const mainTheme = {
       colorPrimaryHover: "#fff",
     },
     Select: {
-      colorTextQuaternary: "#fff",
+      colorTextQuaternary: "#535763",
       colorBgContainer: "rgba(0,0,0,0)",
       fontSize: 18,
       optionSelectedColor: "#ffffff",
@@ -40,7 +40,7 @@ export const mainTheme = {
       colorText: "#fff",
       colorTextPlaceholder: "#fff",
       hoverBorderColor: "#fff",
-      colorIcon: "#fff",
+      colorIcon: "#535763",
     },
     DatePicker: {
       fontSize: 20,
@@ -100,8 +100,8 @@ export const mainTheme = {
       colorBgTextHover: "#f9dd40",
     },
     Input: {
-      colorTextPlaceholder: "#fff",
-      colorIcon: "#fff",
+      colorTextPlaceholder: "#535763",
+      colorIcon: "#535763",
       colorError: "#e53935",
     },
     Radio: {

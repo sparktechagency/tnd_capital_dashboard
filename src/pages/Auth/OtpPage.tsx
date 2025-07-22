@@ -13,49 +13,57 @@ import {
   useResendOTPMutation,
 } from "../../redux/features/auth/authApi";
 import { toast } from "sonner";
+import { AllImages } from "../../../public/images/AllImages";
+import { BsArrowLeft } from "react-icons/bs";
 
 const OTPVerify = () => {
   const router = useNavigate();
   const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
   const phoneNumber = Cookies.get("classaty_phoneNumber");
 
   const [otpMatch] = useOtpVerifyMutation();
   const [resendOtp] = useResendOTPMutation();
 
   const handleOTPSubmit = async () => {
-    if (otp.length === 6) {
-      const res = await tryCatchWrapper(
-        otpMatch,
-        {
-          body: {
-            otp: Number(otp),
-          },
-        },
-        "Verifying..."
-      );
+    // if (otp.length === 6) {
+    //   const res = await tryCatchWrapper(
+    //     otpMatch,
+    //     {
+    //       body: {
+    //         otp: Number(otp),
+    //       },
+    //     },
+    //     "Verifying..."
+    //   );
 
-      const allowedRoles = ["supperAdmin", "school"];
-      const userRole = res?.data?.user?.role;
+    //   const allowedRoles = ["supperAdmin", "school"];
+    //   const userRole = res?.data?.user?.role;
 
-      if (res?.statusCode === 200 && allowedRoles.includes(userRole)) {
-        Cookies.set("classaty_accessToken", res?.data?.accessToken, {
-          path: "/",
-          expires: 365,
-          secure: false,
-        });
+    //   if (res?.statusCode === 200 && allowedRoles.includes(userRole)) {
+    //     Cookies.set("classaty_accessToken", res?.data?.accessToken, {
+    //       path: "/",
+    //       expires: 365,
+    //       secure: false,
+    //     });
 
-        Cookies.remove("classaty_signInToken");
-        Cookies.remove("classaty_phoneNumber");
+    //     Cookies.remove("classaty_signInToken");
+    //     Cookies.remove("classaty_phoneNumber");
 
-        setOtp("");
-        router("/", { replace: true });
-      } else if (res?.statusCode === 200 && !allowedRoles.includes(userRole)) {
-        setOtp("");
-        toast.error("Access Denied", {
-          duration: 2000,
-        });
-      }
-    }
+    //     setOtp("");
+    //     router("/", { replace: true });
+    //   } else if (res?.statusCode === 200 && !allowedRoles.includes(userRole)) {
+    //     setOtp("");
+    //     toast.error("Access Denied", {
+    //       duration: 2000,
+    //     });
+    //   }
+    // }
+    navigate("/reset-password");
+  };
+
+  const handleNavigate = () => {
+    navigate(-1);
   };
 
   const handleResendOtp = async () => {
@@ -63,18 +71,33 @@ const OTPVerify = () => {
     await tryCatchWrapper(resendOtp, {}, "Resending OTP...");
   };
   return (
-    <div className="text-base-color">
+    <div className="!bg-primary-color">
       <Container>
-        <div className="min-h-screen flex justify-center items-center text-center">
-          <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] mx-auto  p-6 rounded-2xl">
-            <div className="mb-8">
-              <MdVerifiedUser className="size-10 mb-4 text-base-color mx-auto" />
-              <h1 className="text-2xl sm:text-3xl font-semibold text-base-color mb-2">
-                Enter code sent to your number Ending in{" "}
-                {phoneNumber?.slice(-4)}
-              </h1>
+        <div className="min-h-screen flex flex-col justify-center items-center w-[440px] mx-auto px-10">
+          <img
+            src={AllImages.logo}
+            alt="logo"
+            className="w-auto h-32 object-cover"
+          />
+          <div className="w-full sm:w-[70%] lg:w-full mx-auto">
+            {/* -------- Sign In Page Header ------------ */}
+            <div className="flex flex-col justify-center items-center">
+              <div className="mt-12">
+                <h1 className="text-lg text-[#535763] mb-3">
+                  <p
+                    onClick={handleNavigate}
+                    className="font-semibold text-black  flex items-center justify-center gap-x-1 cursor-pointer"
+                  >
+                    <BsArrowLeft /> Verify OTP
+                  </p>
+                  <br />
+                  <span className="pr-8 block">
+                    Please enter the otp we have sent you in your email.
+                  </span>
+                </h1>
+              </div>
             </div>
-
+            {/* -------- Form Start ------------ */}
             <Form layout="vertical" className="bg-transparent w-full">
               <Form.Item className="">
                 <div className="flex justify-center items-center">
@@ -83,7 +106,7 @@ const OTPVerify = () => {
                       rounded-lg mr-[10px] sm:mr-[20px] !text-base-color "
                     value={otp}
                     onChange={setOtp}
-                    numInputs={6}
+                    numInputs={4}
                     renderInput={(props) => <input {...props} required />}
                   />
                 </div>
@@ -92,12 +115,13 @@ const OTPVerify = () => {
               <ReuseButton
                 htmlType="submit"
                 variant="secondary"
-                className="!py-6 !px-9 !font-bold !text-base sm:!text-lg lg:!text-xl !rounded-3xl"
+                className="!py-6 !px-9 !font-bold rounded-lg"
                 onClick={handleOTPSubmit}
               >
                 Verify OTP
               </ReuseButton>
             </Form>
+
             <div className="flex justify-center gap-2 py-1 mt-5">
               <p>Didn’t receive code?</p>
               <p

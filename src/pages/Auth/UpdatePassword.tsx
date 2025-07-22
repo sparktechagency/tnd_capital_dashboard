@@ -6,8 +6,10 @@ import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import ReuseButton from "../../ui/Button/ReuseButton";
-import { FormInstance } from "antd";
+import { Form, FormInstance } from "antd";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { BsArrowLeft } from "react-icons/bs";
+import { AllImages } from "../../../public/images/AllImages";
 
 const inputStructure = [
   {
@@ -16,7 +18,7 @@ const inputStructure = [
     inputType: "password",
     label: "Password",
     placeholder: "Enter your password",
-    prefix: <RiLockPasswordFill className="mr-1" />,
+    prefix: <RiLockPasswordFill className="mr-1 !text-black" />,
     labelClassName: "!font-medium",
     inputClassName:
       "!py-3 !rounded-xl !text-lg !text-[#40140F] !bg-[#FBE7E5] !border-none",
@@ -52,50 +54,66 @@ const inputStructure = [
 
 const UpdatePassword = () => {
   const router = useNavigate();
+  const [form] = Form.useForm();
+
   const onFinish = (values: any) => {
     console.log("Received values of update form:", values);
     router("/sign-in");
   };
 
+  const handleNavigate = () => {
+    router(-1);
+  };
+
   return (
-    <div>
+    <div className="!bg-primary-color">
       <Container>
-        <div className="min-h-screen flex justify-center items-center">
-          <div className="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] mx-auto  p-6 rounded-2xl">
-            {/* -------- update Password Page Header ------------ */}
+        <div className="min-h-screen flex flex-col justify-center items-center w-[440px] mx-auto px-10">
+          <img
+            src={AllImages.logo}
+            alt="logo"
+            className="w-auto h-32 object-cover"
+          />
+          <div className="w-full sm:w-[70%] lg:w-full mx-auto">
+            {/* -------- Sign In Page Header ------------ */}
             <div className="flex flex-col justify-center items-center">
-              <div className="text-center mt-5 mb-5">
-                <IoMdUnlock className="size-10 mb-4 text-base-color mx-auto" />
-                <h1 className="text-3xl sm:text-4xl font-semibold text-base-color mb-5">
-                  Reset Your Password
+              <div className="mt-12">
+                <h1 className="text-lg text-[#535763]">
+                  <p
+                    onClick={handleNavigate}
+                    className="font-semibold text-black  flex items-center justify-center gap-x-1 cursor-pointer"
+                  >
+                    <BsArrowLeft /> Reset Password
+                  </p>
+                  <br />
+                  <span className="block pr-8">
+                    Your password must be 8-10 character long.
+                  </span>
                 </h1>
               </div>
             </div>
             {/* -------- Form Start ------------ */}
-            <ReusableForm handleFinish={onFinish}>
+            <ReusableForm form={form} handleFinish={onFinish} className="!mt-4">
               {inputStructure.map((input, index) => (
                 <ReuseInput
                   key={index}
                   name={input.name}
                   Typolevel={4}
                   inputType={input.inputType}
-                  type={input.type}
-                  prefix={input.prefix}
-                  label={input.label}
                   placeholder={input.placeholder}
                   labelClassName={input.labelClassName}
-                  inputClassName={input.inputClassName}
                   rules={input.rules}
+                  inputClassName="!text-black !bg-transparent placeholder:!text-black"
                 />
               ))}
 
               <ReuseButton
                 variant="secondary"
                 htmlType="submit"
-                className="!py-6 !px-9 !font-bold !text-base sm:!text-lg lg:!text-xl !rounded-3xl"
+                className="!py-6 !px-9 !font-bold rounded-lg"
                 // icon={allIcons.arrowRight}
               >
-                Change Password
+                Reset Password
               </ReuseButton>
             </ReusableForm>
           </div>

@@ -18,6 +18,8 @@ import NotFound from "../ui/NotFound/NotFound";
 import DashboardLayout from "../Components/Layout/DashboardLayout";
 import { schoolAdminPaths } from "./schoolAdmin.route";
 import useUserData from "../hooks/useUserData";
+import ForgetPassword from "../pages/Auth/ForgetPassword";
+import UpdatePassword from "../pages/Auth/UpdatePassword";
 
 // eslint-disable-next-line react-refresh/only-export-components
 function AuthRedirect() {
@@ -79,8 +81,16 @@ const router: RouteObject[] = [
     element: <SignIn />,
   },
   {
-    path: "sign-in/verify-otp",
+    path: "forget-password",
+    element: <ForgetPassword />,
+  },
+  {
+    path: "forgot-password/verify-otp",
     element: <OtpPage />,
+  },
+  {
+    path: "reset-password",
+    element: <UpdatePassword />,
   },
   {
     path: "*", // Catch-all for undefined routes
