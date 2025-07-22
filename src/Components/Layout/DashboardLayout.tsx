@@ -107,7 +107,7 @@ const DashboardLayout = () => {
 
       <Layout className="flex !bg-primary-color">
         <Sider
-          theme="dark"
+          theme="light"
           width={300}
           trigger={null}
           breakpoint="lg"
@@ -119,8 +119,6 @@ const DashboardLayout = () => {
             top: 0,
             height: "100vh",
             overflowY: "auto",
-            backgroundColor: "#fff",
-            // borderRight: "3px solid #e1e1e1",
           }}
           className=""
         >
@@ -128,7 +126,7 @@ const DashboardLayout = () => {
             <img
               src={AllImages.logo}
               alt="logo"
-              className="w-[50%] mx-auto h-auto my-5"
+              className="w-[80%] mx-auto h-auto my-8"
             />
           </Link>
 

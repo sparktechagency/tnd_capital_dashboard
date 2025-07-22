@@ -62,7 +62,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-2 !px-3 !rounded-lg !text-lg !bg-[#EFEFEF] !border !border-[#EFEFEF] !text-base-color",
+              "!py-2 !px-3 !rounded-lg !text-lg !border !border-[#535763] !text-base-color",
               inputClassName
             )}
             placeholder={placeholder}
@@ -73,7 +73,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-2 !px-3 !rounded-lg !text-lg !bg-[#EFEFEF] !border !border-[#EFEFEF] !text-base-color",
+              "!py-2 !px-3 !rounded-lg !text-lg !border !border-[#535763] !text-base-color",
               inputClassName
             )}
             rows={rows}
@@ -87,7 +87,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-2 !px-3 !rounded-lg !text-lg !bg-[#EFEFEF] !border !border-[#EFEFEF] !text-base-color",
+              "!py-2 !px-3 !rounded-lg !text-lg !border !border-[#535763] !text-base-color",
               inputClassName
             )}
             placeholder={placeholder}

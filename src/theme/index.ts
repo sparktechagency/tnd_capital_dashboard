@@ -14,9 +14,9 @@ export const mainTheme = {
       itemActiveColor: "#fff",
       itemHoverColor: "#ffffff",
       itemColor: "#ffffff",
-      itemSelectedBg: "#F9DD40",
-      itemSelectedColor: "#F9DD40",
-      iconColor: "#F9DD40",
+      itemSelectedBg: "#0C2752",
+      itemSelectedColor: "#fff",
+      iconColor: "#fff",
       subMenuItemBg: "#fff",
     },
     Form: {

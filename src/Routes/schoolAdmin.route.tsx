@@ -1,41 +1,28 @@
 //* ------------------ICONS------------------
-import dashboardLogo from "../../public/images/dashboard-logo/dashboard.svg";
-import settingLogo from "../../public/images/dashboard-logo/setting.svg";
-import classLogo from "../../public/images/dashboard-logo/class.svg";
-import scheduleLogo from "../../public/images/dashboard-logo/schedule.svg";
-import subjectLogo from "../../public/images/dashboard-logo/subject.svg";
-import schoolLogo from "../../public/images/dashboard-logo/school.svg";
-import teacherLogo from "../../public/images/dashboard-logo/teacher.svg";
-import messageLogo from "../../public/images/dashboard-logo/message.svg";
-import assignmentLogo from "../../public/images/dashboard-logo/assignment.svg";
-import examLogo from "../../public/images/dashboard-logo/exam.svg";
-import resultLogo from "../../public/images/dashboard-logo/result.svg";
-import atendenceLogo from "../../public/images/dashboard-logo/atendence.svg";
-import anounceLogo from "../../public/images/dashboard-logo/anounce.svg";
-import alarmsLogo from "../../public/images/dashboard-logo/alarms.svg";
-import managerLogo from "../../public/images/dashboard-logo/manager.svg";
-import profileLogo from "../../public/images/dashboard-logo/profile.svg";
-import gradeLogo from "../../public/images/dashboard-logo/grade.svg";
+import applicationLogo from "../../public/images/Dashboard-icons/application.svg";
+import clientsLogo from "../../public/images/Dashboard-icons/clients.svg";
+import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
+import fieldOfficerLogo from "../../public/images/Dashboard-icons/fieled_officer.svg";
+import hrLogo from "../../public/images/Dashboard-icons/hr.svg";
+import leadsLogo from "../../public/images/Dashboard-icons/leads.svg";
+import loneLogo from "../../public/images/Dashboard-icons/loan.svg";
+import managerLogo from "../../public/images/Dashboard-icons/manager.svg";
+import officerRecord from "../../public/images/Dashboard-icons/officer_Records.svg";
+import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
+import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
-import Notifications from "../pages/Common/Notifications";
-import SchoolAdmin from "../pages/SchoolAdmin/SchoolAdmin";
-import AlarmsPage from "../pages/SchoolAdmin/Alarms";
-import AnouncementPage from "../pages/SchoolAdmin/Anouncement";
-import AttendencePage from "../pages/SchoolAdmin/AttendancePage";
-import ResultPage from "../pages/SchoolAdmin/ResultPage";
-import AssignmentPage from "../pages/SchoolAdmin/AssignmentPage";
-import SchoolAdminTeachers from "../pages/SchoolAdmin/SchoolAdminTeachers";
-import SchoolAdminStudent from "../pages/SchoolAdmin/SchoolAdminStudent";
-import SubjectPage from "../pages/SchoolAdmin/Subject";
-import ClassSchedulePage from "../pages/SchoolAdmin/ClassSchedulePage";
-import ClassPage from "../pages/SchoolAdmin/Class";
-import SchoolAdminOVerview from "../pages/SchoolAdmin/SchoolAdminOVerview";
-import ExamPage from "../pages/SchoolAdmin/Exam";
-import Profile from "../pages/Common/settings/Profile";
-import SchoolAdminAllManager from "../pages/SchoolAdmin/SchoolAdminAllManager";
-import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
 import ConversationPage from "../pages/Common/ConversationPage";
+import Notifications from "../pages/Common/Notifications";
+import AssignmentPage from "../pages/SchoolAdmin/AssignmentPage";
+import ClassPage from "../pages/SchoolAdmin/Class";
+import ClassSchedulePage from "../pages/SchoolAdmin/ClassSchedulePage";
+import ExamPage from "../pages/SchoolAdmin/Exam";
+import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
+import SchoolAdminOVerview from "../pages/SchoolAdmin/SchoolAdminOVerview";
+import SchoolAdminStudent from "../pages/SchoolAdmin/SchoolAdminStudent";
+import SchoolAdminTeachers from "../pages/SchoolAdmin/SchoolAdminTeachers";
+import SubjectPage from "../pages/SchoolAdmin/Subject";
 
 export const schoolAdminPaths = [
   {
@@ -51,123 +38,74 @@ export const schoolAdminPaths = [
     key: "notifications",
   },
   {
-    path: "class",
+    path: "leads",
     element: <ClassPage />,
-    key: "class",
-    name: "Class",
-    icon: classLogo,
+    key: "leads",
+    name: "Leads",
+    icon: leadsLogo,
   },
   {
-    path: "schedule",
+    path: "applications",
     element: <ClassSchedulePage />,
-    key: "schedule",
-    name: "Schedule",
-    icon: scheduleLogo,
+    key: "application",
+    name: "Application",
+    icon: applicationLogo,
   },
   {
-    path: "subject",
+    path: "lone",
     element: <SubjectPage />,
-    key: "subject",
-    name: "Subjects",
-    icon: subjectLogo,
+    key: "lone",
+    name: "Lone",
+    icon: loneLogo,
   },
   {
-    path: "student",
+    path: "clients",
     element: <SchoolAdminStudent />,
-    key: "student",
-    name: "Students",
-    icon: schoolLogo,
+    key: "clients",
+    name: "Clients",
+    icon: clientsLogo,
   },
   {
-    path: "teacher",
+    path: "repayments",
     element: <SchoolAdminTeachers />,
-    key: "teacher",
-    name: "Teachers",
-    icon: teacherLogo,
+    key: "repayments",
+    name: "Repayments",
+    icon: repaymentsLogo,
   },
   {
-    path: "message",
+    path: "field_officers",
     element: <ConversationPage />,
-    key: "message",
-    name: "Messages",
-    icon: messageLogo,
+    key: "field_officers",
+    name: "Field Officers",
+    icon: fieldOfficerLogo,
   },
   {
-    path: "assignment",
+    path: "managers",
     element: <AssignmentPage />,
-    key: "assignment",
-    name: "Assignment",
-    icon: assignmentLogo,
-  },
-  {
-    path: "exam",
-    element: <ExamPage />,
-    key: "exam",
-    name: "Exam",
-    icon: examLogo,
-  },
-  {
-    path: "grade",
-    element: <GradeSystem />,
-    key: "grade",
-    name: "Grade System",
-    icon: gradeLogo,
-  },
-  {
-    path: "result",
-    element: <ResultPage />,
-    key: "result",
-    name: "Result",
-    icon: resultLogo,
-  },
-  {
-    path: "attendence",
-    element: <AttendencePage />,
-    key: "attendence",
-    name: "Attendence",
-    icon: atendenceLogo,
-  },
-  {
-    path: "anouncement",
-    element: <AnouncementPage />,
-    key: "anouncement",
-    name: "Anouncement",
-    icon: anounceLogo,
-  },
-
-  {
-    path: "alarms",
-    element: <AlarmsPage />,
-    key: "alarms",
-    name: "Alarms",
-    icon: alarmsLogo,
-  },
-  {
-    path: "all-manager",
-    element: <SchoolAdminAllManager />,
-    key: "all-manager",
-    name: "All Manager",
+    key: "managers",
+    name: "Managers",
     icon: managerLogo,
   },
   {
+    path: "hr",
+    element: <ExamPage />,
+    key: "hr",
+    name: "HR",
+    icon: hrLogo,
+  },
+  {
+    path: "officer_record",
+    element: <GradeSystem />,
+    key: "officer_record",
+    name: "Officer Record",
+    icon: officerRecord,
+  },
+
+  {
+    path: "settings",
+    element: <GradeSystem />,
     key: "settings",
     name: "Settings",
-    icon: settingLogo,
-    children: [
-      {
-        key: "school-profile",
-        path: "settings/school-profile",
-        name: "School Profile",
-        icon: schoolLogo,
-        element: <SchoolAdmin />,
-      },
-      {
-        key: "manager-profile",
-        path: "settings/manager-profile",
-        name: "Manager Profile",
-        icon: profileLogo,
-        element: <Profile />,
-      },
-    ],
+    icon: settings,
   },
 ];

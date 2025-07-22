@@ -4,10 +4,12 @@
   .text-gradient-color {
     @apply bg-gradient-to-b from-[#30599D] to-[#273D62] inline-block text-transparent bg-clip-text;
   }
+
   .bg-gradient-color {
     @apply bg-gradient-to-tl from-[#17223A] to-[#30599D];
   }
 }
+
 .wrapper {
   position: absolute;
   top: 50%;
@@ -37,6 +39,7 @@ body {
   color: #0a0a0a;
   scroll-behavior: smooth;
 }
+
 th {
   border: 1px solid #28314e !important;
   font-weight: bold;
@@ -52,14 +55,14 @@ th {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #f9dd40, #f9dd40);
+  background: #ffff;
   margin-left: 2px;
   margin-right: 2px;
   border-radius: 50px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #28314e;
+  background-color: #fff;
 }
 
 .swiper-pagination-bullet {
@@ -135,22 +138,37 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .ant-menu-item .ant-menu-title-content {
   font-weight: 600 !important;
+  color: #0C2752 !important;
+
 }
+
+.ant-menu-item {
+  border: 1px solid rgba(0, 0, 0, 0.18) !important;
+  padding: 20px 10px !important;
+  margin: 10px 0px !important;
+}
+
 .ant-menu-submenu-title .sub {
   font-weight: 600 !important;
 }
+
 .ant-menu-item .active {
-  color: #28314e !important;
+  color: #fff !important;
 }
+
 .ant-menu-submenu-selected .ant-menu-submenu-title {
   background-color: #f9dd40 !important;
+
 }
+
 .ant-menu-submenu-selected .ant-menu-item-selected {
   background-color: transparent !important;
 }
+
 .ant-menu-submenu-selected .ant-menu-item-selected a {
   color: #f9dd40 !important;
 }
+
 .ant-menu-submenu-selected .ant-menu-item-selected .ant-menu-item-icon {
   color: #f9dd4000 !important;
 }
@@ -159,6 +177,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .ant-table-filter-trigger {
   color: #fdf4f3 !important;
 }
+
 .ant-table-filter-column .active {
   color: #0a0a0a !important;
 }
@@ -166,6 +185,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .ant-table-column-sorter-up.active {
   color: #f9dd40 !important;
 }
+
 .ant-table-column-sorter-down.active {
   color: #f9dd40 !important;
 }
