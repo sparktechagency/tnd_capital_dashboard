@@ -1,23 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { IoMdUnlock } from "react-icons/io";
+import { Form, FormInstance } from "antd";
+import { BsArrowLeft } from "react-icons/bs";
+import { RiLockPasswordFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { AllImages } from "../../../public/images/AllImages";
+import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
-import ReuseButton from "../../ui/Button/ReuseButton";
-import { Form, FormInstance } from "antd";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { BsArrowLeft } from "react-icons/bs";
-import { AllImages } from "../../../public/images/AllImages";
 
 const inputStructure = [
   {
     name: "password",
     type: "password",
     inputType: "password",
-    label: "Password",
-    placeholder: "Enter your password",
+    placeholder: "Password",
     prefix: <RiLockPasswordFill className="mr-1 !text-black" />,
     labelClassName: "!font-medium",
     inputClassName:
@@ -28,8 +26,7 @@ const inputStructure = [
     name: "confirmPassword",
     type: "password",
     inputType: "password",
-    label: "Confirm Password",
-    placeholder: "Confirm your password",
+    placeholder: "Confirm Password",
     prefix: <RiLockPasswordFill className="mr-1" />,
     labelClassName: "!font-medium",
     inputClassName:

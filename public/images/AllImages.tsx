@@ -22,6 +22,10 @@ import parants from "./icons/parants.png";
 import earning from "./icons/earning.png";
 import attendenceRate from "./icons/attendenceRate.png";
 import notification from "./icons/notification.svg";
+import collection from "./Dashboard-icons/collection.svg";
+import application from "./Dashboard-icons/application.svg";
+import overdue from "./Dashboard-icons/overdue.svg";
+import clients from "./Dashboard-icons/leads.svg";
 
 export const AllImages = {
   logo,
@@ -46,5 +50,9 @@ export const AllIcons = {
   parants,
   earning,
   attendenceRate,
-  notification
+  notification,
+  collection,
+  application,
+  overdue,
+  clients,
 };

@@ -17,14 +17,17 @@ import Topbar from "../Shared/Topbar";
 import { AllImages } from "../../../public/images/AllImages";
 import { schoolAdminPaths } from "../../Routes/schoolAdmin.route";
 import useUserData from "../../hooks/useUserData";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { clearAuth } from "../../redux/features/auth/authSlice";
 import Cookies from "js-cookie";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
-  const userRole = useUserData();
+  // const userRole = useUserData();
   const location = useLocation();
+  const userRole = useAppSelector((state) => state.role);
+
+  console.log(userRole);
 
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const rootSubmenuKeys = [
@@ -34,12 +37,12 @@ const DashboardLayout = () => {
     "settings",
   ];
 
-  const handleLogout = () => {
-    dispatch(clearAuth());
-    Cookies.remove("classaty_accessToken");
-    window.location.href = "/sign-in";
-    window.location.reload();
-  };
+  // const handleLogout = () => {
+  //   dispatch(clearAuth());
+  //   Cookies.remove("classaty_accessToken");
+  //   window.location.href = "/sign-in";
+  //   window.location.reload();
+  // };
 
   const onOpenChange = (keys: string[]) => {
     const latestOpenKey = keys.find(
@@ -77,11 +80,9 @@ const DashboardLayout = () => {
 
   const activeKeys = getActiveKeys(normalizedPath);
   const menuItems =
-    userRole?.role === "supperAdmin"
-      ? //   ? sidebarItemsGenerator(adminPaths, "admin")
-        sidebarItemsGenerator(adminPaths, "admin")
+    userRole?.role === "admin"
+      ? sidebarItemsGenerator(adminPaths, "admin")
       : sidebarItemsGenerator(schoolAdminPaths, userRole?.role as string);
-  // : sidebarItemsGenerator(resturantOwnerPaths, userRole?.role);
 
   menuItems.push({
     key: "logout",
@@ -95,7 +96,9 @@ const DashboardLayout = () => {
       />
     ),
     label: (
-      <div onClick={handleLogout}>
+      <div
+      // onClick={handleLogout}
+      >
         <NavLink to="/sign-in">Logout</NavLink>
       </div>
     ),
@@ -108,7 +111,7 @@ const DashboardLayout = () => {
       <Layout className="flex !bg-primary-color">
         <Sider
           theme="light"
-          width={300}
+          width={350}
           trigger={null}
           breakpoint="lg"
           collapsedWidth="0"
@@ -117,6 +120,7 @@ const DashboardLayout = () => {
           style={{
             position: "sticky",
             top: 0,
+            padding: "0px 25px",
             height: "100vh",
             overflowY: "auto",
           }}

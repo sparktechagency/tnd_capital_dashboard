@@ -35,7 +35,7 @@ export const sidebarItemsGenerator = (
             style={{
               marginRight: "5px",
               filter: location.pathname.includes(item.path)
-                ? "invert(90%) sepia(10%) saturate(9990%) hue-rotate(160deg) brightness(100%) contrast(100%)"
+                ? "invert(95%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(105%) contrast(100%)"
                 : undefined,
             }}
           />

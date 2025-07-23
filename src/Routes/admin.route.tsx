@@ -1,41 +1,36 @@
 //* ------------------ICONS------------------
-import dashboardLogo from "../../public/images/dashboard-logo/dashboard.svg";
-import settingLogo from "../../public/images/dashboard-logo/setting.svg";
-import profileLogo from "../../public/images/dashboard-logo/profile.svg";
-import privacyPolicyLogo from "../../public/images/dashboard-logo/privacyPolicy.svg";
-import termsAndConditionLogo from "../../public/images/dashboard-logo/termsAndCondition.svg";
-import schoolLogo from "../../public/images/dashboard-logo/school.svg";
-import studentLogo from "../../public/images/dashboard-logo/student.svg";
-import parentsLogo from "../../public/images/dashboard-logo/parents.svg";
-import teacherLogo from "../../public/images/dashboard-logo/teacher.svg";
-import messageLogo from "../../public/images/dashboard-logo/message.svg";
-import subscriptionLogo from "../../public/images/dashboard-logo/subscription.svg";
-import earningLogo from "../../public/images/dashboard-logo/earning.svg";
-import feedbackLogo from "../../public/images/dashboard-logo/feedback.svg";
-import adminLogo from "../../public/images/dashboard-logo/admin.svg";
+import applicationLogo from "../../public/images/Dashboard-icons/application.svg";
+import clientsLogo from "../../public/images/Dashboard-icons/clients.svg";
+import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
+import fieldOfficerLogo from "../../public/images/Dashboard-icons/fieled_officer.svg";
+import hrLogo from "../../public/images/Dashboard-icons/hr.svg";
+import leadsLogo from "../../public/images/Dashboard-icons/leads.svg";
+import loneLogo from "../../public/images/Dashboard-icons/loan.svg";
+import managerLogo from "../../public/images/Dashboard-icons/manager.svg";
+import officerRecord from "../../public/images/Dashboard-icons/officer_Records.svg";
+import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
+import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
-import AdminDashboard from "../pages/Admin/AdminDashboard";
-import Profile from "../pages/Common/settings/Profile";
-import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
-import TermsOfService from "../pages/Common/settings/TermsOfService";
 import Notifications from "../pages/Common/Notifications";
-import AdminAllSchools from "../pages/Admin/AdminAllSchools";
-import AdminAllParents from "../pages/Admin/AdminAllParents";
-import AdminAllTeacher from "../pages/Admin/AdminAllTeacher";
-import Subscription from "../pages/Admin/AdminSubscription";
-import AdminAllTransaction from "../pages/Admin/AdminAllTransaction";
-import AdminFeedback from "../pages/Admin/AdminFeedbcak";
-import AdminAllStudent from "../pages/Admin/AdminAllStudent";
-import AdminAllAdmin from "../pages/Admin/AdmiAllAdmin";
-import ConversationPage from "../pages/Common/ConversationPage";
+import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
+import AdminApplication from "../pages/Admin/AdminApplication";
+import AdminClients from "../pages/Admin/AdminClients";
+import AdminFieldOfficers from "../pages/Admin/AdminFieldOfficers";
+import AdminHr from "../pages/Admin/AdminHr";
+import AdminLeads from "../pages/Admin/AdminLeads";
+import AdminLone from "../pages/Admin/AdminLone";
+import AdminManagers from "../pages/Admin/AdminManagers";
+import AdminOfficerRecord from "../pages/Admin/AdminOfficerRecord";
+import AdminOverview from "../pages/Admin/AdminOverview";
+import AdminRepayments from "../pages/Admin/AdminRepayments";
 
 export const adminPaths = [
   {
     path: "overview",
-    element: <AdminDashboard />,
+    element: <AdminOverview />,
     key: "overview",
-    name: "Overview",
+    name: "Dashboard",
     icon: dashboardLogo,
   },
   {
@@ -44,94 +39,74 @@ export const adminPaths = [
     key: "notifications",
   },
   {
-    path: "school",
-    element: <AdminAllSchools />,
-    key: "school",
-    name: "School List",
-    icon: schoolLogo,
+    path: "leads",
+    element: <AdminLeads />,
+    key: "leads",
+    name: "Leads",
+    icon: leadsLogo,
   },
   {
-    path: "student",
-    element: <AdminAllStudent />,
-    key: "student",
-    name: "Student List",
-    icon: studentLogo,
+    path: "applications",
+    element: <AdminApplication />,
+    key: "application",
+    name: "Application",
+    icon: applicationLogo,
   },
   {
-    path: "parents",
-    element: <AdminAllParents />,
-    key: "parents",
-    name: "Parents List",
-    icon: parentsLogo,
+    path: "lone",
+    element: <AdminLone />,
+    key: "lone",
+    name: "Lone",
+    icon: loneLogo,
   },
   {
-    path: "teacher",
-    element: <AdminAllTeacher />,
-    key: "teacher",
-    name: "Teachers List",
-    icon: teacherLogo,
+    path: "clients",
+    element: <AdminClients />,
+    key: "clients",
+    name: "Clients",
+    icon: clientsLogo,
   },
   {
-    path: "message",
-    element: <ConversationPage />,
-    key: "message",
-    name: "Messages",
-    icon: messageLogo,
+    path: "repayments",
+    element: <AdminRepayments />,
+    key: "repayments",
+    name: "Repayments",
+    icon: repaymentsLogo,
   },
   {
-    path: "subscription",
-    element: <Subscription />,
-    key: "subscription",
-    name: "Subscription",
-    icon: subscriptionLogo,
+    path: "field_officers",
+    element: <AdminFieldOfficers />,
+    key: "field_officers",
+    name: "Field Officers",
+    icon: fieldOfficerLogo,
   },
   {
-    path: "earnings",
-    element: <AdminAllTransaction />,
-    key: "earnings",
-    name: "Earnings",
-    icon: earningLogo,
+    path: "managers",
+    element: <AdminManagers />,
+    key: "managers",
+    name: "Managers",
+    icon: managerLogo,
   },
   {
-    path: "feedback",
-    element: <AdminFeedback />,
-    key: "feedback",
-    name: "Feedback",
-    icon: feedbackLogo,
+    path: "hr",
+    element: <AdminHr />,
+    key: "hr",
+    name: "HR",
+    icon: hrLogo,
   },
   {
-    path: "all-admin",
-    element: <AdminAllAdmin />,
-    key: "all-admin",
-    name: "All Admin",
-    icon: adminLogo,
+    path: "officer_record",
+    element: <AdminOfficerRecord />,
+    key: "officer_record",
+    name: "Officer Record",
+    icon: officerRecord,
   },
+
   {
+    path: "settings",
+    element: <GradeSystem />,
     key: "settings",
     name: "Settings",
-    icon: settingLogo,
-    children: [
-      {
-        key: "profile",
-        path: "settings/profile",
-        name: "Profile",
-        icon: profileLogo,
-        element: <Profile />,
-      },
-      {
-        key: "privacy-policy",
-        path: "settings/privacy-policy",
-        name: "Privacy Policy",
-        icon: privacyPolicyLogo,
-        element: <PrivacyPolicy />,
-      },
-      {
-        key: "terms-of-service",
-        path: "settings/terms-of-service",
-        name: "Terms of Service",
-        icon: termsAndConditionLogo,
-        element: <TermsOfService />,
-      },
-    ],
+    icon: settings,
   },
 ];

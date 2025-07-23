@@ -15,7 +15,7 @@ const inputStructure = [
     type: "email",
     inputType: "email",
     label: "Email",
-    placeholder: "Enter your email",
+    placeholder: "Email",
     labelClassName: "!font-bold",
     prefix: <MdEmail className="mr-1" />,
     inputClassName:

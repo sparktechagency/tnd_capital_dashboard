@@ -7,7 +7,9 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
-import ReuseCheckbox from "../../ui/Form/ReuseCheckbox";
+import ReuseSelect from "../../ui/Form/ReuseSelect";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { changeRole } from "../../redux/slice";
 
 const inputStructure = [
   {
@@ -21,7 +23,7 @@ const inputStructure = [
   {
     name: "password",
     inputType: "password",
-    placeholder: "password",
+    placeholder: "Password",
     labelClassName: "!font-bold",
     rules: [{ required: true, message: "Password is required" }],
   },
@@ -33,7 +35,11 @@ const SignIn = () => {
   const [login] = useLoginMutation();
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
+  const role = useAppSelector((state) => state.role);
+
+  console.log(role);
   const handleNavigate = () => {
     navigate("/forget-password");
   };
@@ -53,7 +59,7 @@ const SignIn = () => {
     //     secure: false,
     //   });
     //   form.resetFields();
-    //   router("/sign-in/verify-otp", { replace: true });
+      router("/admin/overview", { replace: true });
     // }
   };
   return (
@@ -90,9 +96,25 @@ const SignIn = () => {
                   placeholder={input.placeholder}
                   labelClassName={input.labelClassName}
                   rules={input.rules}
-                  inputClassName="!text-black !bg-transparent placeholder:!text-black"
+                  inputClassName=""
                 />
               ))}
+
+              <ReuseSelect
+                Typolevel={4}
+                name="role"
+                label="Role"
+                onChange={(role) => {
+                  dispatch(changeRole(role));
+                }}
+                options={[
+                  { value: "field_officer", label: "Field Officer" },
+                  { value: "hr", label: "HR" },
+                  { value: "hub_manager", label: "HUB Manager" },
+                  { value: "spoke_manager", label: "Spoke Manager" },
+                  { value: "admin", label: "Admin" },
+                ]}
+              />
 
               <div className="flex items-center justify-between mb-6">
                 <p>

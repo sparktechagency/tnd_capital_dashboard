@@ -2,6 +2,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice"; // Import your auth slice
 import conversationReducer from "./features/conversation/conversationSlice";
+import roleReducer from "./slice"
 import { baseApi } from "./api/baseApi";
 import { persistStore, persistReducer } from "redux-persist";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
@@ -48,6 +49,7 @@ const rootReducer = {
   [baseApi.reducerPath]: baseApi.reducer,
   auth: authReducer, // Persisted auth reducer
   conversation: conversationReducer,
+  role: roleReducer
 };
 
 // Create persisted reducer for the auth slice
