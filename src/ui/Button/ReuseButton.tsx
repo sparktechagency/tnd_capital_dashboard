@@ -28,7 +28,7 @@ interface ReuseButtonProps {
 const variantStyles = {
   primary: "!bg-primary-color !text-base-color border !border-base-color ",
   secondary:
-    "!bg-secondary-color !text-primary-color border !border-secondary-color",
+    "!bg-[#0C2752] !text-primary-color border !border-secondary-color",
   highlight: "!bg-[#DDDDDD] !text-base-color border !border-[#DDDDDD]",
   ghost:
     "!bg-primary-color/0 !text-base-color border  !border-primary-color/0 hover:!bg-base-color/40 hover:!text-primary-color hover:!border-base-color/40 transition-all duration-300 ease-in-out",
@@ -53,7 +53,7 @@ const ReuseButton = ({
     <Link to={url}>
       <Button
         className={cn(
-          "!py-5 !px-8 !text-lg w-full text-center  !ring-0 rounded-md",
+          "!py-5 !px-8 !text-lg w-full !h-12 text-center !ring-0 rounded-md",
           variantStyles[variant],
           className
         )}

@@ -18,7 +18,7 @@ import { AllImages } from "../../../public/images/AllImages";
 import { schoolAdminPaths } from "../../Routes/schoolAdmin.route";
 import useUserData from "../../hooks/useUserData";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { clearAuth } from "../../redux/features/auth/authSlice";
+import { clearAuth, setCollapsed } from "../../redux/features/auth/authSlice";
 import Cookies from "js-cookie";
 
 const DashboardLayout = () => {
@@ -26,6 +26,7 @@ const DashboardLayout = () => {
   // const userRole = useUserData();
   const location = useLocation();
   const userRole = useAppSelector((state) => state.role);
+  const { collapsed } = useAppSelector((state) => state.auth);
 
   console.log(userRole);
 
@@ -58,14 +59,17 @@ const DashboardLayout = () => {
   const defaultUrl = userRole?.role === "admin" ? "/admin" : "/";
   const normalizedPath = location.pathname.replace(defaultUrl, "");
 
-  const [collapsed, setCollapsed] = useState(false);
+  // const [collapsed, setCollapsed] = useState(false);
+  // const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setCollapsed(true);
+        // setCollapsed(true);
+        dispatch(setCollapsed(true));
       } else {
-        setCollapsed(false);
+        // setCollapsed(false);
+        dispatch(setCollapsed(false));
       }
     };
 
@@ -76,7 +80,7 @@ const DashboardLayout = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [dispatch]);
 
   const activeKeys = getActiveKeys(normalizedPath);
   const menuItems =
@@ -150,7 +154,7 @@ const DashboardLayout = () => {
           />
         </Sider>
         <Layout>
-          <Header
+          {/* <Header
             style={{
               background: "#ffffff",
               position: "sticky",
@@ -161,9 +165,9 @@ const DashboardLayout = () => {
             className="!px-5"
           >
             <Topbar collapsed={collapsed} setCollapsed={setCollapsed} />
-          </Header>
+          </Header> */}
           <Content>
-            <div className="bg-primary-color px-2 xl:px-5 py-4 xl:py-5">
+            <div className="bg-primary-color px-2 xl:px-5 pb-4 xl:pb-5">
               <Outlet />
             </div>
           </Content>

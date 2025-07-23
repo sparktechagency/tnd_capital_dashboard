@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
 @import "tailwindcss";
 
 @layer components {
@@ -76,65 +79,6 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-/** ANTD Theme Change  */
-
-/** SIDEBAR: Only added a border to the left of the menu items and changed the background color of the selected item. */
-/* .ant-menu-item {
-  background-color: transparent !important;
-  border-left: 6px solid #28314E00 !important;
-  border-radius: 0px !important;
-  margin: 5px !important;
-}
-.ant-menu-item .ant-menu-item-title {
-  background-color: transparent !important;
-  border-left: 6px solid #28314E00 !important;
-  border-radius: 0px !important;
-  margin: 5px !important;
-}
-.ant-menu-item-selected {
-  background-color: transparent !important;
-  border-left: 6px solid #28314E !important;
-  border-radius: 0px !important;
-  margin: 5px !important;
-}
-.ant-menu-submenu .ant-menu-submenu-title {
-  background-color: transparent !important;
-  border-left: 6px solid #28314E00 !important;
-  border-radius: 0px !important;
-  margin: 5px !important;
-}
-
-.ant-menu-submenu-selected .ant-menu-submenu-title {
-  background-color: transparent !important;
-  border-left: 6px solid #28314E !important;
-  border-radius: 0px !important;
-}
-.ant-menu-submenu-selected .ant-menu-item {
-  border-left: 6px solid #28314E00 !important;
-  background-color: transparent !important;
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-  margin: 5px !important;
-  margin-bottom: 5px !important;
-  border-radius: 0px !important;
-}
-.ant-menu-submenu-selected .ant-menu-item-selected {
-  border-left: 6px solid #28314E00 !important;
-  background-color: transparent !important;
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-  margin: 5px !important;
-  margin-bottom: 5px !important;
-}
-.ant-menu-submenu-selected .ant-menu-item-selected a {
-  color: #28314E !important;
-}
-.ant-menu-submenu-selected .ant-menu-item-selected .ant-menu-item-icon {
-  color: #28314E !important;
-} */
-
-/** SIDEBAR:  Selected Backgorund Color Change  */
 
 .ant-menu-item .ant-menu-title-content {
   font-weight: 600 !important;

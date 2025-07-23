@@ -1,6 +1,6 @@
 export const mainTheme = {
   token: {
-    fontFamily: "Outfit, sans-serif",
+    fontFamily: "Poppins, sans-serif",
   },
   components: {
     Button: {
@@ -111,8 +111,8 @@ export const mainTheme = {
     Modal: {
       contentBg: "#FFFFFF",
       headerBg: "#FFFFFF",
-      colorIcon: "#fff",
-      colorIconHover: "#fff",
+      colorIcon: "#000",
+      colorIconHover: "#000",
     },
     Rate: {
       starBg: "#fff",

@@ -12,18 +12,19 @@ import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
-import Notifications from "../pages/Common/Notifications";
-import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
 import AdminApplication from "../pages/Admin/AdminApplication";
 import AdminClients from "../pages/Admin/AdminClients";
 import AdminFieldOfficers from "../pages/Admin/AdminFieldOfficers";
 import AdminHr from "../pages/Admin/AdminHr";
+import AdminLeadInformation from "../pages/Admin/AdminLeadInformation";
 import AdminLeads from "../pages/Admin/AdminLeads";
 import AdminLone from "../pages/Admin/AdminLone";
 import AdminManagers from "../pages/Admin/AdminManagers";
 import AdminOfficerRecord from "../pages/Admin/AdminOfficerRecord";
 import AdminOverview from "../pages/Admin/AdminOverview";
 import AdminRepayments from "../pages/Admin/AdminRepayments";
+import Notifications from "../pages/Common/Notifications";
+import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
 
 export const adminPaths = [
   {
@@ -45,6 +46,15 @@ export const adminPaths = [
     name: "Leads",
     icon: leadsLogo,
   },
+
+  {
+    path: "lead-information",
+    element: <AdminLeadInformation />,
+    key: "lead_information",
+    name: "Lead Information",
+    icon: leadsLogo,
+  },
+
   {
     path: "applications",
     element: <AdminApplication />,

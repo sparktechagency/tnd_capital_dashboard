@@ -51,7 +51,7 @@ const DeleteModal: React.FC<DeleteModalProps<any>> = ({
             className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
             onClick={() => handleDelete(currentRecord)}
           >
-            Remove
+            Delete
           </ReuseButton>
         </div>
       }

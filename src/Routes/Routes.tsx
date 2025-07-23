@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import {
   createBrowserRouter,
   RouteObject,
   useNavigate,
 } from "react-router-dom";
-import { useEffect } from "react";
 
 import Loading from "../ui/Loading";
 import { routeGenerator } from "../utils/routesGenerator";
@@ -11,15 +11,15 @@ import { adminPaths } from "./admin.route";
 import ProtectedRoute from "./ProtectedRoute";
 
 //* Auth
-import SignIn from "../pages/Auth/SignIn";
 import OtpPage from "../pages/Auth/OtpPage";
+import SignIn from "../pages/Auth/SignIn";
 
-import NotFound from "../ui/NotFound/NotFound";
 import DashboardLayout from "../Components/Layout/DashboardLayout";
-import { schoolAdminPaths } from "./schoolAdmin.route";
 import useUserData from "../hooks/useUserData";
 import ForgetPassword from "../pages/Auth/ForgetPassword";
 import UpdatePassword from "../pages/Auth/UpdatePassword";
+import NotFound from "../ui/NotFound/NotFound";
+import { schoolAdminPaths } from "./schoolAdmin.route";
 
 // eslint-disable-next-line react-refresh/only-export-components
 function AuthRedirect() {
@@ -80,6 +80,7 @@ const router: RouteObject[] = [
     path: "sign-in",
     element: <SignIn />,
   },
+
   {
     path: "forget-password",
     element: <ForgetPassword />,

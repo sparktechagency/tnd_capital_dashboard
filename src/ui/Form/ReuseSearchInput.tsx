@@ -42,7 +42,7 @@ const ReuseSearchInput: React.FC<ReuseSearchInputProps> = ({
       placeholder={placeholder}
       onChange={handleSearch}
       formItemClassName="!m-0"
-      inputClassName="!bg-transparent !text-base !text-secondary-color !border-[#E1E1E1] placeholder:!text-base-color !rounded-xl !py-1.5 !bg-[#EFEFEF]"
+      inputClassName="!text-base !text-secondary-color !border-[#E1E1E1] placeholder:!text-base-color w-full !rounded-lg !py-1.5 !bg-[#fff] h-12 !w-[450px]"
       prefix={<SearchOutlined className="text-[#667185] text-xl mr-2" />}
     />
   );

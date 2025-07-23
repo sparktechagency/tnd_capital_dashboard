@@ -7,6 +7,8 @@ export const fieldOfficerData = [
         email: "john.doe@example.com",
         date: "2025-07-20",
         collected_amount: "5,000",
+        address: "Dhaka, Bangladesh"
+
     },
     {
         key: "2",
@@ -16,6 +18,7 @@ export const fieldOfficerData = [
         email: "emily.smith@example.com",
         date: "2025-07-19",
         collected_amount: "3,200",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "3",
@@ -25,6 +28,7 @@ export const fieldOfficerData = [
         email: "michael.j@example.com",
         date: "2025-07-18",
         collected_amount: "4,500",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "4",
@@ -34,6 +38,7 @@ export const fieldOfficerData = [
         email: "sophia.brown@example.com",
         date: "2025-07-17",
         collected_amount: "2,800",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "5",
@@ -43,6 +48,7 @@ export const fieldOfficerData = [
         email: "david.w@example.com",
         date: "2025-07-16",
         collected_amount: "6,700",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "6",
@@ -52,6 +58,7 @@ export const fieldOfficerData = [
         email: "olivia.davis@example.com",
         date: "2025-07-15",
         collected_amount: "3,900",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "7",
@@ -61,6 +68,7 @@ export const fieldOfficerData = [
         email: "daniel.m@example.com",
         date: "2025-07-14",
         collected_amount: "5,300",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "8",
@@ -70,6 +78,7 @@ export const fieldOfficerData = [
         email: "ava.garcia@example.com",
         date: "2025-07-13",
         collected_amount: "4,000",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "9",
@@ -79,6 +88,7 @@ export const fieldOfficerData = [
         email: "james.anderson@example.com",
         date: "2025-07-12",
         collected_amount: "2,500",
+        address: "Dhaka, Bangladesh"
     },
     {
         key: "10",
@@ -88,5 +98,91 @@ export const fieldOfficerData = [
         email: "isabella.lee@example.com",
         date: "2025-07-11",
         collected_amount: "6,200",
+        address: "Dhaka, Bangladesh"
+    },
+];
+
+
+export const leadsData = [
+    {
+        key: "1",
+        fullName: "John Doe",
+        image: "https://randomuser.me/api/portraits/men/1.jpg",
+        phoneNumber: "+8801234567890",
+        email: "john.doe@example.com",
+        address: "Dhaka, Bangladesh"
+
+    },
+    {
+        key: "2",
+        fullName: "Emily Smith",
+        image: "https://randomuser.me/api/portraits/women/2.jpg",
+        phoneNumber: "+8801987654321",
+        email: "emily.smith@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "3",
+        fullName: "Michael Johnson",
+        image: "https://randomuser.me/api/portraits/men/3.jpg",
+        phoneNumber: "+8801712345678",
+        email: "michael.j@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "4",
+        fullName: "Sophia Brown",
+        image: "https://randomuser.me/api/portraits/women/4.jpg",
+        phoneNumber: "+8801555555555",
+        email: "sophia.brown@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "5",
+        fullName: "David Wilson",
+        image: "https://randomuser.me/api/portraits/men/5.jpg",
+        phoneNumber: "+8801876543210",
+        email: "david.w@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "6",
+        fullName: "Olivia Davis",
+        image: "https://randomuser.me/api/portraits/women/6.jpg",
+        phoneNumber: "+8801934567890",
+        email: "olivia.davis@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "7",
+        fullName: "Daniel Martinez",
+        image: "https://randomuser.me/api/portraits/men/7.jpg",
+        phoneNumber: "+8801444444444",
+        email: "daniel.m@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "8",
+        fullName: "Ava Garcia",
+        image: "https://randomuser.me/api/portraits/women/8.jpg",
+        phoneNumber: "+8801788888888",
+        email: "ava.garcia@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "9",
+        fullName: "James Anderson",
+        image: "https://randomuser.me/api/portraits/men/9.jpg",
+        phoneNumber: "+8801765432109",
+        email: "james.anderson@example.com",
+        address: "Dhaka, Bangladesh"
+    },
+    {
+        key: "10",
+        fullName: "Isabella Lee",
+        image: "https://randomuser.me/api/portraits/women/10.jpg",
+        phoneNumber: "+8801122334455",
+        email: "isabella.lee@example.com",
+        address: "Dhaka, Bangladesh"
     },
 ];

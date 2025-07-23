@@ -44,7 +44,7 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
         >
           <CartesianGrid
             vertical={false}
-            stroke="#434E58"
+            stroke="#E2E3E3"
             strokeDasharray="0"
           />
           <XAxis dataKey="month" tick={{ ...tickStyle }} tickMargin={6} />
@@ -60,8 +60,8 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
           />
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#28314E" stopOpacity={1} />
-              <stop offset="70%" stopColor="#F2F6FC" stopOpacity={1} />
+              <stop offset="0%" stopColor="#E2E3E3" stopOpacity={1} />
+              <stop offset="70%" stopColor="#E2E3E3" stopOpacity={1} />
               <stop offset="100%" stopColor="#FFFFFF" stopOpacity={1} />
             </linearGradient>
           </defs>
@@ -71,8 +71,8 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
               border: "1px solid #ccc", // Tooltip border
               borderRadius: "5px", // Tooltip border radius
             }}
-            itemStyle={{ color: "#0a0a08" }} // Tooltip text color
-            labelStyle={{ color: "#202020" }} // Tooltip label color
+            itemStyle={{ color: "#EAEBEB" }} // Tooltip text color
+            labelStyle={{ color: "#EAEBEB" }} // Tooltip label color
             formatter={(value: number): [string, string] => [
               `${value}`,
               "Total Present",
@@ -82,8 +82,8 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
           <Area
             type="monotone"
             dataKey="totalPresent"
-            stroke="#28314E"
-            strokeWidth={3}
+            stroke="#999B9C"
+            strokeWidth={5}
             fill="url(#colorUv)"
             activeDot={{ ...activeDotStyle }} // Custom hover line
           />

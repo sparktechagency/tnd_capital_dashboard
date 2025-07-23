@@ -47,11 +47,11 @@ const BlockModal: React.FC<BlockModalProps<any>> = ({
             Cancel
           </ReuseButton>
           <ReuseButton
-            variant="error"
-            className="!px-6 !py-5 w-fit flex items-center justify-center gap-2"
+            variant="secondary"
+            className="!px-6 !py-5 w-fit flex items-center justify-center gap-2 "
             onClick={() => handleBlock(currentRecord)}
           >
-            Block
+            Yes
           </ReuseButton>
         </div>
       }

@@ -26,6 +26,9 @@ import collection from "./Dashboard-icons/collection.svg";
 import application from "./Dashboard-icons/application.svg";
 import overdue from "./Dashboard-icons/overdue.svg";
 import clients from "./Dashboard-icons/leads.svg";
+import eye from "./icons/eye.svg";
+import unblock from "./icons/unblock.svg";
+import deleteIcon from "./icons/delete.svg";
 
 export const AllImages = {
   logo,
@@ -55,4 +58,7 @@ export const AllIcons = {
   application,
   overdue,
   clients,
+  eye,
+  unblock,
+  deleteIcon,
 };

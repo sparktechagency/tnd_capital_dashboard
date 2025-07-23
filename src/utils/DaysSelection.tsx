@@ -2,23 +2,23 @@
 import { ConfigProvider, Select } from "antd";
 import { useState } from "react";
 
-interface UserSelectOptionProps {
+interface DaysSelectionProps {
   currentUser: string;
   setCurrentUser: (value: string) => void;
 }
 
-interface UserSelectOption {
+interface DaysSelection {
   value: string;
   label: string;
 }
 
-const UserSelectOption: React.FC<UserSelectOptionProps> = ({
+const DaysSelection: React.FC<DaysSelectionProps> = ({
   currentUser,
   setCurrentUser,
 }) => {
-  const [usersOptions] = useState<UserSelectOption[]>([
-    { value: "parents", label: "Parents" },
-    { value: "teacher", label: "Teacher" },
+  const [usersOptions] = useState<DaysSelection[]>([
+    { value: "days", label: "Days" },
+    { value: "month", label: "Month" },
     { value: "student", label: "Student" },
   ]);
 
@@ -28,24 +28,24 @@ const UserSelectOption: React.FC<UserSelectOptionProps> = ({
         components: {
           Select: {
             colorTextQuaternary: "#F9FAFB",
-            fontSize: 16,
-            borderRadius: 10,
-            colorBorder: "#28314E",
-            colorText: "#FFFFFF",
-            colorIcon: "#F9FAFB",
-            colorBgContainer: "rgba(0,0,0,0)",
+            fontSize: 18,
+            borderRadius: 4,
+            colorBorder: "#979699",
+            colorText: "#979699",
+            colorIcon: "#000000",
+            colorBgContainer: "#fff",
             colorBgElevated: "#28314E",
-            selectorBg: "#28314E",
-            colorTextPlaceholder: "#F9FAFB",
+            selectorBg: "#fff",
+            colorTextPlaceholder: "#979699",
             optionSelectedBg: "#FFFFFF",
-            optionSelectedColor: "#28314E",
+            optionSelectedColor: "#000",
           },
         },
       }}
     >
       <Select
         value={currentUser}
-        style={{ width: 150 }}
+        style={{ width: 100, height: 40 }}
         options={usersOptions}
         onChange={(value) => setCurrentUser(value)}
       />
@@ -53,4 +53,4 @@ const UserSelectOption: React.FC<UserSelectOptionProps> = ({
   );
 };
 
-export default UserSelectOption;
+export default DaysSelection;
