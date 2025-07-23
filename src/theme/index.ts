@@ -75,9 +75,9 @@ export const mainTheme = {
     },
     Table: {
       colorPrimary: "#fff",
-      headerBg: "#fff",
+      headerBg: "#0C2752",
       colorBgContainer: "#ffffff",
-      colorText: "#fff",
+      colorText: "#0C2752",
       colorIcon: "#ffffff",
       borderColor: "#E1E1E1",
       headerColor: "#FFFFFF",

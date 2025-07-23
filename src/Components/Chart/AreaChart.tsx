@@ -31,7 +31,7 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
   const tickStyle = { fill: "#40140f" };
 
   return (
-    <div className="w-full h-96">
+    <div className="w-full h-72">
       <ResponsiveContainer>
         <AreaChart
           data={chartData}
