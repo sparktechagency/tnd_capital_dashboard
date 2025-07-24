@@ -389,3 +389,60 @@ export const applicationData = [
         status: "approved"
     },
 ];
+
+export const loanData = [
+    {
+        title: "Type of Financing Request",
+        _id: "1212",
+        features: [
+            "Cost plus profit (CPP) Murabaha Personal",
+            "Cost plus profit (CPP) Murabaha Business",
+            "Thrive Together Partnership (TTP) Mudaraba"
+        ],
+        isActive: true
+    },
+    {
+        title: "Purpose of Financing",
+        _id: "1212dd",
+        features: [
+            "Business Expansion",
+            "Medical Expenses",
+            "Home Renovation",
+            "Education Support"
+        ],
+        isActive: true
+    },
+    {
+        title: "Employment Status Options",
+        _id: "1212df",
+        features: [
+            "Employed",
+            "Self-Employed",
+            "Unemployed",
+            "Freelancer"
+        ],
+        isActive: false
+    },
+    {
+        title: "Preferred Contact Methods",
+        _id: "1212r6",
+        features: [
+            "Phone Call",
+            "SMS",
+            "Email",
+            "WhatsApp"
+        ],
+        isActive: false
+    },
+    {
+        title: "Repayment Term Options",
+        _id: "1212po",
+        features: [
+            "Monthly",
+            "Quarterly",
+            "Yearly",
+            "One-Time Payment"
+        ],
+        isActive: true
+    }
+];

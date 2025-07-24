@@ -29,6 +29,7 @@ import clients from "./Dashboard-icons/leads.svg";
 import eye from "./icons/eye.svg";
 import unblock from "./icons/unblock.svg";
 import deleteIcon from "./icons/delete.svg";
+import pen from "./icons/pen.svg";
 
 export const AllImages = {
   logo,
@@ -61,4 +62,5 @@ export const AllIcons = {
   eye,
   unblock,
   deleteIcon,
+  pen,
 };

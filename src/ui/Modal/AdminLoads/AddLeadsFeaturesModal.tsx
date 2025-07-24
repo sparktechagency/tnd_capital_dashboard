@@ -52,45 +52,6 @@ const AddLeadsFeaturesModal = ({
       centered
       width={480}
     >
-      {/* <div className="py-5">
-        <div>
-          <ReusableForm form={form} handleFinish={onFinish} className="">
-            <div className="">
-              {inputStructure.map((input, index) => (
-                <ReuseInput
-                  key={index}
-                  name={input.name}
-                  label={input.label}
-                  Typolevel={4}
-                  inputType={input.inputType}
-                  placeholder={input.placeholder}
-                  labelClassName={input.labelClassName}
-                  rules={input.rules}
-                  inputClassName="!bg-[#F2F2F2] !border-none !rounded  placeholder:!text-[#B4BCC9] placeholder:text-xs h-10"
-                />
-              ))}
-            </div>
-
-            <div className="space-y-2.5">
-              <ReuseButton
-                variant="outline"
-                className=" !font-semibold rounded-lg !text-sm"
-                // icon={allIcons.arrowRight}
-              >
-                + Add a more Features
-              </ReuseButton>
-              <ReuseButton
-                variant="secondary"
-                className=" !font-semibold rounded-lg !text-sm"
-                // icon={allIcons.arrowRight}
-              >
-                Add
-              </ReuseButton>
-            </div>
-          </ReusableForm>
-        </div>
-      </div> */}
-
       <div className="py-5">
         <ReusableForm form={form} handleFinish={onFinish} className="">
           {/* 🔥 Form.List handles the dynamic input sets */}
