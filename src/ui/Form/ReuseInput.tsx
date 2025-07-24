@@ -8,7 +8,7 @@ import { cn } from "../../lib/utils";
 type TInputProps = {
   Typolevel?: 1 | 2 | 3 | 4 | 5;
   label?: React.ReactNode;
-  name: string;
+  name: string | any;
   rules?: Rule[];
   type?: string;
   placeholder: string;

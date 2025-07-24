@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConfigProvider, Select } from "antd";
 import { useState } from "react";
 
@@ -27,7 +26,7 @@ const DaysSelection: React.FC<DaysSelectionProps> = ({
       theme={{
         components: {
           Select: {
-            colorTextQuaternary: "#F9FAFB",
+            colorTextQuaternary: "#000",
             fontSize: 18,
             borderRadius: 4,
             colorBorder: "#979699",

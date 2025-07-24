@@ -14,6 +14,7 @@ import settings from "../../public/images/Dashboard-icons/setting.svg";
 //* ------------------IMPORT COMPONENTS------------------
 import AdminApplication from "../pages/Admin/AdminApplication";
 import AdminClients from "../pages/Admin/AdminClients";
+import AdminEditLeadInformation from "../pages/Admin/AdminEditLeadInformation";
 import AdminFieldOfficers from "../pages/Admin/AdminFieldOfficers";
 import AdminHr from "../pages/Admin/AdminHr";
 import AdminLeadInformation from "../pages/Admin/AdminLeadInformation";
@@ -50,15 +51,16 @@ export const adminPaths = [
   {
     path: "lead-information",
     element: <AdminLeadInformation />,
-    key: "lead_information",
-    name: "Lead Information",
-    icon: leadsLogo,
+  },
+  {
+    path: "edit-lead-information",
+    element: <AdminEditLeadInformation />,
   },
 
   {
     path: "applications",
     element: <AdminApplication />,
-    key: "application",
+    key: "applications",
     name: "Application",
     icon: applicationLogo,
   },

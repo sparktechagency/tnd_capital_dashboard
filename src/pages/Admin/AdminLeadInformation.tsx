@@ -1,14 +1,19 @@
-import { Form } from "antd";
+import { Form, Upload } from "antd";
+import upload from "../../../public//images/icons/Upload.svg";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
+import AddLeadsFeaturesModal from "../../ui/Modal/AdminLoads/AddLeadsFeaturesModal";
+import { useState } from "react";
 
 const AdminLeadInformation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
+  const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
+    useState<boolean>(false);
 
   const inputStructure = [
     {
@@ -45,49 +50,102 @@ const AdminLeadInformation = () => {
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = (values: any) => {
     console.log(values);
   };
 
+  const handleCancel = () => {
+    setIsAddFeaturesModalOpen(false);
+  };
+
   return (
-    <div>
+    <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
         <div className="lg:ml-[1000px]">
           <ReuseButton
             children="Add Features"
-            // url="/admin/lead-information"
+            onClick={() => setIsAddFeaturesModalOpen(true)}
             icon={PlusIcon()}
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />
         </div>
+        <AddLeadsFeaturesModal
+          isAddFeaturesModalOpen={isAddFeaturesModalOpen}
+          handleCancel={handleCancel}
+        />
       </Topbar>
 
-      <ReusableForm form={form} handleFinish={onFinish} className="!mt-20 !px-32">
-        <div className="grid grid-cols-2 gap-x-52">
-          {inputStructure.map((input, index) => (
-            <ReuseInput
-              key={index}
-              name={input.name}
-              label={input.label}
-              Typolevel={4}
-              inputType={input.inputType}
-              placeholder={input.placeholder}
-              labelClassName={input.labelClassName}
-              rules={input.rules}
-              inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
-            />
-          ))}
-        </div>
+      <div className="mt-10 ">
+        <p className="text-xl font-medium ">Lead Information </p>
 
-        <ReuseButton
-          variant="secondary"
-          htmlType="submit"
-          className="!py-6 !px-9 !font-bold rounded-lg"
-          // icon={allIcons.arrowRight}
+        <ReusableForm
+          form={form}
+          handleFinish={onFinish}
+          className="!px-32 !mt-10"
         >
-          Sign In
-        </ReuseButton>
-      </ReusableForm>
+          <div className="grid grid-cols-2 gap-x-52">
+            {inputStructure.map((input, index) => (
+              <ReuseInput
+                key={index}
+                name={input.name}
+                label={input.label}
+                Typolevel={4}
+                inputType={input.inputType}
+                placeholder={input.placeholder}
+                labelClassName={input.labelClassName}
+                rules={input.rules}
+                inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
+              />
+            ))}
+
+            <Form.Item name="image" className="mb-8 w-full">
+              <label htmlFor="image" className="block text-lg font-medium mb-3">
+                Upload Picture
+              </label>
+              <Upload
+                maxCount={1}
+                listType="text"
+                accept="image/*"
+                multiple={false}
+                customRequest={(options) => {
+                  setTimeout(() => {
+                    options.onSuccess?.("ok");
+                  }, 1000);
+                }}
+                className=""
+              >
+                <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                  <p className="text-3xl mb-2">
+                    <img src={upload} alt="" />
+                  </p>
+                  <p className="text-black font-medium">
+                    Upload your region image here
+                  </p>
+                </div>
+              </Upload>
+            </Form.Item>
+          </div>
+
+          <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
+            <ReuseButton
+              variant="outline"
+              className="!py-6 !px-9 !font-bold rounded-lg !w-full"
+              // icon={allIcons.arrowRight}
+            >
+              Cancel
+            </ReuseButton>
+            <ReuseButton
+              variant="secondary"
+              url="/admin/edit-lead-information"
+              className="!py-6 !px-9 !font-bold rounded-lg !w-full"
+              // icon={allIcons.arrowRight}
+            >
+              Edit Features
+            </ReuseButton>
+          </div>
+        </ReusableForm>
+      </div>
     </div>
   );
 };
