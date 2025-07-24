@@ -24,10 +24,11 @@ const Topbar: React.FC<TopbarProps> = ({ collapsed, children }) => {
         top: 0,
         zIndex: 999,
         marginLeft: 0,
+        padding: 0,
       }}
-      className="!px-5"
+      className=""
     >
-      <div className="flex justify-between gap-0 items-center bg-white px-4 py-2 rounded-full">
+      <div className="flex justify-between gap-0 items-center bg-white px-4 py-2 w-full">
         <div className="flex items-center gap-2 text-base-color ">
           <IoMenuSharp
             onClick={() => dispatch(setCollapsed(!collapsed))}
