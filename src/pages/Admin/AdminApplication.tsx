@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import Topbar from "../../Components/Shared/Topbar";
+import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DaysSelection from "../../utils/DaysSelection";
-import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
-import { applicationData, leadsData } from "./fakeData";
-import DeleteModal from "../../ui/Modal/DeleteModal";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
 import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
+import BlockModal from "../../ui/Modal/BlockModal";
+import DeleteModal from "../../ui/Modal/DeleteModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
+import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
+import DaysSelection from "../../utils/DaysSelection";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { applicationData } from "./fakeData";
 
 const AdminApplication = () => {
   const [page, setPage] = useState<number>(1);

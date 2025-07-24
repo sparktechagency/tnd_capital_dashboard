@@ -64,10 +64,6 @@ const AdminLone = () => {
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />
         </div>
-        {/* <AddLeadsFeaturesModal
-          isAddFeaturesModalOpen={isAddFeaturesModalOpen}
-          handleCancel={handleCancel}
-        /> */}
       </Topbar>
 
       <div className="mt-10 ">
