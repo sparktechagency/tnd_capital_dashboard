@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { AllImages } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
@@ -31,6 +31,53 @@ const chartData = [
 const data = [
   { label: "Rejected", color: "bg-purple-700", percent: 75 },
   { label: "Pending", color: "bg-green-500", percent: 25 },
+];
+
+const cards = [
+  {
+    id: 1,
+    background: "#FFFFFF",
+    name: "Total Collection",
+    icon: (
+      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+        <img src={AllIcons.collection} className="size-7" alt="icon" />
+      </div>
+    ),
+    count: "$2,000",
+  },
+  {
+    id: 2,
+    background: "#FFFFFF",
+    name: "Total Application",
+    icon: (
+      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+        <img src={AllIcons.application} className="size-7" alt="icon" />
+      </div>
+    ),
+    count: "100",
+  },
+  {
+    id: 3,
+    background: "#FFFFFF",
+    name: "Overdue",
+    icon: (
+      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+        <img src={AllIcons.overdue} className="size-7" alt="icon" />
+      </div>
+    ),
+    count: "$2,000K",
+  },
+  {
+    id: 3,
+    background: "#FFFFFF",
+    name: "Total Clients",
+    icon: (
+      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+        <img src={AllIcons.clients} className="size-7" alt="icon" />
+      </div>
+    ),
+    count: "806",
+  },
 ];
 
 const AdminOverview = () => {
@@ -153,7 +200,7 @@ const AdminOverview = () => {
           </div>
         </div>
         <div className="mt-6">
-          <AdminOverviewCard />
+          <AdminOverviewCard cards={cards} className=""/>
         </div>
         <div className="flex items-center justify-between gap-x-8">
           <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">

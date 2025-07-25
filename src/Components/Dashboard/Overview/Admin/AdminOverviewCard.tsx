@@ -1,58 +1,23 @@
-import { AllIcons } from "../../../../../public/images/AllImages";
-import { useGetCountsQuery } from "../../../../redux/features/adminOverview/adminOverviewApi";
-import SpinLoader from "../../../../ui/Spiner";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const AdminOverviewCard = () => {
+import { cn } from "../../../../lib/utils";
+
+const AdminOverviewCard = ({
+  cards,
+  className,
+}: {
+  cards: any[];
+  className?: string;
+}) => {
   // const { data, isFetching } = useGetCountsQuery({});
 
-  const cards = [
-    {
-      id: 1,
-      background: "#FFFFFF",
-      name: "Total Collection",
-      icon: (
-        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-          <img src={AllIcons.collection} className="size-7" alt="icon" />
-        </div>
-      ),
-      count: "$2,000",
-    },
-    {
-      id: 2,
-      background: "#FFFFFF",
-      name: "Total Application",
-      icon: (
-        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-          <img src={AllIcons.application} className="size-7" alt="icon" />
-        </div>
-      ),
-      count: "100",
-    },
-    {
-      id: 3,
-      background: "#FFFFFF",
-      name: "Overdue",
-      icon: (
-        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-          <img src={AllIcons.overdue} className="size-7" alt="icon" />
-        </div>
-      ),
-      count: "$2,000K",
-    },
-    {
-      id: 3,
-      background: "#FFFFFF",
-      name: "Total Clients",
-      icon: (
-        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-          <img src={AllIcons.clients} className="size-7" alt="icon" />
-        </div>
-      ),
-      count: "806",
-    },
-  ];
   return (
-    <div className="flex flex-col lg:flex-row gap-1 lg:gap-x-10 mb-5">
+    <div
+      className={cn(
+        "flex flex-col lg:flex-row gap-1 lg:gap-x-10 mb-5",
+        className
+      )}
+    >
       {/* Company  */}
       {cards.map((item) => (
         <div
