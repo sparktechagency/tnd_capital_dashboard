@@ -126,7 +126,7 @@ const AdminLeads = () => {
           />
           <ReuseButton
             children="Lead Information "
-            url="/admin/lead-information"
+            url="/admin/leads/lead-information"
             icon={LeadsIcon()}
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />

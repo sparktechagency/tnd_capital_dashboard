@@ -14,16 +14,20 @@ import settings from "../../public/images/Dashboard-icons/setting.svg";
 //* ------------------IMPORT COMPONENTS------------------
 import AdminApplication from "../pages/Admin/AdminApplication";
 import AdminClients from "../pages/Admin/AdminClients";
+import AdminEditFieldOfficerInfo from "../pages/Admin/AdminEditFieldOfficerInfo";
 import AdminEditLeadInformation from "../pages/Admin/AdminEditLeadInformation";
 import AdminFieldOfficers from "../pages/Admin/AdminFieldOfficers";
 import AdminHr from "../pages/Admin/AdminHr";
 import AdminLeadInformation from "../pages/Admin/AdminLeadInformation";
 import AdminLeads from "../pages/Admin/AdminLeads";
 import AdminLone from "../pages/Admin/AdminLone";
+import AdminManagerInformation from "../pages/Admin/AdminManagerInformation";
 import AdminManagers from "../pages/Admin/AdminManagers";
+import AdminOfficerInformation from "../pages/Admin/AdminOfficerInformation";
 import AdminOfficerRecord from "../pages/Admin/AdminOfficerRecord";
 import AdminOverview from "../pages/Admin/AdminOverview";
 import AdminRepayments from "../pages/Admin/AdminRepayments";
+import EditManagerInformation from "../pages/Admin/AdminEditManagerInformation";
 import Notifications from "../pages/Common/Notifications";
 import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
 
@@ -49,11 +53,13 @@ export const adminPaths = [
   },
 
   {
-    path: "lead-information",
+    path: "leads/lead-information",
+    key: "leads",
     element: <AdminLeadInformation />,
   },
   {
-    path: "edit-lead-information",
+    path: "leads/edit-lead-information",
+    key: "leads",
     element: <AdminEditLeadInformation />,
   },
 
@@ -86,18 +92,41 @@ export const adminPaths = [
     icon: repaymentsLogo,
   },
   {
-    path: "field_officers",
+    path: "field-officers",
     element: <AdminFieldOfficers />,
-    key: "field_officers",
+    key: "field-officers",
     name: "Field Officers",
     icon: fieldOfficerLogo,
   },
+
+  {
+    path: "field-officers/officer-information",
+    key: "field-officers",
+    element: <AdminOfficerInformation />,
+  },
+  {
+    path: "field-officers/edit-officer-information",
+    key: "field-officers",
+    element: <AdminEditFieldOfficerInfo />,
+  },
+
   {
     path: "managers",
     element: <AdminManagers />,
     key: "managers",
     name: "Managers",
     icon: managerLogo,
+  },
+
+  {
+    path: "managers/manager-information",
+    element: <AdminManagerInformation />,
+    key: "managers",
+  },
+  {
+    path: "managers/edit-manager-information",
+    element: <EditManagerInformation />,
+    key: "managers",
   },
   {
     path: "hr",

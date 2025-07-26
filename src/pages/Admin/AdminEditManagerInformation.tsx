@@ -159,7 +159,7 @@ const inputStructure = [
   },
 ];
 
-const AdminEditLeadInformation = () => {
+const AdminEditManagerInformation = () => {
   const [form] = Form.useForm();
   const { collapsed } = useAppSelector((state) => state.auth);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -187,7 +187,7 @@ const AdminEditLeadInformation = () => {
       <Topbar collapsed={collapsed}></Topbar>
 
       <div className="mt-10 ">
-        <p className="text-xl font-medium ">Officer Information </p>
+        <p className="text-xl font-medium ">Lead Information </p>
         <ReusableForm
           form={form}
           handleFinish={onFinish}
@@ -258,4 +258,4 @@ const AdminEditLeadInformation = () => {
   );
 };
 
-export default AdminEditLeadInformation;
+export default AdminEditManagerInformation;

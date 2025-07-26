@@ -30,6 +30,10 @@ import eye from "./icons/eye.svg";
 import unblock from "./icons/unblock.svg";
 import deleteIcon from "./icons/delete.svg";
 import pen from "./icons/pen.svg";
+import fieldOfficer from "./Dashboard-icons/fieled_officer.svg";
+import CV from "./icons/cv.svg";
+import upload from "./icons/Upload.svg"
+
 
 export const AllImages = {
   logo,
@@ -63,4 +67,7 @@ export const AllIcons = {
   unblock,
   deleteIcon,
   pen,
+  fieldOfficer,
+  CV,
+  upload
 };

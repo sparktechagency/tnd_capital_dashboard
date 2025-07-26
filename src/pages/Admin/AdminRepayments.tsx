@@ -1,28 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Topbar from "../../Components/Shared/Topbar";
-import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DaysSelection from "../../utils/DaysSelection";
-import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
-import { applicationData, installmentData } from "./fakeData";
-import ViewAdminClientsModal from "../../ui/Modal/AdminClients/ViewAdminClientsModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
-import AdminRepaymentsTable from "../../ui/Tables/AdminRepaymentsTable";
-import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
 import { AllIcons } from "../../../public/images/AllImages";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
+import Topbar from "../../Components/Shared/Topbar";
+import { useAppSelector } from "../../redux/hooks";
+import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
+import BlockModal from "../../ui/Modal/BlockModal";
+import DeleteModal from "../../ui/Modal/DeleteModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
+import AdminRepaymentsTable from "../../ui/Tables/AdminRepaymentsTable";
+import DaysSelection from "../../utils/DaysSelection";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { installmentData } from "./fakeData";
 
 const AdminRepayments = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-
+  console.log(searchText);
   const limit = 12;
 
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
@@ -30,15 +27,6 @@ const AdminRepayments = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
-
-  const showAddModal = () => {
-    setIsAddModalVisible(true);
-  };
-
-  const showEditModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsEditModalVisible(true);
-  };
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -60,8 +48,6 @@ const AdminRepayments = () => {
   };
 
   const handleCancel = () => {
-    setIsAddModalVisible(false);
-    setIsEditModalVisible(false);
     setIsViewModalVisible(false);
     setIsBlockModalVisible(false);
     setIsUnblockModalVisible(false);
@@ -147,8 +133,8 @@ const AdminRepayments = () => {
         <div className="flex items-center  gap-x-10 py-5">
           <ReuseSearchInput
             placeholder="Search"
-            setSearch={() => {}}
-            setPage={() => {}}
+            setSearch={setSearchText}
+            setPage={setPage}
           />
         </div>
       </Topbar>

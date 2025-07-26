@@ -13,7 +13,7 @@ export const mainTheme = {
       itemActiveBg: "#fff",
       itemActiveColor: "#fff",
       itemHoverColor: "#ffffff",
-      itemColor: "#ffffff",
+      itemColor: "#262621",
       itemSelectedBg: "#0C2752",
       itemSelectedColor: "#fff",
       iconColor: "#fff",

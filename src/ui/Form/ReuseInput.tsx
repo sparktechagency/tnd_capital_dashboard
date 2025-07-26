@@ -87,7 +87,7 @@ const ReuseInput = ({
             value={value}
             onChange={onChange}
             className={cn(
-              "!py-2 !px-3 !rounded-lg !text-lg !border !border-[#535763] !text-base-color",
+              "!py-2 !px-3 !rounded-lg text-lg !border !border-[#535763] !text-base-color",
               inputClassName
             )}
             placeholder={placeholder}

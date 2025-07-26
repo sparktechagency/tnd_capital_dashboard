@@ -11,6 +11,24 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/terms-and-condition")) {
     return ["terms-and-condition"];
   }
+  if (normalizedPath.includes("/lead-information")) {
+    return ["leads"];
+  }
+  if (normalizedPath.includes("/edit-lead-information")) {
+    return ["leads"];
+  }
+  if (normalizedPath.includes("/officer-information")) {
+    return ["field-officers"];
+  }
+  if (normalizedPath.includes("/edit-officer-information")) {
+    return ["field-officers"];
+  }
+  if (normalizedPath.includes("/manager-information")) {
+    return ["managers"];
+  }
+  if (normalizedPath.includes("/edit-manager-information")) {
+    return ["managers"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };
