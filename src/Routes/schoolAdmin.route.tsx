@@ -2,7 +2,6 @@
 import applicationLogo from "../../public/images/Dashboard-icons/application.svg";
 import clientsLogo from "../../public/images/Dashboard-icons/clients.svg";
 import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
-import fieldOfficerLogo from "../../public/images/Dashboard-icons/fieled_officer.svg";
 import hrLogo from "../../public/images/Dashboard-icons/hr.svg";
 import leadsLogo from "../../public/images/Dashboard-icons/leads.svg";
 import loneLogo from "../../public/images/Dashboard-icons/loan.svg";
@@ -12,7 +11,6 @@ import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
-import ConversationPage from "../pages/Common/ConversationPage";
 import Notifications from "../pages/Common/Notifications";
 import AssignmentPage from "../pages/SchoolAdmin/AssignmentPage";
 import ClassPage from "../pages/SchoolAdmin/Class";
@@ -72,13 +70,7 @@ export const schoolAdminPaths = [
     name: "Repayments",
     icon: repaymentsLogo,
   },
-  {
-    path: "field_officers",
-    element: <ConversationPage />,
-    key: "field_officers",
-    name: "Field Officers",
-    icon: fieldOfficerLogo,
-  },
+
   {
     path: "managers",
     element: <AssignmentPage />,

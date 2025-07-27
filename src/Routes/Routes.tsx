@@ -20,6 +20,7 @@ import ForgetPassword from "../pages/Auth/ForgetPassword";
 import UpdatePassword from "../pages/Auth/UpdatePassword";
 import NotFound from "../ui/NotFound/NotFound";
 import { schoolAdminPaths } from "./schoolAdmin.route";
+import Profile from "../pages/Common/settings/Profile";
 
 // eslint-disable-next-line react-refresh/only-export-components
 function AuthRedirect() {
@@ -93,6 +94,7 @@ const router: RouteObject[] = [
     path: "reset-password",
     element: <UpdatePassword />,
   },
+
   {
     path: "*", // Catch-all for undefined routes
     element: <NotFound />,

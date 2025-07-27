@@ -10,6 +10,7 @@ import managerLogo from "../../public/images/Dashboard-icons/manager.svg";
 import officerRecord from "../../public/images/Dashboard-icons/officer_Records.svg";
 import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
+import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 
 //* ------------------IMPORT COMPONENTS------------------
 import AdminAddHrInformation from "../pages/Admin/AdminAddHRInformation";
@@ -31,7 +32,8 @@ import AdminOfficerRecord from "../pages/Admin/AdminOfficerRecord";
 import AdminOverview from "../pages/Admin/AdminOverview";
 import AdminRepayments from "../pages/Admin/AdminRepayments";
 import Notifications from "../pages/Common/Notifications";
-import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
+import Profile from "../pages/Common/settings/Profile";
+import Settings from "../pages/Common/settings/Settings";
 
 export const adminPaths = [
   {
@@ -157,9 +159,19 @@ export const adminPaths = [
 
   {
     path: "settings",
-    element: <GradeSystem />,
+    element: <Settings />,
     key: "settings",
     name: "Settings",
     icon: settings,
+  },
+  {
+    path: "settings/profile",
+    element: <Profile />,
+    key: "settings",
+  },
+  {
+    path: "settings/edit-profile",
+    element: <EditProfile />,
+    key: "settings",
   },
 ];

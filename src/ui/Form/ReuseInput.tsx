@@ -23,6 +23,7 @@ type TInputProps = {
   formItemClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
+  readOnly?: boolean;
 };
 
 const ReuseInput = ({
@@ -43,6 +44,7 @@ const ReuseInput = ({
   formItemClassName,
   labelClassName,
   inputClassName,
+  readOnly = false,
 }: TInputProps) => {
   return (
     <div className={cn(wrapperClassName)}>
@@ -86,6 +88,7 @@ const ReuseInput = ({
             suffix={suffix}
             value={value}
             onChange={onChange}
+            readOnly={readOnly}
             className={cn(
               "!py-2 !px-3 !rounded-lg text-lg !border !border-[#535763] !text-base-color",
               inputClassName

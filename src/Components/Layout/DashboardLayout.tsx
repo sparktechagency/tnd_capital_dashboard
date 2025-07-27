@@ -115,7 +115,7 @@ const DashboardLayout = () => {
       <Layout className="flex !bg-primary-color">
         <Sider
           theme="light"
-          width={300}
+          width={350}
           trigger={null}
           breakpoint="lg"
           collapsedWidth="0"

@@ -1,12 +1,27 @@
-import EditProfile from "../../../Components/Dashboard/Profile/EditProfile";
+import Topbar from "../../../Components/Shared/Topbar";
+import { EditIcon } from "../../../Components/svg/leads";
+import { useAppSelector } from "../../../redux/hooks";
+import ReuseButton from "../../../ui/Button/ReuseButton";
+import ProfileInfo from "./ProfileInfo";
 
 const Profile = () => {
+  const { collapsed } = useAppSelector((state) => state.auth);
+  const { role } = useAppSelector((state) => state.role);
+
   return (
-    <div
-      className=" min-h-[90vh] p-10  rounded-xl"
-      style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
-    >
-      <EditProfile />
+    <div className=" min-h-screen ">
+      <Topbar collapsed={collapsed}>
+        <ReuseButton
+          children="Edit Profile"
+          url={`/${role}/settings/edit-profile`}
+          onClick={() => {}}
+          variant="outline"
+          icon={EditIcon()}
+          className=""
+        />
+      </Topbar>
+      <ProfileInfo />
+      {/* <EditProfile /> */}
     </div>
   );
 };
