@@ -15,11 +15,9 @@ import { applicationData } from "./fakeData";
 const AdminApplication = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-
+  console.log(searchText);
   const limit = 12;
 
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
@@ -27,15 +25,6 @@ const AdminApplication = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
-
-  const showAddModal = () => {
-    setIsAddModalVisible(true);
-  };
-
-  const showEditModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsEditModalVisible(true);
-  };
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -57,8 +46,6 @@ const AdminApplication = () => {
   };
 
   const handleCancel = () => {
-    setIsAddModalVisible(false);
-    setIsEditModalVisible(false);
     setIsViewModalVisible(false);
     setIsBlockModalVisible(false);
     setIsUnblockModalVisible(false);
@@ -119,8 +106,8 @@ const AdminApplication = () => {
         <div className="flex items-center  gap-x-10 py-5">
           <ReuseSearchInput
             placeholder="Search"
-            setSearch={() => {}}
-            setPage={() => {}}
+            setSearch={setSearchText}
+            setPage={setPage}
           />
         </div>
       </Topbar>

@@ -12,10 +12,13 @@ import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
+import AdminAddHrInformation from "../pages/Admin/AdminAddHRInformation";
 import AdminApplication from "../pages/Admin/AdminApplication";
 import AdminClients from "../pages/Admin/AdminClients";
 import AdminEditFieldOfficerInfo from "../pages/Admin/AdminEditFieldOfficerInfo";
+import AdminEditHRInformation from "../pages/Admin/AdminEditHRInformation";
 import AdminEditLeadInformation from "../pages/Admin/AdminEditLeadInformation";
+import EditManagerInformation from "../pages/Admin/AdminEditManagerInformation";
 import AdminFieldOfficers from "../pages/Admin/AdminFieldOfficers";
 import AdminHr from "../pages/Admin/AdminHr";
 import AdminLeadInformation from "../pages/Admin/AdminLeadInformation";
@@ -27,7 +30,6 @@ import AdminOfficerInformation from "../pages/Admin/AdminOfficerInformation";
 import AdminOfficerRecord from "../pages/Admin/AdminOfficerRecord";
 import AdminOverview from "../pages/Admin/AdminOverview";
 import AdminRepayments from "../pages/Admin/AdminRepayments";
-import EditManagerInformation from "../pages/Admin/AdminEditManagerInformation";
 import Notifications from "../pages/Common/Notifications";
 import GradeSystem from "../pages/SchoolAdmin/GradeSystem";
 
@@ -134,6 +136,16 @@ export const adminPaths = [
     key: "hr",
     name: "HR",
     icon: hrLogo,
+  },
+  {
+    path: "hr/add-hr-information",
+    element: <AdminAddHrInformation />,
+    key: "hr",
+  },
+  {
+    path: "hr/edit-hr-information",
+    element: <AdminEditHRInformation />,
+    key: "hr",
   },
   {
     path: "officer_record",

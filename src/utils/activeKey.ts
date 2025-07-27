@@ -29,6 +29,12 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-manager-information")) {
     return ["managers"];
   }
+  if (normalizedPath.includes("/add-hr-information")) {
+    return ["hr"];
+  }
+  if (normalizedPath.includes("/edit-hr-information")) {
+    return ["hr"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };
