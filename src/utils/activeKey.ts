@@ -56,6 +56,18 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-manager")) {
     return ["managers"];
   }
+  if (normalizedPath.includes("/all-applications")) {
+    return ["applications"];
+  }
+  if (normalizedPath.includes("/all-application-requests")) {
+    return ["applications"];
+  }
+  if (normalizedPath.includes("/all-field-officer-requests")) {
+    return ["fieldOfficer"];
+  }
+  if (normalizedPath.includes("/all-field-officers")) {
+    return ["fieldOfficer"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

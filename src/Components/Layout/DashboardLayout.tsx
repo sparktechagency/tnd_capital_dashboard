@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import logout from "../../../public/images/dashboard-logo/logout.svg";
+import { HrPaths } from "../../Routes/Hr.route";
+import { hubManagerPath } from "../../Routes/HubManager.route";
 import { adminPaths } from "../../Routes/admin.route";
 import { spokeManagerPath } from "../../Routes/spokeManager.route";
 import { setCollapsed } from "../../redux/features/auth/authSlice";
@@ -13,7 +15,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import getActiveKeys from "../../utils/activeKey";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
-import { HrPaths } from "../../Routes/Hr.route";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -25,12 +26,7 @@ const DashboardLayout = () => {
   console.log(userRole);
 
   const [openKeys, setOpenKeys] = useState<string[]>([]);
-  const rootSubmenuKeys = [
-    "orders",
-    "service",
-    "customer-feedBack",
-    "settings",
-  ];
+  const rootSubmenuKeys = ["applications"];
 
   const handleLogout = () => {
     dispatch(changeRole(null));
@@ -90,6 +86,8 @@ const DashboardLayout = () => {
     menuItems = sidebarItemsGenerator(spokeManagerPath, "spokeManager");
   } else if (userRole?.role === "hr") {
     menuItems = sidebarItemsGenerator(HrPaths, "hr");
+  } else if (userRole?.role === "hubManager") {
+    menuItems = sidebarItemsGenerator(hubManagerPath, "hubManager");
   }
 
   menuItems.push({

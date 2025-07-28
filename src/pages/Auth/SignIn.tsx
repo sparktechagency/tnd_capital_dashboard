@@ -109,7 +109,7 @@ const SignIn = () => {
                 options={[
                   { value: "field_officer", label: "Field Officer" },
                   { value: "hr", label: "HR" },
-                  { value: "hub_manager", label: "HUB Manager" },
+                  { value: "hubManager", label: "HUB Manager" },
                   { value: "spokeManager", label: "Spoke Manager" },
                   { value: "admin", label: "Admin" },
                 ]}
