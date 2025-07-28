@@ -5,16 +5,18 @@ import { cn } from "../../../../lib/utils";
 const AdminOverviewCard = ({
   cards,
   className,
+  subClassName,
 }: {
   cards: any[];
   className?: string;
+  subClassName?: string;
 }) => {
   // const { data, isFetching } = useGetCountsQuery({});
 
   return (
     <div
       className={cn(
-        "flex flex-col lg:flex-row gap-1 lg:gap-x-10 mb-5",
+        "flex flex-col lg:flex-row  gap-1 lg:gap-x-10 mb-5",
         className
       )}
     >
@@ -27,7 +29,9 @@ const AdminOverviewCard = ({
             backgroundColor: item.background,
           }}
         >
-          <div className="flex items-center p-6 w-full gap-x-6">
+          <div
+            className={cn("flex items-center p-6 w-full gap-x-6", subClassName)}
+          >
             <div className="">{item.icon}</div>
             <div className=" w-fit ">
               <p className="text-lg sm:text-xl lg:text-[36px] font-semibold text-secondary-color capitalize tracking-wider">

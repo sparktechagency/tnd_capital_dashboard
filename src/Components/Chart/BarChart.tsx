@@ -92,7 +92,7 @@ const Bar_Chart: React.FC = () => {
             dataKey="uv"
             fill="url(#incomeGradient)" // Bar color
             barSize={20} // Width of each bar
-            radius={[10, 10, 10, 10]} // Rounded corners for bars
+            radius={[4, 4, 0, 0]} // Rounded corners for bars
           />
 
           <defs>

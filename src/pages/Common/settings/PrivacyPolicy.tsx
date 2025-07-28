@@ -1,27 +1,23 @@
 import JoditEditor from "jodit-react";
 import { useRef, useState } from "react";
 import ReuseButton from "../../../ui/Button/ReuseButton";
+import Topbar from "../../../Components/Shared/Topbar";
+import { useAppSelector } from "../../../redux/hooks";
 
 const PrivacyPolicy = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
+  const { collapsed } = useAppSelector((state) => state.auth);
 
   const handleOnSave = () => {
     console.log(content);
   };
 
   return (
-    <div
-      className=" min-h-[90vh]  rounded-xl"
-      style={{ boxShadow: "0px 0px 5px  rgba(0, 0, 0, 0.25)" }}
-    >
-      <div className="bg-secondary-color w-full flex items-center p-5 mb-10  rounded-tl-xl rounded-tr-xl">
-        <p className="text-2xl text-primary-color font-semibold">
-          Privacy policy
-        </p>
-      </div>
-      <div className=" flex justify-center items-center">
-        <div className="w-[95%]">
+    <div className=" min-h-screen ">
+      <Topbar collapsed={collapsed}></Topbar>
+      <div className=" flex justify-center items-center mt-10">
+        <div className="w-full">
           <div className="">
             <JoditEditor
               ref={editor}

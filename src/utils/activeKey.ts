@@ -41,6 +41,9 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-profile")) {
     return ["settings"];
   }
+  if (normalizedPath.includes("/support")) {
+    return ["settings"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

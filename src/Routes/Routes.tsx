@@ -15,24 +15,23 @@ import OtpPage from "../pages/Auth/OtpPage";
 import SignIn from "../pages/Auth/SignIn";
 
 import DashboardLayout from "../Components/Layout/DashboardLayout";
-import useUserData from "../hooks/useUserData";
 import ForgetPassword from "../pages/Auth/ForgetPassword";
 import UpdatePassword from "../pages/Auth/UpdatePassword";
+import { useAppSelector } from "../redux/hooks";
 import NotFound from "../ui/NotFound/NotFound";
-import { schoolAdminPaths } from "./schoolAdmin.route";
-import Profile from "../pages/Common/settings/Profile";
+import { spokeManagerPath } from "./spokeManager.route";
 
 // eslint-disable-next-line react-refresh/only-export-components
 function AuthRedirect() {
-  const user = useUserData();
+  const user = useAppSelector((state) => state.role);
+
   const navigate = useNavigate();
+
+  console.log("Ami Hujur", user);
 
   useEffect(() => {
     if (user && user.role) {
-      navigate(
-        `/${user.role === "supperAdmin" ? "admin" : user.role}/overview`,
-        { replace: true }
-      );
+      navigate(`/${user.role}/overview`, { replace: true });
     } else {
       navigate("/sign-in", { replace: true });
     }
@@ -68,14 +67,15 @@ const router: RouteObject[] = [
     ),
     children: routeGenerator(adminPaths), // Generating child routes dynamically
   },
+
   {
-    path: "school",
+    path: "spokeManager",
     element: (
-      <ProtectedRoute role="school">
+      <ProtectedRoute role="spokeManager">
         <DashboardLayout />
       </ProtectedRoute>
     ),
-    children: routeGenerator(schoolAdminPaths), // Generating child routes dynamically
+    children: routeGenerator(spokeManagerPath), // Generating child routes dynamically
   },
   {
     path: "sign-in",

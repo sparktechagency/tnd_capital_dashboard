@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface CounterState {
-    role: string
+    role: string | null
 }
 
 const initialState: CounterState = {
-    role: "admin",
+    role: null,
 }
 
 export const counterSlice = createSlice({

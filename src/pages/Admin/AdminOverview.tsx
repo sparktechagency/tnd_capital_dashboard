@@ -4,16 +4,14 @@ import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
-import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
-import YearOption from "../../utils/YearOption";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { fieldOfficerData } from "./fakeData";
-import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
-import { Header } from "antd/es/layout/layout";
+import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
+import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
+import YearOption from "../../utils/YearOption";
+import { fieldOfficerData } from "./fakeData";
 
-const chartData = [
+export const chartData = [
   { month: "Jan", totalPresent: 35 },
   { month: "Feb", totalPresent: 50 },
   { month: "Mar", totalPresent: 20 },
@@ -82,103 +80,21 @@ const cards = [
 
 const AdminOverview = () => {
   const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useState("");
 
   const limit = 12;
 
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
-  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
   const { collapsed } = useAppSelector((state) => state.auth);
-
-  const showAddModal = () => {
-    setIsAddModalVisible(true);
-  };
-
-  const showEditModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsEditModalVisible(true);
-  };
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  const showBlockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsBlockModalVisible(true);
-  };
-  const showUnblockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsUnblockModalVisible(true);
-  };
-
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
-
   const handleCancel = () => {
-    setIsAddModalVisible(false);
-    setIsEditModalVisible(false);
     setIsViewModalVisible(false);
-    setIsBlockModalVisible(false);
-    setIsUnblockModalVisible(false);
-    setIsDeleteModalVisible(false);
     setCurrentRecord(null);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
-  };
-
-  const handleBlock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "blocked",
-        },
-      },
-      "Blocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-  const handleUnblock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "active",
-        },
-      },
-      "Unblocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      // deleteAdmin,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
   };
 
   return (
@@ -200,7 +116,7 @@ const AdminOverview = () => {
           </div>
         </div>
         <div className="mt-6">
-          <AdminOverviewCard cards={cards} className=""/>
+          <AdminOverviewCard cards={cards} className="" />
         </div>
         <div className="flex items-center justify-between gap-x-8">
           <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">
@@ -244,13 +160,10 @@ const AdminOverview = () => {
           <FieldOfficerTable
             isShowOtherAction={false}
             loading={false}
-            showBlockModal={showBlockModal}
-            showEditModal={showEditModal}
-            showUnblockModal={showUnblockModal}
             showViewModal={showViewUserModal}
-            limit={10}
+            limit={limit}
             data={fieldOfficerData}
-            page={1}
+            page={page}
             setPage={setPage}
             total={0}
           />

@@ -1,9 +1,9 @@
+import Cookies from "js-cookie";
 import { ReactNode, useEffect, useMemo } from "react";
 import { io } from "socket.io-client";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
-import { decodedToken } from "../utils/jwt"; // Adjust path as needed
 import { getSocketUrl } from "../helpers/config/socket-config"; // Adjust path as needed
+import { decodedToken } from "../utils/jwt"; // Adjust path as needed
 import { SocketContext } from "./socket-context"; // Adjust path as needed
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
@@ -32,14 +32,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       reconnectionDelay: 1000,
     });
 
-    socketInstance.on("connect", () =>
-      toast.success("Connected to socket server")
+    socketInstance.on(
+      "connect",
+      () => console.log("Connected to socket server")
+      // toast.success("Connected to socket server")
     );
-    socketInstance.on("disconnect", () =>
-      toast.error("Disconnected from socket server")
+    socketInstance.on(
+      "disconnect",
+      () => console.log("Disconnected from socket server")
+      // toast.error("Disconnected from socket server")
     );
-    socketInstance.on("connect_error", (error) =>
-      toast.error(`Connection error: ${error.message}`)
+    socketInstance.on(
+      "connect_error",
+      (error) => console.log(`Connection error: ${error.message}`)
+      // toast.error(`Connection error: ${error.message}`)
     );
 
     return socketInstance;

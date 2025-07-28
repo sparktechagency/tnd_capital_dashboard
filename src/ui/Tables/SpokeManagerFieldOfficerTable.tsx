@@ -1,24 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { GoEye } from "react-icons/go";
+import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
-interface AdminFieldOfficerTableProps {
+
+interface SpokeManagerFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
-  showEditModal?: (record: any) => void;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showBlockModal?: (record: any) => void; // Function to handle blocking a user
-  showUnblockModal?: (record: any) => void; // Function to handle unblocking a user
+  showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
   limit?: number;
   isShowOtherAction?: boolean;
 }
-const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
+const SpokeManagerFieldOfficerTable: React.FC<
+  SpokeManagerFieldOfficerTableProps
+> = ({
   data,
   loading,
   showViewModal,
+  showDeleteModal,
   setPage,
   page,
   total,
@@ -29,7 +31,7 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (text, record) => (
+      render: (text: any, record: any) => (
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <img
             src={record.image} // Replace with your actual image key
@@ -46,6 +48,11 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
       ),
     },
     {
+      title: "#FO.ID",
+      dataIndex: "foId", // Data key for phoneNumber
+      key: "foId",
+    },
+    {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
@@ -55,19 +62,17 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
       dataIndex: "email", // Data key for email
       key: "email",
     },
-
     {
       title: "Date",
-      dataIndex: "date", // Data key for role
+      dataIndex: "date", // Data key for email
       key: "date",
     },
-
     {
-      title: "Collected Amount",
-      dataIndex: "collected_amount", // Data key for collected_amount
-      render: (collected_amount: string) => <span>$ {collected_amount}</span>,
-      key: "collected_amount",
+      title: "Address",
+      dataIndex: "address", // Data key for role
+      key: "address",
     },
+
     {
       title: "Action",
       key: "action",
@@ -78,7 +83,16 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
               onClick={() => showViewModal(record)}
             >
-              <GoEye style={{ fontSize: "24px" }} />
+              <img src={AllIcons.eye} />
+            </button>
+          </Tooltip>
+
+          <Tooltip placement="right" title="View Details">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              onClick={() => showDeleteModal(record)}
+            >
+              <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
         </Space>
@@ -97,10 +111,11 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
         total={total}
         limit={limit}
         page={page}
+        scroll={{ x: true }}
         keyValue={"email"}
       />
     </div>
   );
 };
 
-export default FieldOfficerTable;
+export default SpokeManagerFieldOfficerTable;

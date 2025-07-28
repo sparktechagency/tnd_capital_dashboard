@@ -1,19 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  FLUSH, PAUSE,
+  PERSIST, persistReducer, persistStore, PURGE,
+  REGISTER, REHYDRATE
+} from "redux-persist";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { baseApi } from "./api/baseApi";
 import authReducer from "./features/auth/authSlice"; // Import your auth slice
 import conversationReducer from "./features/conversation/conversationSlice";
-import roleReducer from "./slice"
-import { baseApi } from "./api/baseApi";
-import { persistStore, persistReducer } from "redux-persist";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import {
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
+import roleReducer from "./slice";
 
 // Handle storage creation for SSR (Server-Side Rendering)
 const createNoopStorage = () => {
@@ -40,7 +36,7 @@ const storage =
 const persistConfig = {
   key: "classaty",
   storage,
-  whitelist: ["auth"], // Persist only the `auth` slice (for accessToken)
+  whitelist: ["auth", "role"], // Persist only the `auth` slice (for accessToken)
   blacklist: ["baseApi"], // Do not persist the `baseApi` slice
 };
 

@@ -3,13 +3,13 @@ import { ConfigProvider, Form, Switch } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { changeRole } from "../../redux/slice";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import ReuseSelect from "../../ui/Form/ReuseSelect";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { changeRole } from "../../redux/slice";
 
 const inputStructure = [
   {
@@ -17,7 +17,6 @@ const inputStructure = [
     inputType: "email",
     placeholder: "Email",
     labelClassName: "!font-bold",
-
     rules: [{ required: true, message: "Email is required" }],
   },
   {
@@ -59,7 +58,7 @@ const SignIn = () => {
     //     secure: false,
     //   });
     //   form.resetFields();
-      router("/admin/overview", { replace: true });
+    router("/", { replace: true });
     // }
   };
   return (
@@ -96,7 +95,7 @@ const SignIn = () => {
                   placeholder={input.placeholder}
                   labelClassName={input.labelClassName}
                   rules={input.rules}
-                  inputClassName=""
+                  inputClassName="!h-11"
                 />
               ))}
 
@@ -111,7 +110,7 @@ const SignIn = () => {
                   { value: "field_officer", label: "Field Officer" },
                   { value: "hr", label: "HR" },
                   { value: "hub_manager", label: "HUB Manager" },
-                  { value: "spoke_manager", label: "Spoke Manager" },
+                  { value: "spokeManager", label: "Spoke Manager" },
                   { value: "admin", label: "Admin" },
                 ]}
               />

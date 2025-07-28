@@ -1,25 +1,18 @@
-import {
-  Link,
-  NavLink,
-  Outlet,
-  ScrollRestoration,
-  useLocation,
-} from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout, Menu } from "antd";
-import { Content, Header } from "antd/es/layout/layout";
-import { useEffect, useState } from "react";
-import logout from "../../../public/images/dashboard-logo/logout.svg";
-import getActiveKeys from "../../utils/activeKey";
-import { adminPaths } from "../../Routes/admin.route";
-import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import Sider from "antd/es/layout/Sider";
-import Topbar from "../Shared/Topbar";
+import { Content } from "antd/es/layout/layout";
+import { useEffect, useState } from "react";
+import { Link, Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
-import { schoolAdminPaths } from "../../Routes/schoolAdmin.route";
-import useUserData from "../../hooks/useUserData";
+import logout from "../../../public/images/dashboard-logo/logout.svg";
+import { adminPaths } from "../../Routes/admin.route";
+import { spokeManagerPath } from "../../Routes/spokeManager.route";
+import { setCollapsed } from "../../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { clearAuth, setCollapsed } from "../../redux/features/auth/authSlice";
-import Cookies from "js-cookie";
+import { changeRole } from "../../redux/slice";
+import getActiveKeys from "../../utils/activeKey";
+import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -38,12 +31,12 @@ const DashboardLayout = () => {
     "settings",
   ];
 
-  // const handleLogout = () => {
-  //   dispatch(clearAuth());
-  //   Cookies.remove("classaty_accessToken");
-  //   window.location.href = "/sign-in";
-  //   window.location.reload();
-  // };
+  const handleLogout = () => {
+    dispatch(changeRole(null));
+    // Cookies.remove("classaty_accessToken");
+    window.location.href = "/sign-in";
+    window.location.reload();
+  };
 
   const onOpenChange = (keys: string[]) => {
     const latestOpenKey = keys.find(
@@ -83,10 +76,18 @@ const DashboardLayout = () => {
   }, [dispatch]);
 
   const activeKeys = getActiveKeys(normalizedPath);
-  const menuItems =
-    userRole?.role === "admin"
-      ? sidebarItemsGenerator(adminPaths, "admin")
-      : sidebarItemsGenerator(schoolAdminPaths, userRole?.role as string);
+  let menuItems: any = [];
+  // =
+  // userRole?.role === "admin"
+  //   ? sidebarItemsGenerator(adminPaths, "admin")
+  //   : sidebarItemsGenerator(schoolAdminPaths, userRole?.role as string);
+
+  console.log(userRole?.role, "role");
+  if (userRole?.role === "admin") {
+    menuItems = sidebarItemsGenerator(adminPaths, "admin");
+  } else if (userRole?.role === "spokeManager") {
+    menuItems = sidebarItemsGenerator(spokeManagerPath, "spokeManager");
+  }
 
   menuItems.push({
     key: "logout",
@@ -99,13 +100,7 @@ const DashboardLayout = () => {
         style={{ color: "#000", fontSize: "16px", marginRight: "5px" }}
       />
     ),
-    label: (
-      <div
-      // onClick={handleLogout}
-      >
-        <NavLink to="/sign-in">Logout</NavLink>
-      </div>
-    ),
+    label: <div onClick={handleLogout}>Logout</div>,
   });
 
   return (

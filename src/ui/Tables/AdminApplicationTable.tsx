@@ -51,6 +51,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
         </div>
       ),
     },
+    
     {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
