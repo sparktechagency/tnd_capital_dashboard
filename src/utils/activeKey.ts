@@ -44,6 +44,12 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/support")) {
     return ["settings"];
   }
+  if (normalizedPath.includes("/edit-officers")) {
+    return ["officers"];
+  }
+  if (normalizedPath.includes("/add-officers")) {
+    return ["officers"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

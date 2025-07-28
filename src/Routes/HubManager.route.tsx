@@ -11,7 +11,7 @@ import SpokeManagerFieldOfficerInfo from "../pages/SpokeManager/SpokeManagerFiel
 import SpokeManagerOverview from "../pages/SpokeManager/SpokeManagerOverview";
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 
-export const spokeManagerPath = [
+export const hubManagerPath = [
   {
     path: "overview",
     element: <SpokeManagerOverview />,

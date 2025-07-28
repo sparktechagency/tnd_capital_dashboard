@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import getActiveKeys from "../../utils/activeKey";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
+import { HrPaths } from "../../Routes/Hr.route";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -87,6 +88,8 @@ const DashboardLayout = () => {
     menuItems = sidebarItemsGenerator(adminPaths, "admin");
   } else if (userRole?.role === "spokeManager") {
     menuItems = sidebarItemsGenerator(spokeManagerPath, "spokeManager");
+  } else if (userRole?.role === "hr") {
+    menuItems = sidebarItemsGenerator(HrPaths, "hr");
   }
 
   menuItems.push({

@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
-import { FieldOfficer } from "../../Components/svg/leads";
+import { PlusIcon } from "../../Components/svg/leads";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import AdminFieldOfficerTable from "../../ui/Tables/AdminFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { officerData } from "./fakeData";
+import HROfficersTable from "../../ui/Tables/HROfficersTable";
+import { officerData } from "../Admin/fakeData";
+import ViewHROfficers from "../../ui/Modal/HROffiers/ViewHROfficers";
 
-const AdminFieldOfficers = () => {
+const HROfficers = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
   console.log(searchText);
@@ -35,8 +35,8 @@ const AdminFieldOfficers = () => {
   };
 
   const handleCancel = () => {
-    setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
+    setIsViewModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -66,9 +66,9 @@ const AdminFieldOfficers = () => {
             setPage={setPage}
           />
           <ReuseButton
-            children="Officer Information "
-            url="/admin/field-officers/officer-information"
-            icon={FieldOfficer()}
+            children="Add Officer "
+            url="/hr/officers/add-officers"
+            icon={PlusIcon()}
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />
         </div>
@@ -76,11 +76,11 @@ const AdminFieldOfficers = () => {
 
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">All Clients</p>
+          <p className="text-xl font-semibold">Field Officers</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
-        <AdminFieldOfficerTable
+        <HROfficersTable
           data={officerData}
           loading={false}
           showViewModal={showViewUserModal}
@@ -90,7 +90,7 @@ const AdminFieldOfficers = () => {
           setPage={setPage}
         />
 
-        <ViewAdminFieldOfficerModal
+        <ViewHROfficers
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
@@ -107,4 +107,4 @@ const AdminFieldOfficers = () => {
   );
 };
 
-export default AdminFieldOfficers;
+export default HROfficers;

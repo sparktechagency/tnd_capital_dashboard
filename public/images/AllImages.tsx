@@ -32,8 +32,8 @@ import deleteIcon from "./icons/delete.svg";
 import pen from "./icons/pen.svg";
 import fieldOfficer from "./Dashboard-icons/fieled_officer.svg";
 import CV from "./icons/cv.svg";
-import upload from "./icons/Upload.svg"
-
+import upload from "./icons/Upload.svg";
+import manager from "./Dashboard-icons/manager.svg";
 
 export const AllImages = {
   logo,
@@ -69,5 +69,6 @@ export const AllIcons = {
   pen,
   fieldOfficer,
   CV,
-  upload
+  upload,
+  manager,
 };

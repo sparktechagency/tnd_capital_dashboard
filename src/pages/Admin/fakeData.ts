@@ -7,7 +7,8 @@ export const fieldOfficerData = [
         email: "john.doe@example.com",
         date: "2025-07-20",
         collected_amount: "5,000",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
 
     },
     {
@@ -18,7 +19,8 @@ export const fieldOfficerData = [
         email: "emily.smith@example.com",
         date: "2025-07-19",
         collected_amount: "3,200",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "3",
@@ -28,7 +30,8 @@ export const fieldOfficerData = [
         email: "michael.j@example.com",
         date: "2025-07-18",
         collected_amount: "4,500",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "4",
@@ -38,7 +41,8 @@ export const fieldOfficerData = [
         email: "sophia.brown@example.com",
         date: "2025-07-17",
         collected_amount: "2,800",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "5",
@@ -48,7 +52,8 @@ export const fieldOfficerData = [
         email: "david.w@example.com",
         date: "2025-07-16",
         collected_amount: "6,700",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "6",
@@ -58,7 +63,8 @@ export const fieldOfficerData = [
         email: "olivia.davis@example.com",
         date: "2025-07-15",
         collected_amount: "3,900",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "7",
@@ -68,7 +74,8 @@ export const fieldOfficerData = [
         email: "daniel.m@example.com",
         date: "2025-07-14",
         collected_amount: "5,300",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "8",
@@ -78,7 +85,8 @@ export const fieldOfficerData = [
         email: "ava.garcia@example.com",
         date: "2025-07-13",
         collected_amount: "4,000",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "manager"
     },
     {
         key: "9",
@@ -88,7 +96,8 @@ export const fieldOfficerData = [
         email: "james.anderson@example.com",
         date: "2025-07-12",
         collected_amount: "2,500",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "officer"
     },
     {
         key: "10",
@@ -98,7 +107,8 @@ export const fieldOfficerData = [
         email: "isabella.lee@example.com",
         date: "2025-07-11",
         collected_amount: "6,200",
-        address: "Dhaka, Bangladesh"
+        address: "Dhaka, Bangladesh",
+        role: "officer"
     },
 ];
 
