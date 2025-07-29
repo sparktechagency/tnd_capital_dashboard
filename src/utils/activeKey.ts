@@ -68,6 +68,18 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/all-field-officers")) {
     return ["fieldOfficer"];
   }
+  if (normalizedPath.includes("/add-new-leads")) {
+    return ["new-leads"];
+  }
+  if (normalizedPath.includes("/edit-new-leads")) {
+    return ["new-leads"];
+  }
+  if (normalizedPath.includes("/loan-apply")) {
+    return ["applications"];
+  }
+  if (normalizedPath.includes("/edit-loan-apply")) {
+    return ["applications"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

@@ -13,8 +13,12 @@ import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
+import FieldOfficerAddNewLeads from "../pages/FieldOfficer/FieldOfficerAddNewLeads";
 import FieldOfficerApplications from "../pages/FieldOfficer/FieldOfficerApplications";
 import FieldOfficerClients from "../pages/FieldOfficer/FieldOfficerClients";
+import FieldOfficerEditLoanApply from "../pages/FieldOfficer/FieldOfficerEditLoanApply";
+import FieldOfficerEditNewLeads from "../pages/FieldOfficer/FieldOfficerEditNewLeads";
+import FieldOfficerLoanApply from "../pages/FieldOfficer/FieldOfficerLoanApply";
 import FieldOfficerNewLeads from "../pages/FieldOfficer/FieldOfficerNewLeads";
 import FieldOfficerOverview from "../pages/FieldOfficer/FieldOfficerOverview";
 import FieldOfficerRepayments from "../pages/FieldOfficer/FieldOfficerRepayments";
@@ -37,6 +41,16 @@ export const fieldOfficerPath = [
     icon: leads,
   },
   {
+    path: "new-leads/add-new-leads",
+    element: <FieldOfficerAddNewLeads />,
+    key: "new-leads",
+  },
+  {
+    path: "new-leads/edit-new-leads/:id",
+    element: <FieldOfficerEditNewLeads />,
+    key: "new-leads",
+  },
+  {
     path: "applications",
     element: <FieldOfficerApplications />,
     key: "applications",
@@ -44,6 +58,16 @@ export const fieldOfficerPath = [
     icon: application,
   },
 
+  {
+    path: "applications/loan-apply",
+    element: <FieldOfficerLoanApply />,
+    key: "applications",
+  },
+  {
+    path: "applications/edit-loan-apply/:id",
+    element: <FieldOfficerEditLoanApply />,
+    key: "applications",
+  },
   {
     path: "clients",
     element: <FieldOfficerClients />,

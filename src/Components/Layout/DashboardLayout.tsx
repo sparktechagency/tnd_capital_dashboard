@@ -5,7 +5,7 @@ import { Content } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import { Link, Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
-import logout from "../../../public/images/dashboard-logo/logout.svg";
+import logout from "../../../public/images/Dashboard-icons/logout.svg";
 import { HrPaths } from "../../Routes/Hr.route";
 import { hubManagerPath } from "../../Routes/HubManager.route";
 import { adminPaths } from "../../Routes/admin.route";
