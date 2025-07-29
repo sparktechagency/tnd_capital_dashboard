@@ -34,6 +34,7 @@ import fieldOfficer from "./Dashboard-icons/fieled_officer.svg";
 import CV from "./icons/cv.svg";
 import upload from "./icons/Upload.svg";
 import manager from "./Dashboard-icons/manager.svg";
+import roundedPlus from "./Dashboard-icons/rounded_plus.svg";
 
 export const AllImages = {
   logo,
@@ -71,4 +72,5 @@ export const AllIcons = {
   CV,
   upload,
   manager,
+  roundedPlus,
 };

@@ -8,21 +8,25 @@ interface AdminAdminFieldOfficerTableProps {
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void;
+  showSpokeModal?: (record: any | undefined) => void | undefined;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
   limit?: number;
   isShowOtherAction?: boolean;
+  isPlusButtonShow?: boolean;
 }
 const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
   data,
   loading,
   showViewModal,
   showDeleteModal,
+  showSpokeModal,
   setPage,
   page,
   total,
   limit,
+  isPlusButtonShow = false,
 }) => {
   const columns = [
     {
@@ -94,6 +98,16 @@ const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
               <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
+          {isPlusButtonShow && (
+            <Tooltip placement="right" title="View Details">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showSpokeModal?.(record)}
+              >
+                <img src={AllIcons.roundedPlus} />
+              </button>
+            </Tooltip>
+          )}
         </Space>
       ),
       align: "center",
