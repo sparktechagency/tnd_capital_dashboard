@@ -18,7 +18,6 @@ import HubManagerClients from "../pages/HubManager/HubManagerClients";
 import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
 import HubManagerOverview from "../pages/HubManager/HubManagerOverview";
 import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
-import SpokeManagerFieldOfficerInfo from "../pages/SpokeManager/SpokeManagerFieldOfficerInfo";
 
 export const hubManagerPath = [
   {
