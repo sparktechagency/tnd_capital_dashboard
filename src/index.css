@@ -81,7 +81,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .ant-menu-item .ant-menu-title-content {
-  font-weight: 600 !important;
+  /* font-weight: 600 !important; */
   color: #0C2752 !important;
 
 }
@@ -104,7 +104,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .ant-menu-sub .ant-menu-title-content {
-  font-weight: 600 !important;
+  /* font-weight: 600 !important; */
   color: #0C275255 !important;
 }
 
@@ -116,7 +116,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-inline.ant-menu-root .ant-menu-item,
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 
@@ -124,11 +124,11 @@ input[type="number"]::-webkit-outer-spin-button {
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
   background-color: #28314e !important;
   color: #fff !important;
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 
 .ant-menu-submenu-title .sub {
-  font-weight: 600 !important;
+  /* font-weight: 600 !important; */
 }
 
 .ant-menu-item .active {

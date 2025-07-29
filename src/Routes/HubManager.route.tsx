@@ -14,6 +14,7 @@ import HubManagerAllApplications from "../pages/HubManager/HubManagerAllApplicat
 import HubManagerAllFieldOfficerRequest from "../pages/HubManager/HubManagerAllFieldOfficerRequest";
 import HubManagerAllFieldOfficers from "../pages/HubManager/HubManagerAllFieldOfficers";
 import HubManagerApplicationRequest from "../pages/HubManager/HubManagerApplicationRequest";
+import HubManagerApplicationRequestDetails from "../pages/HubManager/HubManagerApplicationRequestDetails";
 import HubManagerClients from "../pages/HubManager/HubManagerClients";
 import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
 import HubManagerOverview from "../pages/HubManager/HubManagerOverview";
@@ -56,6 +57,12 @@ export const hubManagerPath = [
         icon: dotIcon,
       },
     ],
+  },
+
+  {
+    key: "applications",
+    path: "applications/all-application-requests-details/:id",
+    element: <HubManagerApplicationRequestDetails />,
   },
 
   {
