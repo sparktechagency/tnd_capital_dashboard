@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import getActiveKeys from "../../utils/activeKey";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
+import { fieldOfficerPath } from "../../Routes/FieldOfficer.route";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -88,6 +89,8 @@ const DashboardLayout = () => {
     menuItems = sidebarItemsGenerator(HrPaths, "hr");
   } else if (userRole?.role === "hubManager") {
     menuItems = sidebarItemsGenerator(hubManagerPath, "hubManager");
+  } else if (userRole?.role === "fieldOfficer") {
+    menuItems = sidebarItemsGenerator(fieldOfficerPath, "fieldOfficer");
   }
 
   menuItems.push({

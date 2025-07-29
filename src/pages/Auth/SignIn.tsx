@@ -107,7 +107,7 @@ const SignIn = () => {
                   dispatch(changeRole(role));
                 }}
                 options={[
-                  { value: "field_officer", label: "Field Officer" },
+                  { value: "fieldOfficer", label: "Field Officer" },
                   { value: "hr", label: "HR" },
                   { value: "hubManager", label: "HUB Manager" },
                   { value: "spokeManager", label: "Spoke Manager" },

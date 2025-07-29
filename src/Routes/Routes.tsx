@@ -22,6 +22,7 @@ import NotFound from "../ui/NotFound/NotFound";
 import { spokeManagerPath } from "./spokeManager.route";
 import { HrPaths } from "./Hr.route";
 import { hubManagerPath } from "./HubManager.route";
+import { fieldOfficerPath } from "./FieldOfficer.route";
 
 // eslint-disable-next-line react-refresh/only-export-components
 function AuthRedirect() {
@@ -96,6 +97,15 @@ const router: RouteObject[] = [
       </ProtectedRoute>
     ),
     children: routeGenerator(hubManagerPath), // Generating child routes dynamically
+  },
+  {
+    path: "fieldOfficer",
+    element: (
+      <ProtectedRoute role="fieldOfficer">
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: routeGenerator(fieldOfficerPath), // Generating child routes dynamically
   },
   {
     path: "sign-in",
