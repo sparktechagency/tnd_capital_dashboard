@@ -27,7 +27,7 @@ const FieldOfficerClientsTable: React.FC<AdminClientsTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (text: any, record: any) => (
+      render: (_text: any, record: any) => (
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <img
             src={record.image} // Replace with your actual image key

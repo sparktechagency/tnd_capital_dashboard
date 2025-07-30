@@ -2,7 +2,6 @@
 import { ConfigProvider, Form, Switch } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
-import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import ReuseButton from "../../ui/Button/ReuseButton";
@@ -31,7 +30,7 @@ const inputStructure = [
 const SignIn = () => {
   const [form] = Form.useForm();
   const router = useNavigate();
-  const [login] = useLoginMutation();
+  // const [login] = useLoginMutation();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -58,6 +57,7 @@ const SignIn = () => {
     //     secure: false,
     //   });
     //   form.resetFields();
+    console.log(values);
     router("/", { replace: true });
     // }
   };

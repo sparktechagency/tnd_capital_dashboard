@@ -30,7 +30,7 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (text, record) => (
+      render: (_text: string, record: any) => (
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <img
             src={record.image} // Replace with your actual image key

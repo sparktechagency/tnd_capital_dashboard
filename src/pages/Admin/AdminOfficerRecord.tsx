@@ -3,11 +3,10 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
+import ViewAdminOfficerRecord from "../../ui/Modal/OfficerRecord/ViewAdminOfficerRecord";
 import AdminOfficerRecordTable from "../../ui/Tables/AdminOfficerRecordTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { applicationData, fieldOfficerData } from "./fakeData";
-import ViewAdminOfficerRecord from "../../ui/Modal/OfficerRecord/ViewAdminOfficerRecord";
+import { fieldOfficerData } from "./fakeData";
 
 const AdminOfficerRecord = () => {
   const [page, setPage] = useState<number>(1);

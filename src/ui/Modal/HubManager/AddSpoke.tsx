@@ -13,7 +13,6 @@ interface AddSpokeProps<T> {
 const AddSpoke: React.FC<AddSpokeProps<any>> = ({
   isAddSpokeVisible,
   handleCancel,
-  currentRecord,
 }) => {
   const onFinish = (values: any) => {
     console.log(values);

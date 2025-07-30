@@ -3,7 +3,6 @@ import { Form, Select, Upload } from "antd";
 import { useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { FadeLoader } from "react-spinners";
-import { getImageUrl } from "../../../helpers/config/envConfig";
 import { countryCodes } from "../../../pages/Common/settings/ProfileInfo";
 import {
   useGetProfileQuery,
@@ -17,25 +16,34 @@ import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import Topbar from "../../Shared/Topbar";
 
 const EditProfile = () => {
-  const serverUrl = getImageUrl();
+  // const serverUrl = getImageUrl();
   const [form] = Form.useForm();
   const [updateProfile] = useUpdateProfileMutation();
   const { data, isFetching } = useGetProfileQuery({});
   const profileData = data?.data;
-  const profileImage = serverUrl + profileData?.image;
+  // const profileImage = serverUrl + profileData?.image;
   const { collapsed } = useAppSelector((state) => state.auth);
-  const [imageUrl, setImageUrl] = useState(profileImage);
+
+  // const handleImageUpload = (info: any) => {
+  //   if (info.file.status === "removed") {
+  //     setImageUrl(profileImage); // Reset to null or fallback image
+  //   } else {
+  //     const file = info.file.originFileObj || info.file; // Handle the file object safely
+  //     if (file) {
+  //       setImageUrl(URL.createObjectURL(file)); // Set the preview URL of the selected image
+  //     } else {
+  //       console.error("No file selected or file object missing");
+  //     }
+  //   }
+  // };
+
+  const [imageUrl, setImageUrl] = useState<any>(null);
 
   const handleImageUpload = (info: any) => {
-    if (info.file.status === "removed") {
-      setImageUrl(profileImage); // Reset to null or fallback image
-    } else {
-      const file = info.file.originFileObj || info.file; // Handle the file object safely
-      if (file) {
-        setImageUrl(URL.createObjectURL(file)); // Set the preview URL of the selected image
-      } else {
-        console.error("No file selected or file object missing");
-      }
+    if (info.file.status === "done") {
+      setImageUrl(info.file);
+    } else if (info.file.status === "removed") {
+      setImageUrl(null);
     }
   };
 
@@ -98,41 +106,33 @@ const EditProfile = () => {
                         maxCount={1}
                         accept="image/*"
                         listType="text"
-                        showUploadList={{
-                          showRemoveIcon: true,
-                          showPreviewIcon: false,
-                          showDownloadIcon: false,
-                          render(file, _, actions) {
-                            const truncated =
-                              file.name.length > 20
-                                ? file.name.slice(0, 17) + "..."
-                                : file.name;
-
-                            return (
-                              <div className="flex items-center gap-2 mt-2">
-                                <span title={file.name}>{truncated}</span>
-                                <button
-                                  type="button"
-                                  onClick={actions.remove}
-                                  className="text-red-500 text-sm underline"
-                                >
-                                  Remove
-                                </button>
-                              </div>
-                            );
-                          },
-                        }}
+                        showUploadList={false}
                       >
                         <button
                           type="button"
-                          style={{
-                            zIndex: 1,
-                          }}
+                          style={{ zIndex: 1 }}
                           className="bg-base-color/18 p-2 w-fit h-fit !border-none absolute -top-12 left-[115px] rounded-full cursor-pointer shadow-lg"
                         >
                           <IoCameraOutline className="w-6 h-6 text-secondary-color" />
                         </button>
                       </Upload>
+
+                      {imageUrl && (
+                        <div className="flex items-center gap-2 mt-2">
+                          <span title={imageUrl.name}>
+                            {imageUrl.name.length > 20
+                              ? imageUrl.name.slice(0, 17) + "..."
+                              : imageUrl.name}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setImageUrl(null)}
+                            className="text-red-500 text-sm underline"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      )}
                     </Form.Item>
                   </div>
                 </div>

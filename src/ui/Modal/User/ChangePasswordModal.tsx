@@ -3,7 +3,7 @@ import { Form, Modal } from "antd";
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdLockOutline } from "react-icons/md";
-import { useUpdateSchoolMutation } from "../../../redux/features/school/schoolApi";
+// import { useUpdateSchoolMutation } from "../../../redux/features/school/schoolApi";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import ReuseButton from "../../Button/ReuseButton";
 import ReusableForm from "../../Form/ReuseForm";
@@ -52,11 +52,11 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   handleCancel,
 }) => {
   const [form] = Form.useForm();
-  const [updateSchool] = useUpdateSchoolMutation();
+  // const [updateSchool] = useUpdateSchoolMutation();
 
   const handleSubmit = async (values: any) => {
     const res = await tryCatchWrapper(
-      updateSchool,
+      // updateSchool,
       {
         body: {
           ...values,

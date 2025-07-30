@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { MdBlock } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
-import { Link } from "react-router-dom";
 
 interface FieldOfficerApplicationProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -30,7 +29,7 @@ const FieldOfficerApplication: React.FC<FieldOfficerApplicationProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (text: any, record: any) => (
+      render: (_text: any, record: any) => (
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <img
             src={record.image} // Replace with your actual image key

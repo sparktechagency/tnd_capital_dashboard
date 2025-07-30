@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ConfigProvider, Form, Switch, Tooltip } from "antd";
+import { ConfigProvider, Switch, Tooltip } from "antd";
 import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
@@ -14,18 +14,13 @@ import { loanData } from "./fakeData";
 
 const AdminLone = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
-  const [form] = Form.useForm();
+
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
     useState<boolean>(false);
   const [isDeleteModalVisible, setisDeleteModalVisible] =
     useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = (values: any) => {
-    console.log(values);
-  };
 
   const handleCancel = () => {
     setIsAddFeaturesModalOpen(false);

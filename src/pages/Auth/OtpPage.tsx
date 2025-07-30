@@ -1,28 +1,24 @@
 "use client";
 import { Form } from "antd";
 import { useState } from "react";
-import OTPInput from "react-otp-input";
-import { MdVerifiedUser } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import Container from "../../ui/Container";
-import ReuseButton from "../../ui/Button/ReuseButton";
-import Cookies from "js-cookie";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import {
-  useOtpVerifyMutation,
-  useResendOTPMutation,
-} from "../../redux/features/auth/authApi";
-import { toast } from "sonner";
-import { AllImages } from "../../../public/images/AllImages";
 import { BsArrowLeft } from "react-icons/bs";
+import OTPInput from "react-otp-input";
+import { useNavigate } from "react-router-dom";
+import { AllImages } from "../../../public/images/AllImages";
+import {
+  useResendOTPMutation
+} from "../../redux/features/auth/authApi";
+import ReuseButton from "../../ui/Button/ReuseButton";
+import Container from "../../ui/Container";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const OTPVerify = () => {
-  const router = useNavigate();
+  // const router = useNavigate();
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  const phoneNumber = Cookies.get("classaty_phoneNumber");
+  // const phoneNumber = Cookies.get("classaty_phoneNumber");
 
-  const [otpMatch] = useOtpVerifyMutation();
+  // const [otpMatch] = useOtpVerifyMutation();
   const [resendOtp] = useResendOTPMutation();
 
   const handleOTPSubmit = async () => {

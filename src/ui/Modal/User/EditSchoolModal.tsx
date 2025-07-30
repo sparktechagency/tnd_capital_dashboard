@@ -6,7 +6,6 @@ import { RiShieldUserFill, RiSchoolFill } from "react-icons/ri";
 import { FaPhone } from "react-icons/fa6";
 import ReuseButton from "../../Button/ReuseButton";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
-import { useUpdateSchoolMutation } from "../../../redux/features/school/schoolApi";
 import { ISchoolDetails } from "../../../types";
 import { useEffect } from "react";
 
@@ -65,7 +64,7 @@ const EditSchoolModal: React.FC<EditSchoolModalProps> = ({
   currentRecord,
 }) => {
   const [form] = Form.useForm();
-  const [updateSchool] = useUpdateSchoolMutation();
+  // const [updateSchool] = useUpdateSchoolMutation();
 
   useEffect(() => {
     if (currentRecord) {
@@ -80,7 +79,7 @@ const EditSchoolModal: React.FC<EditSchoolModalProps> = ({
 
   const handleSubmit = async (values: any) => {
     const res = await tryCatchWrapper(
-      updateSchool,
+      // updateSchool,
       {
         body: {
           ...values,
