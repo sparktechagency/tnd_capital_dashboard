@@ -19,6 +19,7 @@ import FieldOfficerClients from "../pages/FieldOfficer/FieldOfficerClients";
 import FieldOfficerEditLoanApply from "../pages/FieldOfficer/FieldOfficerEditLoanApply";
 import FieldOfficerEditNewLeads from "../pages/FieldOfficer/FieldOfficerEditNewLeads";
 import FieldOfficerLoanApply from "../pages/FieldOfficer/FieldOfficerLoanApply";
+import FieldOfficerMonthlyRepayments from "../pages/FieldOfficer/FieldOfficerMonthlyRepayments";
 import FieldOfficerNewLeads from "../pages/FieldOfficer/FieldOfficerNewLeads";
 import FieldOfficerOverview from "../pages/FieldOfficer/FieldOfficerOverview";
 import FieldOfficerRepayments from "../pages/FieldOfficer/FieldOfficerRepayments";
@@ -81,6 +82,11 @@ export const fieldOfficerPath = [
     key: "repayments",
     name: "Repayments",
     icon: repayments,
+  },
+  {
+    path: "repayments/monthly-re-payment",
+    element: <FieldOfficerMonthlyRepayments />,
+    key: "repayments",
   },
   {
     path: "tracking",

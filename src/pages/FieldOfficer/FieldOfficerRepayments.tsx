@@ -7,6 +7,8 @@ import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import DaysSelection from "../../utils/DaysSelection";
 import { installmentData } from "../Admin/fakeData";
 import FieldOfficerRepaymentsTable from "../../ui/Tables/FieldOfficerRepaymentsTable";
+import ReuseButton from "../../ui/Button/ReuseButton";
+import { LoanApply } from "../../Components/svg/leads";
 
 const FieldOfficerRepayments = () => {
   const [page, setPage] = useState<number>(1);
@@ -37,6 +39,12 @@ const FieldOfficerRepayments = () => {
             placeholder="Search"
             setSearch={setSearchText}
             setPage={setPage}
+          />
+          <ReuseButton
+            children="Re-Payment"
+            url="monthly-re-payment"
+            icon={LoanApply()}
+            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />
         </div>
       </Topbar>

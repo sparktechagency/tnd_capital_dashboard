@@ -80,6 +80,9 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-loan-apply")) {
     return ["applications"];
   }
+  if (normalizedPath.includes("/monthly-re-payment")) {
+    return ["repayments"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

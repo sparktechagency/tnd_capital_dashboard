@@ -16,9 +16,9 @@ const DaysSelection: React.FC<DaysSelectionProps> = ({
   setCurrentUser,
 }) => {
   const [usersOptions] = useState<DaysSelection[]>([
-    { value: "days", label: "Days" },
-    { value: "month", label: "Month" },
-    { value: "student", label: "Student" },
+    { value: "daily", label: "Daily" },
+    { value: "monthly", label: "Monthly" },
+    { value: "yearly", label: "Yearly" },
   ]);
 
   return (
@@ -44,7 +44,7 @@ const DaysSelection: React.FC<DaysSelectionProps> = ({
     >
       <Select
         value={currentUser}
-        style={{ width: 100, height: 40 }}
+        style={{ width: 150, height: 40 }}
         options={usersOptions}
         onChange={(value) => setCurrentUser(value)}
       />

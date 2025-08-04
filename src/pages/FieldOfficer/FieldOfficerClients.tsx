@@ -60,6 +60,7 @@ const FieldOfficerClients = () => {
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+          isPrintButtonShow={true}
         />
       </div>
     </div>

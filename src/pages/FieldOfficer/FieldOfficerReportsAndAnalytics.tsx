@@ -8,6 +8,7 @@ import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOff
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 import YearOption from "../../utils/YearOption";
 import { fieldOfficerData } from "../Admin/fakeData";
+import DaysSelection from "../../utils/DaysSelection";
 
 const chartData = [
   { month: "Jan", totalPresent: 35 },
@@ -89,7 +90,10 @@ const FieldOfficerReportsAndAnalytics = () => {
             </div>
           </div>
         </div>
-        <p className="text-xl font-medium mt-10">All Field Officer Collection</p>
+        <div className="flex items-center justify-between mb-4 mt-10">
+          <p className="text-xl font-semibold">All Applications</p>
+          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+        </div>
 
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerTable

@@ -16,13 +16,13 @@ const cards = [
   {
     id: 1,
     background: "#FFFFFF",
-    name: "Total Collection",
+    name: "Total Leads",
     icon: (
       <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.collection} className="size-7" alt="icon" />
+        <img src={AllIcons.clients} className="size-7" alt="icon" />
       </div>
     ),
-    count: "$2,000",
+    count: "200",
   },
   {
     id: 2,
@@ -38,13 +38,13 @@ const cards = [
   {
     id: 3,
     background: "#FFFFFF",
-    name: "Overdue",
+    name: "Repayments",
     icon: (
       <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
         <img src={AllIcons.overdue} className="size-7" alt="icon" />
       </div>
     ),
-    count: "$2,000K",
+    count: "$2.5K",
   },
   {
     id: 3,

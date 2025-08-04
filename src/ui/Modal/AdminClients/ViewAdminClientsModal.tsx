@@ -1,15 +1,18 @@
 import { Modal } from "antd";
 import ModalItemStyle from "../../../utils/ModalItemStyle";
+import ReuseButton from "../../Button/ReuseButton";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const ViewAdminClientsModal = ({
   isViewModalVisible,
   handleCancel,
   currentRecord,
+  isPrintButtonShow = false,
 }: {
   isViewModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: any;
+  isPrintButtonShow?: boolean;
 }) => {
   return (
     <Modal
@@ -84,6 +87,13 @@ const ViewAdminClientsModal = ({
             />
             <ModalItemStyle title={"Status:"} value={currentRecord?.status} />
           </div>
+          {isPrintButtonShow && (
+            <div className="w-56 mx-auto">
+              <ReuseButton variant="secondary">
+                <span>Print</span>
+              </ReuseButton>
+            </div>
+          )}
         </div>
       </div>
     </Modal>
