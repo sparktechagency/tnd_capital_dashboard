@@ -11,6 +11,8 @@ import AdminMangerTable from "../../ui/Tables/AdminMangerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import { officerData } from "./fakeData";
+import BlockModal from "../../ui/Modal/BlockModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 
 const AdminManger = () => {
   const [page, setPage] = useState<number>(1);
@@ -22,6 +24,8 @@ const AdminManger = () => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
+  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
+  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
 
   const showViewUserModal = (record: any) => {
@@ -37,7 +41,18 @@ const AdminManger = () => {
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
+    setIsBlockModalVisible(false);
+    setIsUnblockModalVisible(false);
     setCurrentRecord(null);
+  };
+
+  const showBlockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsBlockModalVisible(true);
+  };
+  const showUnblockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsUnblockModalVisible(true);
   };
 
   const handleDeleteCancel = () => {
@@ -50,6 +65,37 @@ const AdminManger = () => {
       // deleteAdmin,
       { params: currentRecord?._id },
       "Deleting..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+
+  const handleBlock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      // userAction,
+      {
+        body: {
+          userId: data?._id,
+          action: "blocked",
+        },
+      },
+      "Blocking..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+  const handleUnblock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      // userAction,
+      {
+        body: {
+          userId: data?._id,
+          action: "active",
+        },
+      },
+      "Unblocking..."
     );
     if (res.statusCode === 200) {
       handleCancel();
@@ -85,6 +131,8 @@ const AdminManger = () => {
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          showBlockModal={showBlockModal}
+          showUnblockModal={showUnblockModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -101,6 +149,20 @@ const AdminManger = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
+        />
+
+        <BlockModal
+          currentRecord={currentRecord}
+          isBlockModalVisible={isBlockModalVisible}
+          handleCancel={handleCancel}
+          handleBlock={handleBlock}
+        />
+
+        <UnblockModal
+          currentRecord={currentRecord}
+          isUnblockModalVisible={isUnblockModalVisible}
+          handleCancel={handleCancel}
+          handleUnblock={handleUnblock}
         />
       </div>
     </div>

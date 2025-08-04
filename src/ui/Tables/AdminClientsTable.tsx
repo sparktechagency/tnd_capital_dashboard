@@ -2,14 +2,14 @@
 import { Space, Tooltip } from "antd";
 import ReuseTable from "../../utils/ReuseTable";
 import { AllIcons } from "../../../public/images/AllImages";
-import { MdBlock } from "react-icons/md";
+// import { MdBlock } from "react-icons/md";
 interface AdminClientsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
 
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showBlockModal: (record: any) => void; // Function to handle blocking a user
-  showUnblockModal: (record: any) => void; // Function to handle unblocking a user
+  // showBlockModal: (record: any) => void; // Function to handle blocking a user
+  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +22,8 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
   data,
   loading,
   showViewModal,
-  showBlockModal,
-  showUnblockModal,
+  // showBlockModal,
+  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -55,22 +55,26 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Loan Amount",
       dataIndex: "loanAmountRequested", // Data key for email
       key: "loanAmountRequested",
+      align: "center",
     },
 
     {
       title: "Initial Amount",
       dataIndex: "loanAmountRequested", // Data key for role
       key: "loanAmountRequested",
+      align: "center",
     },
     {
       title: "Term",
       dataIndex: "term", // Data key for role
       key: "term",
+      align: "center",
     },
 
     {
@@ -90,6 +94,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
         </div>
       ),
       key: "status",
+      align: "center",
     },
 
     {
@@ -106,7 +111,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="View Details">
+          <Tooltip placement="right" title="Delete Clients">
             <button
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
               onClick={() => showDeleteModal(record)}
@@ -116,7 +121,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
           </Tooltip>
           {/* Block User Tooltip */}
 
-          <Tooltip placement="left" title="Unblock">
+          {/* <Tooltip placement="left" title="Unblock">
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
               onClick={() => showUnblockModal(record)}
@@ -132,7 +137,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
             >
               <MdBlock style={{ fontSize: "20px" }} />
             </button>
-          </Tooltip>
+          </Tooltip> */}
         </Space>
       ),
       align: "center",

@@ -43,27 +43,32 @@ const HROverviewUserTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date", // Data key for role
       key: "date",
+      align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
+      align: "center",
     },
     {
       title: "Type",
       dataIndex: "role",
       key: "role",
+      align: "center",
       filters: [
         { text: "Officer", value: "officer" },
         { text: "Manager", value: "manager" },

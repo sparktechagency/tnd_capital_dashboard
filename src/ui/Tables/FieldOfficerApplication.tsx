@@ -50,17 +50,20 @@ const FieldOfficerApplication: React.FC<FieldOfficerApplicationProps> = ({
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
+      align: "center",
     },
 
     {
@@ -80,6 +83,7 @@ const FieldOfficerApplication: React.FC<FieldOfficerApplicationProps> = ({
         </div>
       ),
       key: "status",
+      align: "center",
     },
 
     {

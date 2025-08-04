@@ -2,6 +2,7 @@
 import { Space, Tooltip } from "antd";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { MdBlock } from "react-icons/md";
 
 interface AdminAdminFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -9,6 +10,8 @@ interface AdminAdminFieldOfficerTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void;
   showSpokeModal?: (record: any | undefined) => void | undefined;
+  showBlockModal?: (record: any) => void;
+  showUnblockModal?: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -22,6 +25,8 @@ const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
   showViewModal,
   showDeleteModal,
   showSpokeModal,
+  showBlockModal,
+  showUnblockModal,
   setPage,
   page,
   total,
@@ -53,27 +58,32 @@ const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
       title: "#FO.ID",
       dataIndex: "foId", // Data key for phoneNumber
       key: "foId",
+      align: "center",
     },
     {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date", // Data key for role
       key: "date",
+      align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
+      align: "center",
     },
 
     {
@@ -98,6 +108,25 @@ const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
               <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
+
+          <Tooltip placement="left" title="Unblock">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
+              onClick={() => showUnblockModal?.(record)}
+            >
+              <img src={AllIcons.unblock} className="" />
+            </button>
+          </Tooltip>
+
+          <Tooltip placement="left" title="Block">
+            <button
+              className="!p-0 !bg-transparent !border-none cursor-pointer"
+              onClick={() => showBlockModal?.(record)}
+            >
+              <MdBlock style={{ fontSize: "20px" }} />
+            </button>
+          </Tooltip>
+
           {isPlusButtonShow && (
             <Tooltip placement="right" title="View Details">
               <button

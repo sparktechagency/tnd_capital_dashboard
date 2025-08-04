@@ -11,6 +11,8 @@ import AdminFieldOfficerTable from "../../ui/Tables/AdminFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import { officerData } from "./fakeData";
+import BlockModal from "../../ui/Modal/BlockModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 
 const AdminFieldOfficers = () => {
   const [page, setPage] = useState<number>(1);
@@ -21,7 +23,8 @@ const AdminFieldOfficers = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
+  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
+  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
 
   const showViewUserModal = (record: any) => {
@@ -37,7 +40,18 @@ const AdminFieldOfficers = () => {
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
+    setIsBlockModalVisible(false);
+    setIsUnblockModalVisible(false);
     setCurrentRecord(null);
+  };
+
+  const showBlockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsBlockModalVisible(true);
+  };
+  const showUnblockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsUnblockModalVisible(true);
   };
 
   const handleDeleteCancel = () => {
@@ -50,6 +64,37 @@ const AdminFieldOfficers = () => {
       // deleteAdmin,
       { params: currentRecord?._id },
       "Deleting..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+
+  const handleBlock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      // userAction,
+      {
+        body: {
+          userId: data?._id,
+          action: "blocked",
+        },
+      },
+      "Blocking..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+  const handleUnblock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      // userAction,
+      {
+        body: {
+          userId: data?._id,
+          action: "active",
+        },
+      },
+      "Unblocking..."
     );
     if (res.statusCode === 200) {
       handleCancel();
@@ -76,7 +121,7 @@ const AdminFieldOfficers = () => {
 
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">All Clients</p>
+          <p className="text-xl font-semibold">All Field Officers</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
@@ -85,6 +130,8 @@ const AdminFieldOfficers = () => {
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          showBlockModal={showBlockModal}
+          showUnblockModal={showUnblockModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -101,6 +148,19 @@ const AdminFieldOfficers = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
+        />
+        <BlockModal
+          currentRecord={currentRecord}
+          isBlockModalVisible={isBlockModalVisible}
+          handleCancel={handleCancel}
+          handleBlock={handleBlock}
+        />
+
+        <UnblockModal
+          currentRecord={currentRecord}
+          isUnblockModalVisible={isUnblockModalVisible}
+          handleCancel={handleCancel}
+          handleUnblock={handleUnblock}
         />
       </div>
     </div>

@@ -50,27 +50,32 @@ const HROfficersTable: React.FC<AdminHROfficersTableProps> = ({
       title: "#FO.ID",
       dataIndex: "foId", // Data key for phoneNumber
       key: "foId",
+      align: "center",
     },
     {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date", // Data key for role
       key: "date",
+      align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
+      align: "center",
     },
 
     {

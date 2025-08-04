@@ -31,14 +31,14 @@ const AdminApplication = () => {
     setIsViewModalVisible(true);
   };
 
-  const showBlockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsBlockModalVisible(true);
-  };
-  const showUnblockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsUnblockModalVisible(true);
-  };
+  // const showBlockModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsBlockModalVisible(true);
+  // };
+  // const showUnblockModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsUnblockModalVisible(true);
+  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -121,8 +121,8 @@ const AdminApplication = () => {
         <AdminApplicationTable
           data={applicationData}
           loading={false}
-          showBlockModal={showBlockModal}
-          showUnblockModal={showUnblockModal}
+          // showBlockModal={showBlockModal}
+          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

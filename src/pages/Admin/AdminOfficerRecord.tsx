@@ -43,7 +43,7 @@ const AdminOfficerRecord = () => {
 
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">All Applications</p>
+          <p className="text-xl font-semibold">Field Officer Record</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { MdBlock } from "react-icons/md";
+// import { MdBlock } from "react-icons/md";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
 
@@ -9,8 +9,8 @@ interface AdminApplicationTableProps {
   loading: boolean;
 
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showBlockModal: (record: any) => void; // Function to handle blocking a user
-  showUnblockModal: (record: any) => void; // Function to handle unblocking a user
+  // showBlockModal: (record: any) => void; // Function to handle blocking a user
+  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +22,8 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
   data,
   loading,
   showViewModal,
-  showBlockModal,
-  showUnblockModal,
+  // showBlockModal,
+  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -51,22 +51,25 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
         </div>
       ),
     },
-    
+
     {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
+      align: "center",
     },
 
     {
@@ -86,6 +89,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
         </div>
       ),
       key: "status",
+      align: "center",
     },
 
     {
@@ -102,7 +106,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="View Details">
+          <Tooltip placement="right" title="Delete Application">
             <button
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
               onClick={() => showDeleteModal(record)}
@@ -112,7 +116,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
           </Tooltip>
           {/* Block User Tooltip */}
 
-          <Tooltip placement="left" title="Unblock">
+          {/* <Tooltip placement="left" title="Unblock">
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
               onClick={() => showUnblockModal(record)}
@@ -128,7 +132,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
             >
               <MdBlock style={{ fontSize: "20px" }} />
             </button>
-          </Tooltip>
+          </Tooltip> */}
         </Space>
       ),
       align: "center",

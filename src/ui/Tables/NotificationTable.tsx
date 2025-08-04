@@ -29,26 +29,31 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
       title: "Recipient",
       dataIndex: "recipient", // Data key for recipient
       key: "recipient",
+      align: "center",
     },
     {
       title: "Notification",
       dataIndex: "message", // Data key for message
       key: "message",
+      align: "center",
     },
     {
       title: "Channel",
       dataIndex: "channel", // Data key for channel
       key: "channel",
+      align: "center",
     },
     {
       title: "Status",
       dataIndex: "status", // Data key for status
       key: "status",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date", // Data key for date
       key: "date",
+      align: "center",
     },
   ];
 

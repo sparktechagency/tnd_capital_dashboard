@@ -49,17 +49,20 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
 
     {
       title: "Date",
       dataIndex: "date", // Data key for role
       key: "date",
+      align: "center",
     },
 
     {
@@ -67,6 +70,7 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
       dataIndex: "collected_amount", // Data key for collected_amount
       render: (collected_amount: string) => <span>$ {collected_amount}</span>,
       key: "collected_amount",
+      align: "center",
     },
     {
       title: "Action",

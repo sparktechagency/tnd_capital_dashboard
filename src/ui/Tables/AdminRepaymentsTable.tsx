@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { MdBlock } from "react-icons/md";
+// import { MdBlock } from "react-icons/md";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
 
@@ -9,8 +9,8 @@ interface AdminRepaymentsTableProps {
   loading: boolean;
 
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showBlockModal: (record: any) => void; // Function to handle blocking a user
-  showUnblockModal: (record: any) => void; // Function to handle unblocking a user
+  // showBlockModal: (record: any) => void; // Function to handle blocking a user
+  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +22,8 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
   data,
   loading,
   showViewModal,
-  showBlockModal,
-  showUnblockModal,
+  // showBlockModal,
+  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -55,23 +55,27 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
       title: "Installment Amount",
       dataIndex: "installmentAmount", // Data key for phoneNumber
       key: "installmentAmount",
+      align: "center",
     },
     {
       title: "Due Date",
       dataIndex: "dueDate", // Data key for email
       key: "dueDate",
+      align: "center",
     },
 
     {
       title: "Paid On",
       dataIndex: "paidOn", // Data key for role
       key: "paidOn",
+      align: "center",
     },
 
     {
       title: "Penalty",
       dataIndex: "penalty", // Data key for role
       key: "penalty",
+      align: "center",
     },
 
     {
@@ -91,6 +95,7 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
         </div>
       ),
       key: "status",
+      align: "center",
     },
 
     {
@@ -107,7 +112,7 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="View Details">
+          <Tooltip placement="right" title="Delete Repayments">
             <button
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
               onClick={() => showDeleteModal(record)}
@@ -117,7 +122,7 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
           </Tooltip>
           {/* Block User Tooltip */}
 
-          <Tooltip placement="left" title="Unblock">
+          {/* <Tooltip placement="left" title="Unblock">
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
               onClick={() => showUnblockModal(record)}
@@ -133,7 +138,7 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
             >
               <MdBlock style={{ fontSize: "20px" }} />
             </button>
-          </Tooltip>
+          </Tooltip> */}
         </Space>
       ),
       align: "center",

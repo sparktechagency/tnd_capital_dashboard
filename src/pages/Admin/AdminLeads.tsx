@@ -33,14 +33,14 @@ const AdminLeads = () => {
     setIsViewModalVisible(true);
   };
 
-  const showBlockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsBlockModalVisible(true);
-  };
-  const showUnblockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsUnblockModalVisible(true);
-  };
+  // const showBlockModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsBlockModalVisible(true);
+  // };
+  // const showUnblockModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsUnblockModalVisible(true);
+  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -122,15 +122,15 @@ const AdminLeads = () => {
 
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">All Clients</p>
+          <p className="text-xl font-semibold">All Leads</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
         <LeadsTable
           data={leadsData}
           loading={false}
-          showBlockModal={showBlockModal}
-          showUnblockModal={showUnblockModal}
+          // showBlockModal={showBlockModal}
+          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

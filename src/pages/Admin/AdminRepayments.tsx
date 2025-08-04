@@ -33,14 +33,14 @@ const AdminRepayments = () => {
     setIsViewModalVisible(true);
   };
 
-  const showBlockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsBlockModalVisible(true);
-  };
-  const showUnblockModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsUnblockModalVisible(true);
-  };
+  // const showBlockModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsBlockModalVisible(true);
+  // };
+  // const showUnblockModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsUnblockModalVisible(true);
+  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -152,8 +152,8 @@ const AdminRepayments = () => {
         <AdminRepaymentsTable
           data={installmentData}
           loading={false}
-          showBlockModal={showBlockModal}
-          showUnblockModal={showUnblockModal}
+          // showBlockModal={showBlockModal}
+          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

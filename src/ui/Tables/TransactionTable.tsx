@@ -37,27 +37,32 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       title: "Name",
       dataIndex: ["user", "name"], // Data key for name
       key: "name",
+      align: "center",
     },
     {
       title: "Phone Number",
       dataIndex: ["user", "phoneNumber"], // Data key for email
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "createdAt", // Data key for date
       key: "createdAt",
+      align: "center",
       render: (createdAt: string) => formetDateAndTime(createdAt),
     },
     {
       title: "Plan",
       dataIndex: ["subscription", "planName"], // Data key for plan
       key: "plan",
+      align: "center",
     },
     {
       title: "Amount",
       dataIndex: "amount", // Data key for amount
       key: "amount",
+      align: "center",
     },
     {
       title: "Action",

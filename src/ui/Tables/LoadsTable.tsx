@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { MdBlock } from "react-icons/md";
+// import { MdBlock } from "react-icons/md";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
 
@@ -9,8 +9,8 @@ interface AdminLeadsTableProps {
   loading: boolean;
 
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showBlockModal: (record: any) => void; // Function to handle blocking a user
-  showUnblockModal: (record: any) => void; // Function to handle unblocking a user
+  // showBlockModal: (record: any) => void; // Function to handle blocking a user
+  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +22,8 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
   data,
   loading,
   showViewModal,
-  showBlockModal,
-  showUnblockModal,
+  // showBlockModal,
+  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -54,18 +54,18 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
     {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
-      key: "phoneNumber",
+      key: "phoneNumber",align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
-      key: "email",
+      key: "email",align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
-      key: "address",
+      key: "address",align: "center",
     },
 
     {
@@ -92,7 +92,7 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
           </Tooltip>
           {/* Block User Tooltip */}
 
-          <Tooltip placement="left" title="Unblock">
+          {/* <Tooltip placement="left" title="Unblock">
             <button
               className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
               onClick={() => showUnblockModal(record)}
@@ -108,7 +108,7 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
             >
               <MdBlock style={{ fontSize: "20px" }} />
             </button>
-          </Tooltip>
+          </Tooltip> */}
         </Space>
       ),
       align: "center",

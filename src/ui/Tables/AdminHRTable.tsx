@@ -2,12 +2,15 @@
 import { Space, Tooltip } from "antd";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { MdBlock } from "react-icons/md";
 
 interface AdminAdminHRTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void;
+  showBlockModal: (record: any) => void;
+  showUnblockModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -19,6 +22,8 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
   loading,
   showViewModal,
   showDeleteModal,
+  showBlockModal,
+  showUnblockModal,
   setPage,
   page,
   total,
@@ -50,22 +55,26 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
       key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date", // Data key for role
       key: "date",
+      align: "center",
     },
 
     {
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
+      align: "center",
     },
 
     {
@@ -82,12 +91,30 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="View Details">
+          <Tooltip placement="right" title="Delete HR">
             <button
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
               onClick={() => showDeleteModal(record)}
             >
               <img src={AllIcons.deleteIcon} />
+            </button>
+          </Tooltip>
+
+          <Tooltip placement="left" title="Unblock">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
+              onClick={() => showUnblockModal(record)}
+            >
+              <img src={AllIcons.unblock} className="" />
+            </button>
+          </Tooltip>
+
+          <Tooltip placement="left" title="Block">
+            <button
+              className="!p-0 !bg-transparent !border-none cursor-pointer"
+              onClick={() => showBlockModal(record)}
+            >
+              <MdBlock style={{ fontSize: "20px" }} />
             </button>
           </Tooltip>
         </Space>

@@ -22,7 +22,7 @@ const ViewAdminApplicationModal = ({
       <div className="py-5">
         <div className="text-base-color">
           <h3 className="text-xl text-secondary-color text-center">
-            Lead Details
+            Application Details
           </h3>
 
           <div className="flex flex-col justify-center items-center gap-2 mt-3">

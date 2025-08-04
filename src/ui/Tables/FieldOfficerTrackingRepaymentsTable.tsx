@@ -52,23 +52,27 @@ const FieldOfficerTrackingRepaymentsTable: React.FC<
       title: "Installment Amount",
       dataIndex: "installmentAmount", // Data key for phoneNumber
       key: "installmentAmount",
+      align: "center",
     },
     {
       title: "Due Date",
       dataIndex: "dueDate", // Data key for email
       key: "dueDate",
+      align: "center",
     },
 
     {
       title: "Paid On",
       dataIndex: "paidOn", // Data key for role
       key: "paidOn",
+      align: "center",
     },
 
     {
       title: "Penalty",
       dataIndex: "penalty", // Data key for role
       key: "penalty",
+      align: "center",
     },
 
     {
@@ -87,6 +91,7 @@ const FieldOfficerTrackingRepaymentsTable: React.FC<
           {text}
         </div>
       ),
+      align: "center",
       key: "status",
     },
 

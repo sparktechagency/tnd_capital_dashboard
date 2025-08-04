@@ -23,7 +23,7 @@ const ViewAdminManagerModal = ({
       <div className="py-5">
         <div className="text-base-color">
           <h3 className="text-xl text-secondary-color text-center">
-            Officer Details
+            Manager Details
           </h3>
 
           <div className="flex flex-col justify-center items-center gap-2 mt-3">
@@ -55,7 +55,7 @@ const ViewAdminManagerModal = ({
 
             <div>
               <p className="text-lg font-medium">CV</p>
-              <div className="w-[100px] h-auto p-2 bg-[#B4B8BD] rounded-lg mt-4" >
+              <div className="w-[100px] h-auto p-2 bg-[#B4B8BD] rounded-lg mt-4">
                 <div className="flex items-center size-[80px] justify-center bg-[#B3CEFC] rounded-full">
                   <img src={AllIcons.CV} alt="" />
                 </div>

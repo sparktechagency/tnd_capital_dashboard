@@ -22,7 +22,7 @@ const ViewAdminOfficerRecord = ({
       <div className="py-5">
         <div className="text-base-color">
           <h3 className="text-xl text-secondary-color text-center">
-            Lead Details
+            Field Officer Record
           </h3>
 
           <div className="flex flex-col justify-center items-center gap-2 mt-3">
@@ -43,6 +43,22 @@ const ViewAdminOfficerRecord = ({
             <ModalItemStyle
               title={"Home Address:"}
               value={currentRecord?.address}
+            />
+            <ModalItemStyle
+              title={"Hub ID:"}
+              value={currentRecord?.hubId || "12D89"}
+            />
+            <ModalItemStyle
+              title={"Spoke Id:"}
+              value={currentRecord?.spokeId || "12D89"}
+            />
+            <ModalItemStyle
+              title={"Set Location:"}
+              value={currentRecord?.address}
+            />
+            <ModalItemStyle
+              title={"Collected Amount:"}
+              value={currentRecord?.collected_amount}
             />
           </div>
         </div>
