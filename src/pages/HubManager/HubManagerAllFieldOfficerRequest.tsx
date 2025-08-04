@@ -3,13 +3,13 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import DaysSelection from "../../utils/DaysSelection";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import AdminFieldOfficerTable from "../../ui/Tables/AdminFieldOfficerTable";
-import { officerData } from "../Admin/fakeData";
 import AddSpoke from "../../ui/Modal/HubManager/AddSpoke";
+import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
+import DaysSelection from "../../utils/DaysSelection";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { officerData } from "../Admin/fakeData";
 
 const HubManagerAllFieldOfficerRequest = () => {
   const [page, setPage] = useState<number>(1);
@@ -80,7 +80,7 @@ const HubManagerAllFieldOfficerRequest = () => {
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
-        <AdminFieldOfficerTable
+        <HubManagerFieldOfficerTable
           data={officerData}
           loading={false}
           showViewModal={showViewUserModal}
