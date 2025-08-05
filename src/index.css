@@ -89,7 +89,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .ant-menu-item {
   border: 1px solid rgba(0, 0, 0, 0.18) !important;
   padding: 20px 10px !important;
-  margin: 10px 0px !important;
+  margin: 8px 0px !important;
 }
 
 .ant-menu-submenu-title {

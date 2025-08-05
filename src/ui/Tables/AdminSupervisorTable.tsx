@@ -1,0 +1,151 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Space, Tooltip } from "antd";
+import { AllIcons } from "../../../public/images/AllImages";
+import ReuseTable from "../../utils/ReuseTable";
+import { MdBlock } from "react-icons/md";
+import { Link } from "react-router-dom";
+
+interface AdminSupervisorTable {
+  data: any[]; // Replace `unknown` with the actual type of your data array
+  loading: boolean;
+  showViewModal: (record: any) => void; // Function to handle viewing a user
+  showDeleteModal: (record: any) => void;
+  showBlockModal: (record: any) => void;
+  showUnblockModal: (record: any) => void;
+  setPage?: (page: number) => void; // Function to handle pagination
+  page?: number;
+  total?: number;
+  limit?: number;
+  isShowOtherAction?: boolean;
+}
+const AdminSupervisorTable: React.FC<AdminSupervisorTable> = ({
+  data,
+  loading,
+  showViewModal,
+  showDeleteModal,
+  showBlockModal,
+  showUnblockModal,
+  setPage,
+  page,
+  total,
+  limit,
+}) => {
+  const columns = [
+    {
+      title: "Full Name",
+      dataIndex: "fullName",
+      key: "fullName",
+      render: (_text: string, record: any) => (
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <img
+            src={record.image} // Replace with your actual image key
+            alt={record.fullName}
+            style={{
+              width: 45,
+              height: 45,
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+          <span>{record.fullName}</span>
+        </div>
+      ),
+    },
+
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber", // Data key for phoneNumber
+      key: "phoneNumber",
+      align: "center",
+    },
+    {
+      title: "Email",
+      dataIndex: "email", // Data key for email
+      key: "email",
+      align: "center",
+    },
+    {
+      title: "Date",
+      dataIndex: "date", // Data key for role
+      key: "date",
+      align: "center",
+    },
+
+    {
+      title: "Address",
+      dataIndex: "address", // Data key for role
+      key: "address",
+      align: "center",
+    },
+
+    {
+      title: "Action",
+      key: "action",
+      render: (_: unknown, record: any) => (
+        <Space size="middle">
+          <Tooltip placement="right" title="View Details">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              onClick={() => showViewModal(record)}
+            >
+              <img src={AllIcons.eye} />
+            </button>
+          </Tooltip>
+
+          <Tooltip placement="right" title="Delete Supervisor">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              onClick={() => showDeleteModal(record)}
+            >
+              <img src={AllIcons.deleteIcon} />
+            </button>
+          </Tooltip>
+          <Tooltip placement="left" title="Edit Supervisor">
+            <Link to={`/admin/supervisory/edit-supervisor/${record.key}`}>
+              <button className="!p-0 !bg-transparent !border-none cursor-pointer">
+                <img src={AllIcons.pen} />
+              </button>
+            </Link>
+          </Tooltip>
+
+          <Tooltip placement="left" title="Unblock">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
+              onClick={() => showUnblockModal(record)}
+            >
+              <img src={AllIcons.unblock} className="" />
+            </button>
+          </Tooltip>
+
+          <Tooltip placement="left" title="Block">
+            <button
+              className="!p-0 !bg-transparent !border-none cursor-pointer"
+              onClick={() => showBlockModal(record)}
+            >
+              <MdBlock style={{ fontSize: "20px" }} />
+            </button>
+          </Tooltip>
+        </Space>
+      ),
+      align: "center",
+    },
+  ];
+
+  return (
+    <div>
+      <ReuseTable
+        columns={columns}
+        data={data}
+        loading={loading}
+        setPage={setPage}
+        total={total}
+        limit={limit}
+        page={page}
+        scroll={{ x: true }}
+        keyValue={"email"}
+      />
+    </div>
+  );
+};
+
+export default AdminSupervisorTable;

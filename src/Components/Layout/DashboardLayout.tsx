@@ -156,18 +156,6 @@ const DashboardLayout = () => {
           />
         </Sider>
         <Layout>
-          {/* <Header
-            style={{
-              background: "#ffffff",
-              position: "sticky",
-              top: 0,
-              zIndex: 999,
-              marginLeft: 0,
-            }}
-            className="!px-5"
-          >
-            <Topbar collapsed={collapsed} setCollapsed={setCollapsed} />
-          </Header> */}
           <Content>
             <div className="bg-primary-color px-2 xl:px-5 pb-4 xl:pb-5">
               <Outlet />

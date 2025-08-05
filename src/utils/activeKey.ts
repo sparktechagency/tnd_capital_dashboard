@@ -83,6 +83,15 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/monthly-re-payment")) {
     return ["repayments"];
   }
+  if (normalizedPath.includes("/add-supervisor")) {
+    return ["supervisory"];
+  }
+  if (normalizedPath.includes("/edit-supervisor-information")) {
+    return ["supervisory"];
+  }
+  if (normalizedPath.includes("/edit-supervisor")) {
+    return ["supervisory"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };
