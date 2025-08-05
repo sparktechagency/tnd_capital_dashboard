@@ -11,6 +11,7 @@ import officerRecord from "../../public/images/Dashboard-icons/officer_Records.s
 import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
+import location from "../../public/images/Dashboard-icons/location.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
 import AdminAddHrInformation from "../pages/Admin/AdminAddHRInformation";
@@ -35,6 +36,7 @@ import Notifications from "../pages/Common/Notifications";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
+import AdminLocationProfile from "../pages/Admin/AdminLocationProfile";
 
 export const adminPaths = [
   {
@@ -157,7 +159,13 @@ export const adminPaths = [
     name: "Officer Record",
     icon: officerRecord,
   },
-
+  {
+    path: "location",
+    element: <AdminLocationProfile />,
+    key: "location",
+    name: "Location Profile",
+    icon: location,
+  },
   {
     path: "settings",
     element: <Settings />,
