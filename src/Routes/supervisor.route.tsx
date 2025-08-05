@@ -1,48 +1,30 @@
-//* ------------------ICONS------------------
 import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
 import dotIcon from "../../public/images/Dashboard-icons/dot.svg";
-import fieldOfficer from "../../public/images/Dashboard-icons/fieled_officer.svg";
-import leadsIcon from "../../public/images/Dashboard-icons/leads.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
-import application from "../../public/images/Dashboard-icons/application.svg";
-import clients from "../../public/images/Dashboard-icons/clients.svg";
 
-//* ------------------IMPORT COMPONENTS------------------
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
 import HubManagerAllApplications from "../pages/HubManager/HubManagerAllApplications";
-import HubManagerAllFieldOfficerRequest from "../pages/HubManager/HubManagerAllFieldOfficerRequest";
-import HubManagerAllFieldOfficers from "../pages/HubManager/HubManagerAllFieldOfficers";
 import HubManagerApplicationRequest from "../pages/HubManager/HubManagerApplicationRequest";
 import HubManagerApplicationRequestDetails from "../pages/HubManager/HubManagerApplicationRequestDetails";
-import HubManagerClients from "../pages/HubManager/HubManagerClients";
-import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
-import HubManagerOverview from "../pages/HubManager/HubManagerOverview";
-import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
 
-export const hubManagerPath = [
+import SupervisorOverview from "../pages/Supervisor/SupervisorOverview";
+
+export const supervisorPaths = [
   {
     path: "overview",
-    element: <HubManagerOverview />,
+    element: <SupervisorOverview />,
     key: "overview",
     name: "Dashboard",
     icon: dashboardLogo,
   },
 
   {
-    path: "leads",
-    element: <HubManagerLeads />,
-    key: "leads",
-    name: "Leads",
-    icon: leadsIcon,
-  },
-
-  {
     key: "applications",
     name: "Application",
-    icon: application,
+    icon: dashboardLogo,
     children: [
       {
         key: "applications",
@@ -65,43 +47,6 @@ export const hubManagerPath = [
     key: "applications",
     path: "applications/all-application-requests-details/:id",
     element: <HubManagerApplicationRequestDetails />,
-  },
-
-  {
-    path: "clients",
-    element: <HubManagerClients />,
-    key: "clients",
-    name: "Clients",
-    icon: clients,
-  },
-  {
-    path: "repayments",
-    element: <HubManagerRepayments />,
-    key: "repayments",
-    name: "Repayments",
-    icon: fieldOfficer,
-  },
-
-  {
-    key: "fieldOfficer",
-    name: "Field Officers",
-    icon: dashboardLogo,
-    children: [
-      {
-        key: "fieldOfficer",
-        path: "fieldOfficer/all-field-officer-requests",
-        name: "All Requests",
-        element: <HubManagerAllFieldOfficerRequest />,
-        icon: dotIcon,
-      },
-      {
-        key: "fieldOfficer",
-        path: "fieldOfficer/all-field-officers",
-        name: "All Field Officers",
-        element: <HubManagerAllFieldOfficers />,
-        icon: dotIcon,
-      },
-    ],
   },
 
   {

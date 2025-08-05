@@ -12,6 +12,7 @@ import repaymentsLogo from "../../public/images/Dashboard-icons/repayments.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 import location from "../../public/images/Dashboard-icons/location.svg";
+import supervisor from "../../public/images/Dashboard-icons/supervisor.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
 import AdminAddHrInformation from "../pages/Admin/AdminAddHRInformation";
@@ -37,6 +38,7 @@ import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
 import AdminLocationProfile from "../pages/Admin/AdminLocationProfile";
+import AdminSupervisor from "../pages/Admin/AdminSupervisor";
 
 export const adminPaths = [
   {
@@ -166,6 +168,13 @@ export const adminPaths = [
     name: "Location Profile",
     icon: location,
   },
+  // {
+  //   path: "supervisory",
+  //   element: <AdminSupervisor />,
+  //   key: "supervisory",
+  //   name: "Supervisory",
+  //   icon: supervisor,
+  // },
   {
     path: "settings",
     element: <Settings />,
