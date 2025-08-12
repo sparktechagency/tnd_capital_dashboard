@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import { useAppSelector } from "../../redux/hooks";
-import Topbar from "../../Components/Shared/Topbar";
-import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
-import YearOption from "../../utils/YearOption";
+import { AllIcons } from "../../../public/images/AllImages";
 import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
-import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
-import { fieldOfficerData } from "../Admin/fakeData";
+import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
+import Topbar from "../../Components/Shared/Topbar";
+import { useAppSelector } from "../../redux/hooks";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
+import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
+import YearOption from "../../utils/YearOption";
+import { fieldOfficerData } from "../Admin/fakeData";
 
 const chartData = [
   { month: "Jan", totalPresent: 35 },
@@ -100,20 +100,6 @@ const HubManagerOverview = () => {
     <section>
       <Topbar collapsed={collapsed}></Topbar>
       <div className="mt-6">
-        <div className="flex items-center">
-          <img
-            src={AllImages.profile}
-            alt="profile_pic"
-            style={{ width: "60px", height: "60px", marginRight: "10px" }}
-            className="rounded-full border border-secondary-color"
-          />
-          <div className="flex flex-col justify-center">
-            <p className="font-semibold text-xl">Hello, Emma Taylor</p>
-            <p className="text-lg font-normal">
-              Check your activities in this dashboard.
-            </p>
-          </div>
-        </div>
         <div className="mt-6">
           <AdminOverviewCard cards={cards} className="" />
         </div>
@@ -155,7 +141,9 @@ const HubManagerOverview = () => {
           </div>
         </div>
 
-        <p className="text-xl font-medium mt-14">All Field Officer Collection</p>
+        <p className="text-xl font-medium mt-14">
+          All Field Officer Collection
+        </p>
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerTable
             isShowOtherAction={false}

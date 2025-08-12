@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ConfigProvider, Form, Switch } from "antd";
+import { Form } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -117,22 +117,12 @@ const SignIn = () => {
                 ]}
               />
 
-              <div className="flex items-center justify-between mb-6">
-                <p>
-                  <ConfigProvider
-                    theme={{ token: { colorPrimary: "#0C2752" } }}
-                  >
-                    <Switch size="small" defaultChecked />
-                  </ConfigProvider>
-                  <span className="ml-2 text-[#0C2752] font-medium">
-                    Remember me
-                  </span>
-                </p>
+              <div className="flex items-center justify-end mb-6">
                 <p
                   onClick={handleNavigate}
                   className="text-[#0C2752] cursor-pointer hover:underline font-medium"
                 >
-                  Forget password?
+                  Forgot password?
                 </p>
               </div>
 

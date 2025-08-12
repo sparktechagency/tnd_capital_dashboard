@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { AllIcons } from "../../../public/images/AllImages";
+import Bar_Chart from "../../Components/Chart/BarChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
-import Bar_Chart from "../../Components/Chart/BarChart";
 import HROverviewUserTable from "../../ui/Tables/HROverviewUserTable";
 import YearOption from "../../utils/YearOption";
 import { fieldOfficerData } from "../Admin/fakeData";
@@ -46,20 +46,6 @@ const HROverview = () => {
     <section>
       <Topbar collapsed={collapsed}></Topbar>
       <div className="mt-6">
-        <div className="flex items-center">
-          <img
-            src={AllImages.profile}
-            alt="profile_pic"
-            style={{ width: "60px", height: "60px", marginRight: "10px" }}
-            className="rounded-full border border-secondary-color"
-          />
-          <div className="flex flex-col justify-center">
-            <p className="font-semibold text-xl">Hello, Emma Taylor</p>
-            <p className="text-lg font-normal">
-              Check your activities in this dashboard.
-            </p>
-          </div>
-        </div>
         <div className="mt-6">
           <AdminOverviewCard cards={cards} subClassName="justify-center" />
         </div>

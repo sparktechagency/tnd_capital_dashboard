@@ -40,26 +40,26 @@ const ViewAdminRepaymentsModal = ({
               title={"Phone Number"}
               value={currentRecord?.phoneNumber}
             />
-            <ModalItemStyle title={"City:"} value={currentRecord?.city} />
+            <ModalItemStyle title={"City"} value={currentRecord?.city} />
             <ModalItemStyle
-              title={"Loan Amount:"}
+              title={"Loan Amount"}
               value={currentRecord?.loanAmount}
             />
-            <ModalItemStyle title={"Term:"} value={currentRecord?.term} />
+            <ModalItemStyle title={"Term"} value={currentRecord?.term} />
             <ModalItemStyle
-              title={"Installment Amount:"}
+              title={"Installment Amount"}
               value={currentRecord?.installmentAmount}
             />
             <ModalItemStyle
-              title={"Due Date:"}
+              title={"Due Date"}
               value={currentRecord?.dueDate}
             />
-            <ModalItemStyle title={"Paid On:"} value={currentRecord?.paidOn} />
+            <ModalItemStyle title={"Paid On"} value={currentRecord?.paidOn} />
             <ModalItemStyle
-              title={"Penalty :"}
+              title={"Penalty"}
               value={currentRecord?.penalty}
             />
-            <ModalItemStyle title={"Status:"} value={currentRecord?.status} />
+            <ModalItemStyle title={"Status"} value={currentRecord?.status} className="capitalize" />
           </div>
         </div>
       </div>

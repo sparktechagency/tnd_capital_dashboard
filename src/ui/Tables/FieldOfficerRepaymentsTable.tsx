@@ -44,6 +44,12 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
       ),
     },
     {
+      title: "Total Amount",
+      dataIndex: "installmentAmount", // Data key for phoneNumber
+      key: "installmentAmount",
+      align: "center",
+    },
+    {
       title: "Installment Amount",
       dataIndex: "installmentAmount", // Data key for phoneNumber
       key: "installmentAmount",

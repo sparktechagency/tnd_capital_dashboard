@@ -43,12 +43,7 @@ const FieldOfficerClientsTable: React.FC<AdminClientsTableProps> = ({
         </div>
       ),
     },
-    {
-      title: "Phone Number",
-      dataIndex: "phoneNumber", // Data key for phoneNumber
-      key: "phoneNumber",
-      align: "center",
-    },
+
     {
       title: "Loan Amount",
       dataIndex: "loanAmountRequested", // Data key for email

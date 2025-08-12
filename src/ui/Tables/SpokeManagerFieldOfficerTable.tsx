@@ -7,7 +7,7 @@ interface SpokeManagerFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
+  showDeleteModal?: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -20,7 +20,6 @@ const SpokeManagerFieldOfficerTable: React.FC<
   data,
   loading,
   showViewModal,
-  showDeleteModal,
   setPage,
   page,
   total,
@@ -89,15 +88,6 @@ const SpokeManagerFieldOfficerTable: React.FC<
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
-            </button>
-          </Tooltip>
-
-          <Tooltip placement="right" title="View Details">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
         </Space>
