@@ -16,6 +16,7 @@ import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 
 //* ------------------IMPORT COMPONENTS------------------
 import AdminAddHrInformation from "../pages/Admin/AdminAddHRInformation";
+import AdminAddRepayments from "../pages/Admin/AdminAddRepayments";
 import AdminAddSupervisor from "../pages/Admin/AdminAddSupervisor";
 import AdminApplication from "../pages/Admin/AdminApplication";
 import AdminClients from "../pages/Admin/AdminClients";
@@ -37,6 +38,7 @@ import AdminOfficerRecord from "../pages/Admin/AdminOfficerRecord";
 import AdminOverview from "../pages/Admin/AdminOverview";
 import AdminRepayments from "../pages/Admin/AdminRepayments";
 import AdminSupervisor from "../pages/Admin/AdminSupervisor";
+import EditRepaymentsInformation from "../pages/Admin/EditRepaymentsInformation";
 import EditSupervisorInformation from "../pages/Admin/EditSupervisorInformation";
 import Notifications from "../pages/Common/Notifications";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
@@ -103,7 +105,23 @@ export const adminPaths = [
     name: "Repayments",
     icon: repaymentsLogo,
   },
-
+  {
+    path: "repayments/add-repayments",
+    element: <AdminAddRepayments />,
+    key: "repayments",
+  },
+  {
+    path: "repayments/edit-repayments-information",
+    element: <EditRepaymentsInformation />,
+    key: "repayments",
+  },
+  {
+    path: "hr",
+    element: <AdminHr />,
+    key: "hr",
+    name: "HR",
+    icon: hrLogo,
+  },
   {
     path: "supervisory",
     element: <AdminSupervisor />,
@@ -127,13 +145,13 @@ export const adminPaths = [
     key: "supervisory",
   },
 
-  {
-    path: "hr",
-    element: <AdminHr />,
-    key: "hr",
-    name: "HR",
-    icon: hrLogo,
-  },
+  // {
+  //   path: "supervisory",
+  //   element: <AdminHr />,
+  //   key: "Supervisory",
+  //   name: "Supervisory",
+  //   icon: hrLogo,
+  // },
   {
     path: "managers",
     element: <AdminManagers />,

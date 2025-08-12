@@ -35,6 +35,12 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-hr-information")) {
     return ["hr"];
   }
+  if (normalizedPath.includes("/add-repayments")) {
+    return ["repayments"];
+  }
+  if (normalizedPath.includes("/edit-repayments-information")) {
+    return ["repayments"];
+  }
   if (normalizedPath.includes("/profile")) {
     return ["settings"];
   }

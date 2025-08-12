@@ -85,7 +85,7 @@ export const mainTheme = {
       footerColor: "#FDFDFD",
       // marginXXS: 4,
       colorLinkActive: "#FDFDFD",
-      headerSplitColor: "#FFFFFF",
+      headerSplitColor: "#0C2752",
 
       headerSortActiveBg: "#fff",
       headerSortHoverBg: "#fff",

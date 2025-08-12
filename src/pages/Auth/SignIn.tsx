@@ -100,6 +100,7 @@ const SignIn = () => {
               ))}
 
               <ReuseSelect
+                placeholder="Selete role"
                 Typolevel={4}
                 name="role"
                 label="Role"

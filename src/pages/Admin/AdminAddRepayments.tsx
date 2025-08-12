@@ -9,11 +9,11 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import FieldOfficerFeaturesModal from "../../ui/Modal/AdminFieldOfficer/AddFieldOfficerFeaturesModal";
 
-const AdminAddSupervisor = () => {
+const AdminAddRepayments = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
-    useState<boolean>(false); 
+    useState<boolean>(false);
 
   const inputStructure = [
     {
@@ -78,12 +78,12 @@ const AdminAddSupervisor = () => {
   return (
     <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
-        <div className="flex items-center  gap-x-10 py-5">
+        <div className="flex items-center  gap-x-10 py-5"> 
           <ReuseButton
             children=" Edit Features"
             icon={EditIcon()}
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
-            url="/admin/supervisory/edit-supervisor-information"
+            url="/admin/repayments/edit-repayments-information"
           />
           <ReuseButton
             children="Add Features"
@@ -99,7 +99,7 @@ const AdminAddSupervisor = () => {
       </Topbar>
 
       <div className="mt-16 ">
-        <p className="text-xl font-medium ">Supervisor Information </p>
+        <p className="text-xl font-medium ">Payment Information </p>
 
         <ReusableForm
           form={form}
@@ -193,4 +193,4 @@ const AdminAddSupervisor = () => {
   );
 };
 
-export default AdminAddSupervisor;
+export default AdminAddRepayments;

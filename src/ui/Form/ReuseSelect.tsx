@@ -31,6 +31,7 @@ type TSelectProps = {
 
 const ReuseSelect = ({
   showSearch = false,
+
   Typolevel = 5,
   label,
   name,
@@ -61,6 +62,7 @@ const ReuseSelect = ({
           {label}
         </Typography.Title>
       )}
+
       <Form.Item name={name} rules={rules}>
         <Select
           showSearch={showSearch}

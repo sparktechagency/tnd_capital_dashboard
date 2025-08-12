@@ -3,7 +3,9 @@ import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
+import { PlusIcon } from "../../Components/svg/leads";
 import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
 import BlockModal from "../../ui/Modal/BlockModal";
@@ -135,6 +137,12 @@ const AdminRepayments = () => {
             placeholder="Search"
             setSearch={setSearchText}
             setPage={setPage}
+          />
+          <ReuseButton
+            children="Payment Information"
+            url="/admin/repayments/add-repayments"
+            icon={PlusIcon()}
+            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />
         </div>
       </Topbar>
