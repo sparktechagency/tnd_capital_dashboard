@@ -4,13 +4,16 @@ import { AllIcons } from "../../../public/images/AllImages";
 import Bar_Chart from "../../Components/Chart/BarChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
+import { Calculator } from "../../Components/svg/leads";
 import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import FieldOfficerLeadsTable from "../../ui/Tables/FieldOfficerLeadsTable";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import YearOption from "../../utils/YearOption";
 import { fieldOfficerData } from "../Admin/fakeData";
+import LoanCalculation from "../../ui/Modal/LoanCalculation/LoanCalculation";
 
 const cards = [
   {
@@ -65,6 +68,8 @@ const FieldOfficerOverview = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
+  const [isLoanCalculatorModalVisible, setIsLoanCalculatorModalVisible] =
+    useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
@@ -86,10 +91,16 @@ const FieldOfficerOverview = () => {
     setIsEditModalVisible(true);
   };
 
+  const showLoanCalculatorModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsLoanCalculatorModalVisible(true);
+  };
+
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
     setIsEditModalVisible(false);
+    setIsLoanCalculatorModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -106,8 +117,17 @@ const FieldOfficerOverview = () => {
 
   return (
     <section>
-      <Topbar collapsed={collapsed}></Topbar>
-      <div className="mt-6">
+      <Topbar collapsed={collapsed}>
+        <div className="flex justify-end  gap-x-10 py-5">
+          <ReuseButton
+            children="Lone Collector"
+            icon={Calculator()}
+            onClick={showLoanCalculatorModal}
+            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
+          />
+        </div>
+      </Topbar>
+      <div className="mt-10">
         <div className="mt-6">
           <AdminOverviewCard cards={cards} className="" />
         </div>
@@ -145,6 +165,11 @@ const FieldOfficerOverview = () => {
             isDeleteModalVisible={isDeleteModalVisible}
             handleCancel={handleCancel}
             currentRecord={currentRecord}
+          />
+
+          <LoanCalculation
+            handleCancel={handleCancel}
+            isLoanCalculatorModalVisible={isLoanCalculatorModalVisible}
           />
         </div>
       </div>

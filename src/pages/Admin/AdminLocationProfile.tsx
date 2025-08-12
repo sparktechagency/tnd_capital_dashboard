@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import AdminLocationProfileTable from "../../ui/Tables/AdminLocationProfileTable";
-import { fieldOfficerData } from "./fakeData";
 import Topbar from "../../Components/Shared/Topbar";
+import { Location } from "../../Components/svg/leads";
 import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DaysSelection from "../../utils/DaysSelection";
-import ViewAdminManagerModal from "../../ui/Modal/AdminManager/ViewAdminManagerModal";
 import EditManagerInfoModal from "../../ui/Modal/AdminManager/EditManagerInfoModal";
+import ViewAdminManagerModal from "../../ui/Modal/AdminManager/ViewAdminManagerModal";
+import AdminLocationProfileTable from "../../ui/Tables/AdminLocationProfileTable";
+import DaysSelection from "../../utils/DaysSelection";
+import { dataSource } from "./fakeData";
 
 const AdminLocationProfile = () => {
   const [page, setPage] = useState<number>(1);
@@ -40,13 +42,20 @@ const AdminLocationProfile = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
         <div className="flex items-center  gap-x-10 py-5">
           <ReuseSearchInput
             placeholder="Search"
             setSearch={setSearchText}
             setPage={setPage}
+          />
+
+          <ReuseButton
+            children="Location"
+            url="/admin/location/add-location"
+            icon={Location()}
+            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />
         </div>
       </Topbar>
@@ -59,7 +68,7 @@ const AdminLocationProfile = () => {
         <AdminLocationProfileTable
           loading={false}
           limit={limit}
-          data={fieldOfficerData}
+          data={dataSource}
           showViewModal={showViewUserModal}
           showEditModal={showEditUserModal}
           page={page}

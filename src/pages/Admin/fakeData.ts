@@ -112,7 +112,6 @@ export const fieldOfficerData = [
     },
 ];
 
-
 export const leadsData = [
     {
         key: "1",
@@ -600,7 +599,6 @@ export const installmentData = [
     },
 ];
 
-
 export const officerData = [
     {
         key: "1",
@@ -828,5 +826,44 @@ export const spokeManagerFieldOfficerData = [
         hubId: "HUB-DHK-06",
         setLocation: "23.8150, 90.4150",
         cv: "https://example.com/cv/sophia_brown.pdf",
+    },
+];
+
+export const dataSource = [
+    {
+        key: "1",
+        locationName: "Dhaka, Bangladesh",
+        phoneNumber: "+8801712345678",
+        email: "ahmed.karim@example.com",
+        date: "2025-08-10",
+        address: "House 12, Road 7, Dhanmondi, Dhaka",
+        role: "officer",
+    },
+    {
+        key: "2",
+        locationName: "Chittagong, Bangladesh",
+        phoneNumber: "+8801811223344",
+        email: "sadia.akter@example.com",
+        date: "2025-07-22",
+        address: "Flat 5A, Agrabad, Chittagong",
+        role: "manager",
+    },
+    {
+        key: "3",
+        locationName: "Sylhet, Bangladesh",
+        phoneNumber: "+8801912345678",
+        email: "mahin.khan@example.com",
+        date: "2025-08-05",
+        address: "Block B, Zindabazar, Sylhet",
+        role: "officer",
+    },
+    {
+        key: "4",
+        locationName: "Khulna, Bangladesh",
+        phoneNumber: "+8801711223344",
+        email: "farhana.yasmin@example.com",
+        date: "2025-08-01",
+        address: "House 9, Sonadanga, Khulna",
+        role: "manager",
     },
 ];

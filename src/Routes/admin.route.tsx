@@ -16,6 +16,7 @@ import EditProfile from "../Components/Dashboard/Profile/EditProfile";
 
 //* ------------------IMPORT COMPONENTS------------------
 import AdminAddHrInformation from "../pages/Admin/AdminAddHRInformation";
+import AdminAddLocation from "../pages/Admin/AdminAddLocation";
 import AdminAddRepayments from "../pages/Admin/AdminAddRepayments";
 import AdminAddSupervisor from "../pages/Admin/AdminAddSupervisor";
 import AdminApplication from "../pages/Admin/AdminApplication";
@@ -145,13 +146,6 @@ export const adminPaths = [
     key: "supervisory",
   },
 
-  // {
-  //   path: "supervisory",
-  //   element: <AdminHr />,
-  //   key: "Supervisory",
-  //   name: "Supervisory",
-  //   icon: hrLogo,
-  // },
   {
     path: "managers",
     element: <AdminManagers />,
@@ -214,6 +208,12 @@ export const adminPaths = [
     element: <AdminLocationProfile />,
     key: "location",
     name: "Location Profile",
+    icon: location,
+  },
+  {
+    path: "location/add-location",
+    element: <AdminAddLocation />,
+    key: "location",
     icon: location,
   },
 

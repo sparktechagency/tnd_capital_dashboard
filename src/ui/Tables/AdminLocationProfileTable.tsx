@@ -27,24 +27,9 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
 }) => {
   const columns = [
     {
-      title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
-      render: (_text: string, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      title: "Location Name",
+      dataIndex: "locationName",
+      key: "locationName",
     },
 
     {
@@ -57,7 +42,6 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
       title: "Email",
       dataIndex: "email", // Data key for email
       key: "email",
-      align: "center",
     },
     {
       title: "Date",
@@ -70,20 +54,18 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
       title: "Address",
       dataIndex: "address", // Data key for role
       key: "address",
-      align: "center",
     },
-    {
-      title: "Type",
-      dataIndex: "role",
-      key: "role",
-      align: "center",
-      filters: [
-        { text: "Officer", value: "officer" },
-        { text: "Manager", value: "manager" },
-      ],
-      onFilter: (value: string, record: any) => record.role === value,
-      render: (text: string) => <span className="capitalize">{text}</span>,
-    },
+    // {
+    //   title: "Type",
+    //   dataIndex: "role",
+    //   key: "role",
+    //   filters: [
+    //     { text: "Officer", value: "officer" },
+    //     { text: "Manager", value: "manager" },
+    //   ],
+    //   onFilter: (value: string, record: any) => record.role === value,
+    //   render: (text: string) => <span className="capitalize">{text}</span>,
+    // },
     {
       title: "Action",
       key: "action",
