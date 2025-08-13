@@ -58,6 +58,14 @@ const AdminAddLocation = () => {
       labelClassName: "!font-normal !text-sm",
       rules: [{ required: true, message: "Currency is required" }],
     },
+    {
+      name: "nid",
+      inputType: "text",
+      label: "Excel Formula",
+      placeholder: "Excel Formula",
+      labelClassName: "!font-normal !text-sm",
+      rules: [{ required: true, message: "Excel Formula is required" }],
+    },
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

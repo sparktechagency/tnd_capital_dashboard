@@ -5,8 +5,7 @@ import { Location } from "../../Components/svg/leads";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import EditManagerInfoModal from "../../ui/Modal/AdminManager/EditManagerInfoModal";
-import ViewAdminManagerModal from "../../ui/Modal/AdminManager/ViewAdminManagerModal";
+import ViewAdminLocationProfileModal from "../../ui/Modal/AdminLocationProfile/ViewAdminLocationProfileModal";
 import AdminLocationProfileTable from "../../ui/Tables/AdminLocationProfileTable";
 import DaysSelection from "../../utils/DaysSelection";
 import { dataSource } from "./fakeData";
@@ -19,8 +18,6 @@ const AdminLocationProfile = () => {
   console.log(searchText);
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   console.log(currentRecord);
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -30,14 +27,14 @@ const AdminLocationProfile = () => {
     setIsViewModalVisible(true);
   };
 
-  const showEditUserModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsEditModalVisible(true);
-  };
+  // const showEditUserModal = (record: any) => {
+  //   setCurrentRecord(record);
+  //   setIsEditModalVisible(true);
+  // };
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsEditModalVisible(false);
+    // setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -70,23 +67,23 @@ const AdminLocationProfile = () => {
           limit={limit}
           data={dataSource}
           showViewModal={showViewUserModal}
-          showEditModal={showEditUserModal}
+          // showEditModal={showEditUserModal}
           page={page}
           setPage={setPage}
           total={0}
         />
 
-        <ViewAdminManagerModal
+        <ViewAdminLocationProfileModal
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
         />
 
-        <EditManagerInfoModal
+        {/* <EditManagerInfoModal
           isEditManagerOpen={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        />
+        /> */}
       </div>
     </div>
   );

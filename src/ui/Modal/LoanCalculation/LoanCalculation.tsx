@@ -11,7 +11,6 @@ import React, {
 import { Table, Input, Form, Modal, FormInstance } from "antd";
 import type { InputRef } from "antd";
 import type { ColumnType } from "antd/es/table";
-import type { ColumnsType } from "antd/es/table";
 
 interface LoanRecord {
   key: string;
@@ -37,7 +36,7 @@ interface LoanCalculationProps {
 }
 
 interface EditableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
-  index: number; // or any type you want
+  index: number;
 }
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
@@ -112,72 +111,67 @@ const EditableCell: FC<EditableTableProps & { children: ReactNode }> = ({
   return <td {...restProps}>{childNode}</td>;
 };
 
+// Formula function
+const calculateLoan = (principal: number, months: number) => {
+  const extraCharge = months > 6 ? (months - 6) * 0.018 * principal : 0;
+  const monthlyInstallment = (1.35 * principal + 19 + extraCharge) / months;
+  const totalRepayment = monthlyInstallment * months;
+  const grossProfit = totalRepayment - principal;
+
+  return {
+    monthlyInstallment: monthlyInstallment.toFixed(2),
+    totalRepayment: totalRepayment.toFixed(2),
+    grossProfit: grossProfit.toFixed(2),
+  };
+};
+
 const LoanCalculation: FC<LoanCalculationProps> = ({
   isLoanCalculatorModalVisible,
   handleCancel,
 }) => {
-  const [dataSource, setDataSource] = useState<LoanRecord[]>([
-    {
-      key: "1",
-      principal: 500,
-      months: 6,
-      totalRepayment: "694.00",
-      monthlyInstallment: "115.67",
-      grossProfit: "194.00",
-      initialHere: "",
-    },
-    {
-      key: "2",
-      principal: 500,
-      months: 8,
-      totalRepayment: "694.00",
-      monthlyInstallment: "115.67",
-      grossProfit: "194.00",
-      initialHere: "",
-    },
-    {
-      key: "3",
-      principal: 500,
-      months: 10,
-      totalRepayment: "694.00",
-      monthlyInstallment: "115.67",
-      grossProfit: "194.00",
-      initialHere: "",
-    },
-    {
-      key: "4",
-      principal: 500,
-      months: 12,
-      totalRepayment: "694.00",
-      monthlyInstallment: "115.67",
-      grossProfit: "194.00",
-      initialHere: "",
-    },
-    {
-      key: "5",
-      principal: 500,
-      months: 18,
-      totalRepayment: "694.00",
-      monthlyInstallment: "115.67",
-      grossProfit: "194.00",
-      initialHere: "",
-    },
-    {
-      key: "6",
-      principal: 500,
-      months: 24,
-      totalRepayment: "694.00",
-      monthlyInstallment: "115.67",
-      grossProfit: "194.00",
-      initialHere: "",
-    },
-  ]);
+  // Initial table rows with formula calculation
+  const [dataSource, setDataSource] = useState<LoanRecord[]>(() => {
+    const initialMonths = [6, 8, 10, 12, 18, 24];
+    return initialMonths.map((m, i) => {
+      const P = 500;
+      const { totalRepayment, monthlyInstallment, grossProfit } = calculateLoan(
+        P,
+        m
+      );
+      return {
+        key: (i + 1).toString(),
+        principal: P,
+        months: m,
+        totalRepayment,
+        monthlyInstallment,
+        grossProfit,
+        initialHere: "",
+      };
+    });
+  });
 
   const handleSave = (row: LoanRecord) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
-    newData.splice(index, 1, { ...item, ...row });
+
+    const principal = Number(row.principal) || 0;
+    const months = Number(row.months) || 1;
+
+    const { totalRepayment, monthlyInstallment, grossProfit } = calculateLoan(
+      principal,
+      months
+    );
+
+    const updatedRow: LoanRecord = {
+      ...item,
+      ...row,
+      monthlyInstallment,
+      totalRepayment,
+      grossProfit,
+    };
+
+    newData.splice(index, 1, updatedRow);
     setDataSource(newData);
   };
 
@@ -198,25 +192,16 @@ const LoanCalculation: FC<LoanCalculationProps> = ({
       title: "Total Repayment",
       dataIndex: "totalRepayment",
       render: (text: string) => <p className="text-sm">${text}</p>,
-      editable: true,
     },
     {
       title: "Monthly Installment",
       dataIndex: "monthlyInstallment",
       render: (text: string) => <p className="text-sm">${text}</p>,
-      editable: true,
     },
     {
       title: "Gross Profit",
       dataIndex: "grossProfit",
       render: (text: string) => <p className="text-sm">${text}</p>,
-      editable: true,
-    },
-    {
-      title: "Initial Here",
-      dataIndex: "initialHere",
-      render: (text: string) => <p className="text-sm">${text}</p>,
-      editable: true,
     },
   ];
 
@@ -240,13 +225,10 @@ const LoanCalculation: FC<LoanCalculationProps> = ({
       onCancel={handleCancel}
       centered
       width={1200}
-      // style={{ textAlign: "center" }}
       footer={false}
     >
       <div style={{ padding: "20px" }}>
-        <h2 className="text-xl font-medium mb-5">
-          Loan Collector
-        </h2>
+        <h2 className="text-xl font-medium mb-5">Loan Calculator</h2>
         <Table
           components={{
             body: {

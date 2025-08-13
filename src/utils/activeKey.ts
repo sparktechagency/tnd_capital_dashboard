@@ -101,6 +101,9 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/add-location")) {
     return ["location"];
   }
+  if (normalizedPath.includes("/edit-location")) {
+    return ["location"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

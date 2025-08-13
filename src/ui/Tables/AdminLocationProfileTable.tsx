@@ -2,13 +2,14 @@
 import { Space, Tooltip } from "antd";
 import ReuseTable from "../../utils/ReuseTable";
 import { AllIcons } from "../../../public/images/AllImages";
+import { Link } from "react-router-dom";
 
 interface AdminLocationProfileTable {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   showViewModal: (record: any) => void;
-  showEditModal: (record: any) => void;
+  showEditModal?: (record: any) => void;
 
   page?: number;
   total?: number;
@@ -19,8 +20,6 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
   loading,
   setPage,
   showViewModal,
-  showEditModal,
-
   page,
   total,
   limit,
@@ -55,17 +54,7 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
       dataIndex: "address", // Data key for role
       key: "address",
     },
-    // {
-    //   title: "Type",
-    //   dataIndex: "role",
-    //   key: "role",
-    //   filters: [
-    //     { text: "Officer", value: "officer" },
-    //     { text: "Manager", value: "manager" },
-    //   ],
-    //   onFilter: (value: string, record: any) => record.role === value,
-    //   render: (text: string) => <span className="capitalize">{text}</span>,
-    // },
+
     {
       title: "Action",
       key: "action",
@@ -81,12 +70,14 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
           </Tooltip>
 
           <Tooltip placement="left" title="Block">
-            <button
-              className="!p-0 !bg-transparent !border-none cursor-pointer"
-              onClick={() => showEditModal(record)}
-            >
-              <img src={AllIcons.pen} />
-            </button>
+            <Link to={`/admin/location/edit-location/${record.key}`}>
+              <button
+                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                // onClick={() => showEditModal(record)}
+              >
+                <img src={AllIcons.pen} />
+              </button>
+            </Link>
           </Tooltip>
         </Space>
       ),

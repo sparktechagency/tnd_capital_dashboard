@@ -45,6 +45,7 @@ import Notifications from "../pages/Common/Notifications";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
+import EditManagerInfoModal from "../ui/Modal/AdminManager/EditManagerInfoModal";
 
 export const adminPaths = [
   {
@@ -213,6 +214,12 @@ export const adminPaths = [
   {
     path: "location/add-location",
     element: <AdminAddLocation />,
+    key: "location",
+    icon: location,
+  },
+  {
+    path: "location/edit-location/:id",
+    element: <EditManagerInfoModal />,
     key: "location",
     icon: location,
   },
