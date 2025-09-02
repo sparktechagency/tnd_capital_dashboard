@@ -7,13 +7,13 @@ import { decodedToken } from "../utils/jwt"; // Adjust path as needed
 import { SocketContext } from "./socket-context"; // Adjust path as needed
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-  const token = Cookies.get("classaty_accessToken");
+  const token = Cookies.get("crm_accessToken");
   let user;
 
   if (token) {
     user = decodedToken(token);
     if (!user) {
-      Cookies.remove("classaty_accessToken");
+      Cookies.remove("crm_accessToken");
       // Optionally redirect to login or handle invalid token
       toast.error("Invalid token. Please log in again.");
     }

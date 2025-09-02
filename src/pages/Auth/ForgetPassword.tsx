@@ -8,6 +8,9 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useForgotPasswordMutation } from "../../redux/features/auth/authApi";
+import Cookies from "js-cookie";
 
 const inputStructure = [
   {
@@ -28,11 +31,23 @@ const ForgetPassword = () => {
   const router = useNavigate();
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const [forgotPassword] = useForgotPasswordMutation();
+
+  const onFinish = async (values: any) => {
     const data = {
       ...values,
     };
-    console.log(data);
+
+    const res = await tryCatchWrapper(
+      forgotPassword,
+      { body: data },
+      "Sending OTP..."
+    );
+
+    if (res?.data?.forgotPasswordToken) {
+      Cookies.set("forgotPasswordToken", res?.data?.forgotPasswordToken);
+    }
+
     router("/forgot-password/verify-otp");
   };
 

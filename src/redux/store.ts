@@ -34,7 +34,7 @@ const storage =
 
 // Configuration for persisting only the auth state (accessToken)
 const persistConfig = {
-  key: "classaty",
+  key: "crm",
   storage,
   whitelist: ["auth", "role"], // Persist only the `auth` slice (for accessToken)
   blacklist: ["baseApi"], // Do not persist the `baseApi` slice

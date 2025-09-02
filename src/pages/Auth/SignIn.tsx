@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form } from "antd";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
-import ReuseSelect from "../../ui/Form/ReuseSelect";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const inputStructure = [
   {
@@ -30,7 +32,7 @@ const inputStructure = [
 const SignIn = () => {
   const [form] = Form.useForm();
   const router = useNavigate();
-  // const [login] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -43,24 +45,22 @@ const SignIn = () => {
   };
 
   const onFinish = async (values: any) => {
-    // const res = await tryCatchWrapper(login, { body: values }, "Signing In...");
-    // console.log("res", res);
-    // if (res?.data?.signInToken) {
-    //   Cookies.set("classaty_signInToken", res?.data?.signInToken, {
-    //     path: "/",
-    //     expires: 1,
-    //     secure: false,
-    //   });
-    //   Cookies.set("classaty_phoneNumber", values.phoneNumber, {
-    //     path: "/",
-    //     expires: 1,
-    //     secure: false,
-    //   });
-    //   form.resetFields();
-    console.log(values);
-    router("/", { replace: true });
-    // }
+    const res = await tryCatchWrapper(login, { body: values }, "Signing In...");
+    console.log("res", res);
+
+    if (res?.data?.accessToken) {
+      Cookies.set("crm_accessToken", res?.data?.accessToken, {
+        path: "/",
+        expires: 1,
+        secure: false,
+      });
+
+      dispatch(changeRole(res?.data?.user?.role));
+      router(`/${res?.data?.user?.role}/overview`, { replace: true });
+    }
   };
+
+
   return (
     <div className="!bg-primary-color">
       <Container>
@@ -98,24 +98,6 @@ const SignIn = () => {
                   inputClassName="!h-11"
                 />
               ))}
-
-              <ReuseSelect
-                placeholder="Selete role"
-                Typolevel={4}
-                name="role"
-                label="Role"
-                onChange={(role) => {
-                  dispatch(changeRole(role));
-                }}
-                options={[
-                  { value: "fieldOfficer", label: "Field Officer" },
-                  { value: "spokeManager", label: "Spoke Manager" },
-                  { value: "supervisor", label: "Supervisor" },
-                  { value: "hubManager", label: "HUB Manager" },
-                  { value: "hr", label: "HR" },
-                  { value: "admin", label: "Admin" },
-                ]}
-              />
 
               <div className="flex items-center justify-end mb-6">
                 <p

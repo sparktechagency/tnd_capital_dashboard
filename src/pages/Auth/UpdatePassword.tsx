@@ -9,6 +9,9 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
+import { useUpdatePasswordMutation } from "../../redux/features/auth/authApi";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import Cookies from "js-cookie";
 
 const inputStructure = [
   {
@@ -52,10 +55,26 @@ const inputStructure = [
 const UpdatePassword = () => {
   const router = useNavigate();
   const [form] = Form.useForm();
+  const [resetPassword] = useUpdatePasswordMutation();
 
-  const onFinish = (values: any) => {
-    console.log("Received values of update form:", values);
-    router("/sign-in");
+  const onFinish = async (values: any) => {
+    console.log(values);
+
+    const res = await tryCatchWrapper(
+      resetPassword,
+      {
+        body: {
+          ...values,
+        },
+      },
+      "Updating..."
+    );
+    console.log(res, "res");
+
+    if (res?.statusCode === 200) {
+      Cookies.remove("resetPasswordToken");
+      router("/sign-in");
+    }
   };
 
   const handleNavigate = () => {

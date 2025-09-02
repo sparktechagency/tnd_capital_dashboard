@@ -6,17 +6,17 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import logout from "../../../public/images/Dashboard-icons/logout.svg";
+import { fieldOfficerPath } from "../../Routes/FieldOfficer.route";
 import { HrPaths } from "../../Routes/Hr.route";
 import { hubManagerPath } from "../../Routes/HubManager.route";
 import { adminPaths } from "../../Routes/admin.route";
 import { spokeManagerPath } from "../../Routes/spokeManager.route";
+import { supervisorPaths } from "../../Routes/supervisor.route";
 import { setCollapsed } from "../../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import getActiveKeys from "../../utils/activeKey";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
-import { fieldOfficerPath } from "../../Routes/FieldOfficer.route";
-import { supervisorPaths } from "../../Routes/supervisor.route";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +32,7 @@ const DashboardLayout = () => {
 
   const handleLogout = () => {
     dispatch(changeRole(null));
-    // Cookies.remove("classaty_accessToken");
+    // Cookies.remove("crm_accessToken");
     window.location.href = "/sign-in";
     window.location.reload();
   };

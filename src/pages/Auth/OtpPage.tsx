@@ -1,61 +1,51 @@
 "use client";
 import { Form } from "antd";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import OTPInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import {
-  useResendOTPMutation
+  useOtpVerifyMutation,
+  useResendOTPMutation,
 } from "../../redux/features/auth/authApi";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import Container from "../../ui/Container";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const OTPVerify = () => {
-  // const router = useNavigate();
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  // const phoneNumber = Cookies.get("classaty_phoneNumber");
-
-  // const [otpMatch] = useOtpVerifyMutation();
+  const [otpMatch] = useOtpVerifyMutation();
   const [resendOtp] = useResendOTPMutation();
 
   const handleOTPSubmit = async () => {
-    // if (otp.length === 6) {
-    //   const res = await tryCatchWrapper(
-    //     otpMatch,
-    //     {
-    //       body: {
-    //         otp: Number(otp),
-    //       },
-    //     },
-    //     "Verifying..."
-    //   );
+    if (otp.length === 6) {
+      const res = await tryCatchWrapper(
+        otpMatch,
+        {
+          body: {
+            otp: Number(otp),
+          },
+        },
+        "Verifying..."
+      );
 
-    //   const allowedRoles = ["supperAdmin", "school"];
-    //   const userRole = res?.data?.user?.role;
+      if (res?.statusCode === 200) {
+        Cookies.set("resetPasswordToken", res?.data?.resetPasswordToken, {
+          path: "/",
+          expires: 365,
+          secure: false,
+        });
 
-    //   if (res?.statusCode === 200 && allowedRoles.includes(userRole)) {
-    //     Cookies.set("classaty_accessToken", res?.data?.accessToken, {
-    //       path: "/",
-    //       expires: 365,
-    //       secure: false,
-    //     });
+        Cookies.remove("crm_accessToken");
+        Cookies.remove("forgotPasswordToken");
 
-    //     Cookies.remove("classaty_signInToken");
-    //     Cookies.remove("classaty_phoneNumber");
-
-    //     setOtp("");
-    //     router("/", { replace: true });
-    //   } else if (res?.statusCode === 200 && !allowedRoles.includes(userRole)) {
-    //     setOtp("");
-    //     toast.error("Access Denied", {
-    //       duration: 2000,
-    //     });
-    //   }
-    // }
-    navigate("/reset-password");
+        setOtp("");
+        navigate("/reset-password");
+      }
+    }
   };
 
   const handleNavigate = () => {
@@ -102,7 +92,7 @@ const OTPVerify = () => {
                       rounded-lg mr-[10px] sm:mr-[20px] !text-base-color "
                     value={otp}
                     onChange={setOtp}
-                    numInputs={4}
+                    numInputs={6}
                     renderInput={(props) => <input {...props} required />}
                   />
                 </div>

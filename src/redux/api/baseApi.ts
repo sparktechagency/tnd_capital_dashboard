@@ -1,14 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { tagTypesList } from "../tagTypes";
 import Cookies from "js-cookie";
 import { getBaseUrl } from "../../helpers/config/envConfig";
+import { tagTypesList } from "../tagTypes";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: getBaseUrl(),
   credentials: "include",
   prepareHeaders: (headers) => {
-    const token = Cookies.get("classaty_accessToken");
-    const signInToken = Cookies.get("classaty_signInToken");
+    const token = Cookies.get("crm_accessToken");
+    const signInToken = Cookies.get("crm_signInToken");
+    const forgotPasswordToken = Cookies.get("forgotPasswordToken");
+    const resetPasswordToken = Cookies.get("resetPasswordToken");
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
@@ -16,6 +18,14 @@ const baseQuery = fetchBaseQuery({
 
     if (signInToken) {
       headers.set("Authorization", `signInToken ${signInToken}`);
+    }
+
+    if (forgotPasswordToken) {
+      headers.set("Authorization", `forgotPasswordToken ${forgotPasswordToken}`);
+    }
+
+    if (resetPasswordToken) {
+      headers.set("Authorization", `resetPasswordToken ${resetPasswordToken}`);
     }
 
     return headers;

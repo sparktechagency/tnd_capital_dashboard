@@ -15,6 +15,18 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.auth],
     }),
+
+    forgotPassword: build.mutation({
+      query: (req) => {
+        return {
+          url: `${auth_url}/forgot_password`,
+          method: "POST",
+          body: req.body,
+        };
+      },
+      invalidatesTags: [tagTypes.auth],
+    }),
+
     otpVerify: build.mutation({
       query: (req) => {
         return {
@@ -25,6 +37,7 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.auth],
     }),
+
     resendOTP: build.mutation({
       query: () => {
         return {
@@ -34,10 +47,21 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.auth],
     }),
+
+    updatePassword: build.mutation({
+      query: (req) => {
+        return {
+          url: `${auth_url}/reset_password`,
+          method: "POST",
+          body: req.body,
+        };
+      },
+      invalidatesTags: [tagTypes.auth],
+    })
   }),
 });
 
-export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation } =
+export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation } =
   authApi;
 
 export default authApi;

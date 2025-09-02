@@ -1,11 +1,11 @@
 // hooks/useUserData.ts
-import { useMemo } from "react";
 import Cookies from "js-cookie";
-import { decodedToken } from "../utils/jwt";
+import { useMemo } from "react";
 import { IUser } from "../types";
+import { decodedToken } from "../utils/jwt";
 
 const useUserData = () => {
-  const token = Cookies.get("classaty_accessToken");
+  const token = Cookies.get("crm_accessToken");
 
   const user = useMemo(() => {
     if (!token) return null;
