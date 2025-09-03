@@ -46,6 +46,15 @@ const adminLeadsApi = baseApi.injectEndpoints({
                 body: req.body,
             }),
             invalidatesTags: [tagTypes.adminLeadsField],
+        }),
+
+        updateLeadsField: builder.mutation({
+            query: (req) => ({
+                url: leads_and_clients_field_url,
+                method: "PATCH",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.adminLeadsField],
         })
     }),
 });
@@ -54,5 +63,6 @@ export const {
     useGetAllLeadsQuery,
     useDeleteLeadsMutation,
     useGetAllLeadsRelatedFieldQuery,
-    useCreateLeadsFieldMutation
+    useCreateLeadsFieldMutation,
+    useUpdateLeadsFieldMutation
 } = adminLeadsApi;

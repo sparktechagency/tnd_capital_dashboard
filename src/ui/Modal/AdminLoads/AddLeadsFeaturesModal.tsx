@@ -4,6 +4,7 @@ import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
 import { useCreateLeadsFieldMutation } from "../../../redux/features/adminLeads/adminLeadsApi";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
+import ReuseSelect from "../../Form/ReuseSelect";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -24,14 +25,14 @@ const inputStructure = [
     labelClassName: "!font-normal !text-sm",
     rules: [{ required: true, message: "Name is required" }],
   },
-  {
-    name: "inputType",
-    inputType: "text",
-    label: "Input Type",
-    placeholder: "Type..",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Name is required" }],
-  },
+  // {
+  //   name: "inputType",
+  //   inputType: "text",
+  //   label: "Input Type",
+  //   placeholder: "Type..",
+  //   labelClassName: "!font-normal !text-sm",
+  //   rules: [{ required: true, message: "Name is required" }],
+  // },
   {
     name: "placeholder",
     inputType: "text",
@@ -54,11 +55,15 @@ const AddLeadsFeaturesModal = ({
   const [createLeadsField] = useCreateLeadsFieldMutation();
 
   const onFinish = async (values: any) => {
-    console.log("Success:", values?.features?.[0]);
-
     const res = await tryCatchWrapper(
       createLeadsField,
-      { body: { ...values?.features?.[0], required: true } },
+      {
+        body: {
+          ...values?.features?.[0],
+          inputType: values?.features?.inputType,
+          required: true,
+        },
+      },
       "Adding Feature..."
     );
 
@@ -97,6 +102,22 @@ const AddLeadsFeaturesModal = ({
                         inputClassName="!bg-[#F2F2F2] !border-none !rounded placeholder:!text-[#B4BCC9] placeholder:text-xs h-10"
                       />
                     ))}
+
+                    <ReuseSelect
+                      name="inputType"
+                      label="Input Type"
+                      placeholder="Select Input Type"
+                      options={[
+                        { value: "text", label: "Text" },
+                        { value: "number", label: "Number" },
+                        { value: "email", label: "Email" },
+                        { value: "password", label: "Password" },
+                        { value: "file", label: "Image/CV" },
+                      ]}
+                      labelClassName="!font-normal !text-xs"
+                      selectClassName="!h-11"
+                    />
+
                     {/* 🗑️ Optional Remove button */}
                     {fields.length > 1 && (
                       <ReuseButton
