@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
 import upload from "../../../public//images/icons/Upload.svg";
 import Topbar from "../../Components/Shared/Topbar";
@@ -8,6 +9,8 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import AddLeadsFeaturesModal from "../../ui/Modal/AdminLoads/AddLeadsFeaturesModal";
 import { useState } from "react";
+import { useGetAllLeadsRelatedFieldQuery } from "../../redux/features/adminLeads/adminLeadsApi";
+import Loading from "../../ui/Loading";
 
 const AdminLeadInformation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -15,40 +18,7 @@ const AdminLeadInformation = () => {
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
     useState<boolean>(false);
 
-  const inputStructure = [
-    {
-      name: "name",
-      inputType: "text",
-      placeholder: "Full Name",
-      label: "Full Name",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
-    },
-    {
-      name: "phoneNumber",
-      inputType: "text",
-      label: "Phone Number",
-      placeholder: "Phone Number",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
-    },
-    {
-      name: "email",
-      inputType: "email",
-      label: "Email",
-      placeholder: "Email",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "Home Address",
-      inputType: "text",
-      label: "Home Address",
-      placeholder: "Home Address",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-  ];
+  const { data: leadsField, isFetching } = useGetAllLeadsRelatedFieldQuery({});
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = (values: any) => {
@@ -58,6 +28,10 @@ const AdminLeadInformation = () => {
   const handleCancel = () => {
     setIsAddFeaturesModalOpen(false);
   };
+
+  if (isFetching) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen">
@@ -85,53 +59,65 @@ const AdminLeadInformation = () => {
           className="!px-32 !mt-10"
         >
           <div className="grid grid-cols-2 gap-x-52">
-            {inputStructure.map((input, index) => (
-              <ReuseInput
-                key={index}
-                name={input.name}
-                label={input.label}
-                Typolevel={4}
-                inputType={input.inputType}
-                placeholder={input.placeholder}
-                labelClassName={input.labelClassName}
-                rules={input.rules}
-                inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
-              />
-            ))}
-
-            <Form.Item name="image" className="mb-8 w-full">
-              <label htmlFor="image" className="block text-sm font-medium mb-3">
-                Upload Picture
-              </label>
-              <Upload
-                maxCount={1}
-                listType="text"
-                accept="image/*"
-                multiple={false}
-                customRequest={(options) => {
-                  setTimeout(() => {
-                    options.onSuccess?.("ok");
-                  }, 1000);
-                }}
-                className=""
-              >
-                <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
-                  <p className="text-3xl mb-2">
-                    <img src={upload} alt="" />
-                  </p>
-                  <p className="text-black font-medium">
-                    Upload your region image here
-                  </p>
-                </div>
-              </Upload>
-            </Form.Item>
+            {leadsField?.data?.map((field: any, index: number) => {
+              return (
+                <>
+                  {field?.inputType === "file" ? (
+                    <Form.Item
+                      name={field.inputName}
+                      className="mb-8 w-full"
+                      key={index}
+                    >
+                      <label
+                        htmlFor={field.inputName}
+                        className="block text-sm font-medium mb-3"
+                      >
+                        {field.label}
+                      </label>
+                      <Upload
+                        maxCount={1}
+                        listType="text"
+                        accept="file/*"
+                        multiple={false}
+                        customRequest={(options) => {
+                          setTimeout(() => {
+                            options.onSuccess?.("ok");
+                          }, 1000);
+                        }}
+                        className=""
+                      >
+                        <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                          <p className="text-3xl mb-2">
+                            <img src={upload} alt="" />
+                          </p>
+                          <p className="text-black font-medium">
+                            {field.placeholder}
+                          </p>
+                        </div>
+                      </Upload>
+                    </Form.Item>
+                  ) : (
+                    <ReuseInput
+                      key={index}
+                      name={field.inputName}
+                      label={field.label}
+                      Typolevel={4}
+                      inputType={field.inputType}
+                      placeholder={field.placeholder}
+                      labelClassName="!font-normal !text-sm"
+                      rules={field.rules}
+                      inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
+                    />
+                  )}
+                </>
+              );
+            })}
           </div>
 
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
@@ -139,7 +125,6 @@ const AdminLeadInformation = () => {
               variant="secondary"
               url="/admin/leads/edit-lead-information"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Edit Features
             </ReuseButton>

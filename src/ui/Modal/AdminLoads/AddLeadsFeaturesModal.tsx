@@ -2,12 +2,22 @@ import { Form, Modal } from "antd";
 import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
+import { useCreateLeadsFieldMutation } from "../../../redux/features/adminLeads/adminLeadsApi";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const inputStructure = [
   {
-    name: "name",
+    name: "label",
+    inputType: "text",
+    placeholder: "Type..",
+    label: "Input Label",
+    labelClassName: "!font-normal !text-sm",
+    rules: [{ required: true, message: "Name is required" }],
+  },
+  {
+    name: "inputName",
     inputType: "text",
     placeholder: "Type..",
     label: "Input Name",
@@ -15,7 +25,7 @@ const inputStructure = [
     rules: [{ required: true, message: "Name is required" }],
   },
   {
-    name: "phoneNumber",
+    name: "inputType",
     inputType: "text",
     label: "Input Type",
     placeholder: "Type..",
@@ -23,7 +33,7 @@ const inputStructure = [
     rules: [{ required: true, message: "Name is required" }],
   },
   {
-    name: "email",
+    name: "placeholder",
     inputType: "text",
     label: "Placeholder Text",
     placeholder: "Type..",
@@ -40,8 +50,22 @@ const AddLeadsFeaturesModal = ({
   handleCancel: () => void;
 }) => {
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+
+  const [createLeadsField] = useCreateLeadsFieldMutation();
+
+  const onFinish = async (values: any) => {
+    console.log("Success:", values?.features?.[0]);
+
+    const res = await tryCatchWrapper(
+      createLeadsField,
+      { body: { ...values?.features?.[0], required: true } },
+      "Adding Feature..."
+    );
+
+    if (res?.statusCode === 201) {
+      form.resetFields();
+      handleCancel();
+    }
   };
 
   return (

@@ -3,6 +3,7 @@ import { tagTypes } from "../../tagTypes";
 
 
 const leads_and_clients_url = "/leads_and_clients";
+const leads_and_clients_field_url = "/leads_and_clients_field";
 
 const adminLeadsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -27,10 +28,31 @@ const adminLeadsApi = baseApi.injectEndpoints({
             invalidatesTags: [tagTypes.adminLeads],
         }),
 
+
+        // field 
+        getAllLeadsRelatedField: builder.query({
+            query: () => ({
+                url: leads_and_clients_field_url,
+                method: "GET",
+
+            }),
+            providesTags: [tagTypes.adminLeadsField],
+        }),
+
+        createLeadsField: builder.mutation({
+            query: (req) => ({
+                url: `${leads_and_clients_field_url}/add_field`,
+                method: "POST",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.adminLeadsField],
+        })
     }),
 });
 
 export const {
     useGetAllLeadsQuery,
-    useDeleteLeadsMutation
+    useDeleteLeadsMutation,
+    useGetAllLeadsRelatedFieldQuery,
+    useCreateLeadsFieldMutation
 } = adminLeadsApi;
