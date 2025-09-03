@@ -3,14 +3,12 @@ import { Space, Tooltip } from "antd";
 // import { MdBlock } from "react-icons/md";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { getImageUrl } from "../../helpers/config/envConfig";
 
 interface AdminLeadsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
-
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  // showBlockModal: (record: any) => void; // Function to handle blocking a user
-  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +20,6 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
   data,
   loading,
   showViewModal,
-  // showBlockModal,
-  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -33,39 +29,44 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
   const columns = [
     {
       title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
-      render: (_text: string, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      dataIndex: ["fieldOfficer", "customFields", "name"],
+      key: "name",
+      render: (_text: string, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={getImageUrl() + record?.customFields?.image}
+              alt={_text}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{record?.customFields?.name}</span>
+          </div>
+        );
+      },
     },
     {
       title: "Phone Number",
       dataIndex: "phoneNumber", // Data key for phoneNumber
-      key: "phoneNumber",align: "center",
+      key: "phoneNumber",
+      align: "center",
     },
     {
       title: "Email",
       dataIndex: "email", // Data key for email
-      key: "email",align: "center",
+      key: "email",
+      align: "center",
     },
 
     {
       title: "Address",
-      dataIndex: "address", // Data key for role
-      key: "address",align: "center",
+      dataIndex: ["customFields", "homeAddress"], // Data key for role
+      key: "address",
+      align: "center",
     },
 
     {
@@ -90,25 +91,6 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
               <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
-          {/* Block User Tooltip */}
-
-          {/* <Tooltip placement="left" title="Unblock">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
-              onClick={() => showUnblockModal(record)}
-            >
-              <img src={AllIcons.unblock} className="" />
-            </button>
-          </Tooltip>
-
-          <Tooltip placement="left" title="Block">
-            <button
-              className="!p-0 !bg-transparent !border-none cursor-pointer"
-              onClick={() => showBlockModal(record)}
-            >
-              <MdBlock style={{ fontSize: "20px" }} />
-            </button>
-          </Tooltip> */}
         </Space>
       ),
       align: "center",

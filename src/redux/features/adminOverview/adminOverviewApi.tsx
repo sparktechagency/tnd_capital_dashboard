@@ -8,7 +8,7 @@ const overviewApi = baseApi.injectEndpoints({
         url: `/dashboard/collection_report?year=${year}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.adminOverview, tagTypes.user],
+      providesTags: [tagTypes.adminOverview],
     }),
 
     getAdminCounts: builder.query({

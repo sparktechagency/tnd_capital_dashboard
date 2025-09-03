@@ -2,45 +2,45 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { LeadsIcon } from "../../Components/svg/leads";
+import {
+  useDeleteLeadsMutation,
+  useGetAllLeadsQuery,
+} from "../../redux/features/adminLeads/adminLeadsApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import BlockModal from "../../ui/Modal/BlockModal";
+import ViewLoadsModal from "../../ui/Modal/AdminLoads/ViewLoadsModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
 import LeadsTable from "../../ui/Tables/LoadsTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { leadsData } from "./fakeData";
-import ViewLoadsModal from "../../ui/Modal/AdminLoads/ViewLoadsModal";
+import Loading from "../../ui/Loading";
 
 const AdminLeads = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
-  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data: allLeads, isFetching } = useGetAllLeadsQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+  const leadsData = allLeads?.data?.result;
+
+  const [deleteLead] = useDeleteLeadsMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  // const showBlockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsBlockModalVisible(true);
-  // };
-  // const showUnblockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsUnblockModalVisible(true);
-  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -49,51 +49,18 @@ const AdminLeads = () => {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsBlockModalVisible(false);
-    setIsUnblockModalVisible(false);
     setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
-  };
-
-  const handleBlock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "blocked",
-        },
-      },
-      "Blocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-  const handleUnblock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "active",
-        },
-      },
-      "Unblocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteLead,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -101,6 +68,10 @@ const AdminLeads = () => {
       handleCancel();
     }
   };
+
+  if (isFetching) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -129,8 +100,6 @@ const AdminLeads = () => {
         <LeadsTable
           data={leadsData}
           loading={false}
-          // showBlockModal={showBlockModal}
-          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
@@ -149,20 +118,6 @@ const AdminLeads = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
-        />
-
-        <BlockModal
-          currentRecord={currentRecord}
-          isBlockModalVisible={isBlockModalVisible}
-          handleCancel={handleCancel}
-          handleBlock={handleBlock}
-        />
-
-        <UnblockModal
-          currentRecord={currentRecord}
-          isUnblockModalVisible={isUnblockModalVisible}
-          handleCancel={handleCancel}
-          handleUnblock={handleUnblock}
         />
       </div>
     </div>
