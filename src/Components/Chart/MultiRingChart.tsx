@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const data1 = [
@@ -9,7 +10,26 @@ const data2 = [
   { name: "Primary", value: 24.51 },
   { name: "Secondary", value: 75.49 },
 ];
-export default function MultiRingChart() {
+export default function MultiRingChart({ loanApprovalReport }: any) {
+  console.log(loanApprovalReport, "loanApprovalReport");
+
+  // const data1 = [
+  //   {
+  //     name: "Primary",
+  //     value:
+  //       loanApprovalReport?.status === "approved"
+  //         ? loanApprovalReport?.percentage
+  //         : 0,
+  //   },
+  //   {
+  //     name: "Secondary",
+  //     value:
+  //       loanApprovalReport?.status === "approved"
+  //         ? loanApprovalReport?.percentage
+  //         : 0,
+  //   },
+  // ];
+
   return (
     <div style={{ width: 300, height: 290 }}>
       <ResponsiveContainer width="100%" height="100%">

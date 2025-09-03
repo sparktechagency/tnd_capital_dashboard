@@ -3,17 +3,33 @@ import { tagTypes } from "../../tagTypes";
 
 const overviewApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUserChart: builder.query({
-      query: ({ role }) => ({
-        url: `/users/user_overview?role=${role}`,
+    getCollectionChart: builder.query({
+      query: ({ year }) => ({
+        url: `/dashboard/collection_report?year=${year}`,
         method: "GET",
-        // params: { role },
       }),
       providesTags: [tagTypes.adminOverview, tagTypes.user],
     }),
-    getCounts: builder.query({
+
+    getAdminCounts: builder.query({
       query: () => ({
-        url: `/users/count_total`,
+        url: `/dashboard/admin_dashboard_count`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.adminOverview],
+    }),
+
+    getAdminLoanApprovalReport: builder.query({
+      query: ({ year }) => ({
+        url: `/dashboard/loan_approval_report?year=${year}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.adminOverview],
+    }),
+
+    getRecentOfficerCollection: builder.query({
+      query: () => ({
+        url: `/dashboard/all_field_officer_collection?limit=5`,
         method: "GET",
       }),
       providesTags: [tagTypes.adminOverview],
@@ -21,4 +37,9 @@ const overviewApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUserChartQuery, useGetCountsQuery } = overviewApi;
+export const {
+  useGetCollectionChartQuery,
+  useGetAdminCountsQuery,
+  useGetAdminLoanApprovalReportQuery,
+  useGetRecentOfficerCollectionQuery,
+} = overviewApi;

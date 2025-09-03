@@ -5,11 +5,17 @@ import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
+import {
+  useGetAdminCountsQuery,
+  useGetAdminLoanApprovalReportQuery,
+  useGetCollectionChartQuery,
+  useGetRecentOfficerCollectionQuery,
+} from "../../redux/features/adminOverview/adminOverviewApi";
 import { useAppSelector } from "../../redux/hooks";
+import Loading from "../../ui/Loading";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 import YearOption from "../../utils/YearOption";
-import { fieldOfficerData } from "./fakeData";
 
 export const chartData = [
   { month: "Jan", totalPresent: 35 },
@@ -26,58 +32,6 @@ export const chartData = [
   { month: "Dec", totalPresent: 106 },
 ];
 
-const data = [
-  { label: "Rejected", color: "bg-purple-700", percent: 75 },
-  { label: "Pending", color: "bg-green-500", percent: 25 },
-];
-
-const cards = [
-  {
-    id: 1,
-    background: "#FFFFFF",
-    name: "Total Collection",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.collection} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "$2,000",
-  },
-  {
-    id: 2,
-    background: "#FFFFFF",
-    name: "Total Application",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.application} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "100",
-  },
-  {
-    id: 3,
-    background: "#FFFFFF",
-    name: "Overdue",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.overdue} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "$2,000K",
-  },
-  {
-    id: 3,
-    background: "#FFFFFF",
-    name: "Total Clients",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.clients} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "806",
-  },
-];
-
 const AdminOverview = () => {
   const [page, setPage] = useState(1);
 
@@ -86,6 +40,71 @@ const AdminOverview = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const { collapsed } = useAppSelector((state) => state.auth);
+  const [currentYear, setCurrentYear] = useState(2025);
+
+  const { data: adminCount, isLoading: countLoading } = useGetAdminCountsQuery(
+    {}
+  );
+  const { data: collectionChart, isLoading: chartLoading } =
+    useGetCollectionChartQuery({
+      year: currentYear,
+    });
+
+  const { data: loanApprovalReport, isLoading: reportLoading } =
+    useGetAdminLoanApprovalReportQuery({
+      year: currentYear,
+    });
+
+  const { data: recentApplication } = useGetRecentOfficerCollectionQuery({});
+
+  const applicationData = recentApplication?.data?.result;
+
+  const cards = [
+    {
+      id: 1,
+      background: "#FFFFFF",
+      name: "Total Collection",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.collection} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: adminCount?.data?.totalCollection,
+    },
+    {
+      id: 2,
+      background: "#FFFFFF",
+      name: "Total Application",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.application} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: adminCount?.data?.totalApplication,
+    },
+    {
+      id: 3,
+      background: "#FFFFFF",
+      name: "Overdue",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.overdue} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: adminCount?.data?.totalOverdue,
+    },
+    {
+      id: 3,
+      background: "#FFFFFF",
+      name: "Total Clients",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.clients} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: adminCount?.data?.totalClients,
+    },
+  ];
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -96,6 +115,21 @@ const AdminOverview = () => {
     setIsViewModalVisible(false);
     setCurrentRecord(null);
   };
+
+  const data = [
+    {
+      label: loanApprovalReport?.data[1]?.status,
+      color: "bg-purple-700",
+      percent: loanApprovalReport?.data[1]?.percentage,
+    },
+    {
+      label: loanApprovalReport?.data[0]?.status,
+      color: "bg-green-500",
+      percent: loanApprovalReport?.data[0]?.percentage,
+    },
+  ];
+
+  if (countLoading || chartLoading || reportLoading) return <Loading />;
 
   return (
     <section>
@@ -110,15 +144,19 @@ const AdminOverview = () => {
               <p className="text-xl font-medium">Collection Report</p>
               <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
             </div>
-            <Area_Chart chartData={chartData} />
+            <Area_Chart chartData={collectionChart?.data} />
           </div>
           <div className="shadow-lg w-[700px] border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Loan Approval</p>
-              <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+              <YearOption
+                currentYear={2025}
+                setThisYear={setCurrentYear}
+                key={""}
+              />
             </div>
             <div className="flex items-center justify-between pr-4">
-              <MultiRingChart />
+              <MultiRingChart loanApprovalReport={loanApprovalReport?.data} />
               <div>
                 <div className="space-y-6">
                   {data.map((item, index) => (
@@ -127,7 +165,7 @@ const AdminOverview = () => {
                         <span
                           className={`w-3 h-3 rounded-full ${item.color}`}
                         ></span>
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 text-sm capitalize">
                           {item.label}
                         </span>
                       </div>
@@ -142,13 +180,15 @@ const AdminOverview = () => {
           </div>
         </div>
 
+        <p className="mt-6 font-medium text-xl">Recent Officer Collection</p>
+
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerTable
             isShowOtherAction={false}
             loading={false}
             showViewModal={showViewUserModal}
             limit={limit}
-            data={fieldOfficerData}
+            data={applicationData}
             page={page}
             setPage={setPage}
             total={0}

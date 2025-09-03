@@ -12,7 +12,7 @@ import {
 // Define the structure of the chart data
 interface ChartData {
   month: string;
-  totalPresent: number;
+  count: number;
 }
 
 const activeDotStyle = {
@@ -24,6 +24,7 @@ const activeDotStyle = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
+
   // Formatter function to add 'K' suffix to Y-axis values
   const yAxisTickFormatter = (value: number): string => `${value}`;
 
@@ -81,7 +82,7 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
           />
           <Area
             type="monotone"
-            dataKey="totalPresent"
+            dataKey="count"
             stroke="#999B9C"
             strokeWidth={5}
             fill="url(#colorUv)"
