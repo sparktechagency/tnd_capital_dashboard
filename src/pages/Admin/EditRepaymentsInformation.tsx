@@ -10,154 +10,13 @@ import down from "../../../public/images/icons/down.svg";
 import { useState } from "react";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-
-const inputStructure = [
-  {
-    name: "Full Name",
-    inputData: [
-      {
-        name: "name",
-        inputType: "text",
-        placeholder: "Input Name",
-        label: "Input Name",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "phoneNumber",
-        inputType: "text",
-        label: "Input Type",
-        placeholder: "Input Type",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "email",
-        inputType: "text",
-        label: "Placeholder Text",
-        placeholder: "Placeholder Text",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Email is required" }],
-      },
-    ],
-  },
-  {
-    name: "Phone Number",
-    inputData: [
-      {
-        name: "name",
-        inputType: "text",
-        placeholder: "Input Name",
-        label: "Input Name",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "phoneNumber",
-        inputType: "text",
-        label: "Input Type",
-        placeholder: "Input Type",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "email",
-        inputType: "text",
-        label: "Placeholder Text",
-        placeholder: "Placeholder Text",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Email is required" }],
-      },
-    ],
-  },
-  {
-    name: "Email",
-    inputData: [
-      {
-        name: "name",
-        inputType: "text",
-        placeholder: "Input Name",
-        label: "Input Name",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "phoneNumber",
-        inputType: "text",
-        label: "Input Type",
-        placeholder: "Input Type",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "email",
-        inputType: "text",
-        label: "Placeholder Text",
-        placeholder: "Placeholder Text",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Email is required" }],
-      },
-    ],
-  },
-  {
-    name: "House Address",
-    inputData: [
-      {
-        name: "name",
-        inputType: "text",
-        placeholder: "Input Name",
-        label: "Input Name",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "phoneNumber",
-        inputType: "text",
-        label: "Input Type",
-        placeholder: "Input Type",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "email",
-        inputType: "text",
-        label: "Placeholder Text",
-        placeholder: "Placeholder Text",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Email is required" }],
-      },
-    ],
-  },
-  {
-    name: "Upload Picture",
-    inputData: [
-      {
-        name: "name",
-        inputType: "text",
-        placeholder: "Input Name",
-        label: "Input Name",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "phoneNumber",
-        inputType: "text",
-        label: "Input Type",
-        placeholder: "Input Type",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Name is required" }],
-      },
-      {
-        name: "email",
-        inputType: "text",
-        label: "Placeholder Text",
-        placeholder: "Placeholder Text",
-        labelClassName: "!font-normal !text-sm",
-        rules: [{ required: true, message: "Email is required" }],
-      },
-    ],
-  },
-];
+import {
+  useDeleteRepaymentsFieldMutation,
+  useGetAllRepaymentsFieldQuery,
+  useUpdateRepaymentsFieldMutation,
+} from "../../redux/features/admin/adminRepayments/adminRepaymentsApi";
+import { groupedDataFunction } from "../../utils/groupedData";
+import Loading from "../../ui/Loading";
 
 const EditRepaymentsInformation = () => {
   const [form] = Form.useForm();
@@ -165,23 +24,47 @@ const EditRepaymentsInformation = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
 
+  // api calling
+  const { data: getAllRepaymentsField, isFetching } =
+    useGetAllRepaymentsFieldQuery({});
+  const [updateRepaymentsField] = useUpdateRepaymentsFieldMutation();
+  const [deleteRepaymentsField] = useDeleteRepaymentsFieldMutation();
+
   const handleCancel = () => {
     setIsDeleteModalOpen(false);
   };
+
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteRepaymentsField,
       { params: currentRecord?._id },
       "Deleting..."
     );
     if (res.statusCode === 200) {
+      form.resetFields();
       handleCancel();
     }
   };
 
-  const onFinish = (values: any) => {
-    console.log("Received values of update form:", values);
+  const onFinish = async (values: any) => {
+    const groupedData = groupedDataFunction(values);
+
+    const res = await tryCatchWrapper(
+      updateRepaymentsField,
+      { body: groupedData },
+      "Updating..."
+    );
+
+    if (res?.statusCode === 200) {
+      form.resetFields();
+      handleCancel();
+    }
   };
+
+  if (isFetching) {
+    return <Loading />;
+  }
+
   return (
     <div className="min-h-screen">
       <Topbar collapsed={collapsed}></Topbar>
@@ -194,52 +77,73 @@ const EditRepaymentsInformation = () => {
           className="!px-32 !mt-10"
         >
           <div className="grid grid-cols-2 gap-x-10 gap-y-5">
-            {inputStructure.map((input, index) => (
-              <div key={index} className="bg-[#F2F2F2] p-6 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <img src={down} alt="" className="cursor-pointer" />
-                  <p className="text-lg font-medium">{input.name}</p>
-                  <img
-                    onClick={() => {
-                      setIsDeleteModalOpen(true);
-                      setCurrentRecord(input);
-                    }}
-                    src={deleteIcon}
-                    alt=""
-                    className="cursor-pointer"
-                  />
-                </div>
-                <div className="px-6 mt-3">
-                  {input.inputData.map((inputData, index) => (
+            {getAllRepaymentsField?.data?.map((input: any, index: number) => {
+              return (
+                <div key={index} className="bg-[#F2F2F2] p-6 rounded-lg">
+                  <div className="flex items-center gap-x-2">
+                    <img src={down} alt="" className="cursor-pointer" />
+                    <p className="text-lg font-medium">{input.label}</p>
+                    <img
+                      onClick={() => {
+                        setIsDeleteModalOpen(true);
+                        setCurrentRecord(input);
+                      }}
+                      src={deleteIcon}
+                      alt=""
+                      className="cursor-pointer"
+                    />
+                  </div>
+
+                  <div className="px-6 mt-3">
                     <ReuseInput
-                      key={index}
-                      name={inputData.name}
-                      label={inputData.label}
+                      name={input._id + "-" + "label"}
+                      label="Input Label"
                       Typolevel={4}
-                      placeholder={inputData.placeholder}
-                      labelClassName={inputData.labelClassName}
-                      rules={inputData.rules}
+                      placeholder="Input Label"
+                      labelClassName="!font-normal !text-sm"
                       inputClassName="!text-sm !border-none"
                     />
-                  ))}
+                    <ReuseInput
+                      name={input._id + "-" + "inputName"}
+                      label="Input Name"
+                      Typolevel={4}
+                      placeholder="Input Name"
+                      labelClassName="!font-normal !text-sm"
+                      inputClassName="!text-sm !border-none"
+                    />
+                    <ReuseInput
+                      name={input._id + "-" + "inputType"}
+                      label="Input Type"
+                      Typolevel={4}
+                      placeholder="Input Type"
+                      labelClassName="!font-normal !text-sm"
+                      inputClassName="!text-sm !border-none"
+                    />
+                    <ReuseInput
+                      name={input._id + "-" + "placeholder"}
+                      label="Placeholder"
+                      Typolevel={4}
+                      placeholder="Input Placeholder"
+                      labelClassName="!font-normal !text-sm"
+                      inputClassName="!text-sm !border-none"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
             <ReuseButton
               variant="secondary"
-              url="/admin/edit-lead-information"
+              htmlType="submit"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Edit Features
             </ReuseButton>

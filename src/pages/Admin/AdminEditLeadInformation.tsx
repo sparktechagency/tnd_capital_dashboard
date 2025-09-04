@@ -12,18 +12,12 @@ import ReuseInput from "../../ui/Form/ReuseInput";
 import Loading from "../../ui/Loading";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { useGetAllLeadsRelatedFieldQuery, useUpdateLeadsFieldMutation } from "../../redux/features/admin/adminLeads/adminLeadsApi";
-
-type FieldData = {
-  inputName?: string;
-  inputType?: string;
-  label?: string;
-  placeholder?: string;
-};
-
-type GroupedData = {
-  [id: string]: FieldData;
-};
+import {
+  useDeleteLeadsFieldMutation,
+  useGetAllLeadsRelatedFieldQuery,
+  useUpdateLeadsFieldMutation,
+} from "../../redux/features/admin/adminLeads/adminLeadsApi";
+import { groupedDataFunction } from "../../utils/groupedData";
 
 const AdminEditLeadInformation = () => {
   const [form] = Form.useForm();
@@ -31,8 +25,10 @@ const AdminEditLeadInformation = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
 
+  // api calling
   const { data: leadsField, isFetching } = useGetAllLeadsRelatedFieldQuery({});
   const [updateLeadsField] = useUpdateLeadsFieldMutation();
+  const [deleteLeadsField] = useDeleteLeadsFieldMutation();
 
   const handleCancel = () => {
     setIsDeleteModalOpen(false);
@@ -40,7 +36,7 @@ const AdminEditLeadInformation = () => {
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteLeadsField,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -53,21 +49,7 @@ const AdminEditLeadInformation = () => {
   const onFinish = async (values: any) => {
     console.log("Received values of update form:", values);
 
-    const groupedData: GroupedData = Object.keys(values).reduce(
-      (acc: GroupedData, key: string) => {
-        const [id, field] = key.split("-");
-        if (!acc[id]) {
-          acc[id] = {};
-        }
-
-        acc[id][field as keyof FieldData] = values[key];
-
-        return acc;
-      },
-      {}
-    );
-
-    console.log(groupedData);
+    const groupedData = groupedDataFunction(values);
 
     const res = await tryCatchWrapper(
       updateLeadsField,

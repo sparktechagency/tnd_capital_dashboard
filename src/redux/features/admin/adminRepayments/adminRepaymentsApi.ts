@@ -56,7 +56,7 @@ const adminRepayments = baseApi.injectEndpoints({
 
         deleteRepaymentsField: builder.mutation({
             query: (req) => ({
-                url: `${repayments_field_url}/delete/${req?.params}`,
+                url: `${repayments_field_url}/${req?.params}`,
                 method: "DELETE",
             }),
             invalidatesTags: [tagTypes.adminRepayments],
@@ -64,8 +64,8 @@ const adminRepayments = baseApi.injectEndpoints({
 
         updateRepaymentsField: builder.mutation({
             query: (req) => ({
-                url: `${repayments_field_url}/update/${req?.params}`,
-                method: "PUT",
+                url: `${repayments_field_url}`,
+                method: "PATCH",
                 body: req.body,
             }),
             invalidatesTags: [tagTypes.adminRepayments],
