@@ -4,6 +4,8 @@ import { useState } from "react";
 import ReuseButton from "../../Button/ReuseButton";
 import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
+import { useCreateLoanMutation } from "../../../redux/features/admin/adminLoan/adminLoanApi";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 
 const AddAdminLoan = ({
   isViewModalVisible,
@@ -15,8 +17,25 @@ const AddAdminLoan = ({
   const [form] = Form.useForm();
   const [features, setFeatures] = useState<string[]>([""]);
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  // api calling
+
+  const [createLoan] = useCreateLoanMutation();
+
+  const onFinish = async (values: any) => {
+    const newData = {
+      title: values.planName,
+      features: features,
+    };
+
+    const res = await tryCatchWrapper(
+      createLoan,
+      { body: newData },
+      "Creating..."
+    );
+
+    if (res?.statusCode === 201) {
+      handleCancel();
+    }
   };
 
   const handleAdd = () => {
@@ -24,10 +43,10 @@ const AddAdminLoan = ({
   };
 
   const handleChange = (index: number, value: string) => {
-    const newFacilities = [...features];
-    newFacilities[index] = value;
-    setFeatures(newFacilities);
-    form.setFieldValue("facilities", newFacilities); // sync with form
+    const newFeatures = [...features];
+    newFeatures[index] = value;
+    setFeatures(newFeatures);
+    form.setFieldsValue({ features: newFeatures }); // Sync with the form
   };
 
   return (
@@ -60,15 +79,16 @@ const AddAdminLoan = ({
             <>
               {features.map((feature, index) => (
                 <ReuseInput
-                  name="planName"
-                  label={` Feature ${index + 1}`}
+                  key={index}
+                  name={`features[${index}]`} // Correct dynamic name for AntD form
+                  label={`Feature ${index + 1}`}
                   value={feature}
                   Typolevel={4}
                   inputType="text"
                   placeholder={`Feature ${index + 1}`}
                   onChange={(e) => handleChange(index, e.target.value)}
                   labelClassName="!font-normal !text-sm"
-                  rules={[{ required: true, message: "features is required" }]}
+                  rules={[{ required: true, message: "Feature is required" }]}
                   inputClassName="!bg-[#F2F2F2] !border-none !rounded placeholder:!text-[#B4BCC9] placeholder:text-xs h-11"
                 />
               ))}
@@ -76,7 +96,7 @@ const AddAdminLoan = ({
                 onClick={handleAdd}
                 className="!font-semibold rounded-lg !text-sm"
               >
-                + Add a more Features
+                + Add more Features
               </ReuseButton>
             </>
           </Form.Item>

@@ -11,6 +11,10 @@ import EditAdminLoan from "../../ui/Modal/AdminLoan/EditAdminLoan";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import { loanData } from "./fakeData";
+import {
+  useDeleteLoansMutation,
+  useGetAllLoansQuery,
+} from "../../redux/features/admin/adminLoan/adminLoanApi";
 
 const AdminLone = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -37,9 +41,13 @@ const AdminLone = () => {
     setLoanList(updatedSubs);
   };
 
+  // api calling
+  const { data: loans } = useGetAllLoansQuery({});
+  const [deleteLoan] = useDeleteLoansMutation();
+
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteLoan,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -63,7 +71,7 @@ const AdminLone = () => {
 
       <div className="mt-10 ">
         <div className="grid grid-cols-3 gap-x-10 gap-y-5 ">
-          {loanData.map((data, index) => (
+          {loans?.data?.map((data: any, index: number) => (
             <div
               key={index}
               className="rounded-xl shadow-lg p-5 border border-[#dddddd57]"
@@ -114,7 +122,7 @@ const AdminLone = () => {
                   }}
                   className="space-y-1.5 mt-4 ml-4"
                 >
-                  {data.features.map((feature, index) => (
+                  {data.features.map((feature: any, index: number) => (
                     <li key={index} className="text-sm ">
                       {feature}
                     </li>
@@ -133,6 +141,7 @@ const AdminLone = () => {
         <EditAdminLoan
           handleCancel={handleCancel}
           isEditAdminLoanModalVisible={isEditModalVisible}
+          currentRecord={currentRecord}
         />
 
         <DeleteModal
