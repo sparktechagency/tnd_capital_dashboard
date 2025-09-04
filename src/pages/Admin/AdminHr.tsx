@@ -2,17 +2,22 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { HR } from "../../Components/svg/leads";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+  useUserActionMutation,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminHRModal from "../../ui/Modal/AdminHR/ViewAdminHRModal";
+import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminHRTable from "../../ui/Tables/AdminHRTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { officerData } from "./fakeData";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
+import Loading from "../../ui/Loading";
 
 const AdminHr = () => {
   const [page, setPage] = useState<number>(1);
@@ -28,6 +33,19 @@ const AdminHr = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calls
+  const { data, isLoading } = useGetUsersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+    role: "hr",
+  });
+
+  const hrData = data?.data;
+
+  const [updateUser] = useUserActionMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -57,12 +75,12 @@ const AdminHr = () => {
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -73,12 +91,12 @@ const AdminHr = () => {
 
   const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      updateUser,
       {
         body: {
-          userId: data?._id,
           action: "blocked",
         },
+        params: data?._id,
       },
       "Blocking..."
     );
@@ -88,12 +106,12 @@ const AdminHr = () => {
   };
   const handleUnblock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      updateUser,
       {
         body: {
-          userId: data?._id,
           action: "active",
         },
+        params: data?._id,
       },
       "Unblocking..."
     );
@@ -101,6 +119,10 @@ const AdminHr = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -127,7 +149,7 @@ const AdminHr = () => {
         </div>
 
         <AdminHRTable
-          data={officerData}
+          data={hrData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
@@ -136,6 +158,7 @@ const AdminHr = () => {
           limit={limit}
           page={page}
           setPage={setPage}
+          total={hrData?.meta?.total}
         />
 
         <ViewAdminHRModal
