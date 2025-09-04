@@ -2,10 +2,7 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { LeadsIcon } from "../../Components/svg/leads";
-import {
-  useDeleteLeadsMutation,
-  useGetAllLeadsQuery,
-} from "../../redux/features/adminLeads/adminLeadsApi";
+
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
@@ -15,6 +12,10 @@ import LeadsTable from "../../ui/Tables/LoadsTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import Loading from "../../ui/Loading";
+import {
+  useDeleteLeadsMutation,
+  useGetAllLeadsQuery,
+} from "../../redux/features/admin/adminLeads/adminLeadsApi";
 
 const AdminLeads = () => {
   const [page, setPage] = useState<number>(1);
@@ -33,7 +34,7 @@ const AdminLeads = () => {
     limit,
     searchTerm: searchText,
   });
-  const leadsData = allLeads?.data?.result;
+  const leadsData = allLeads?.data;
 
   const [deleteLead] = useDeleteLeadsMutation();
 
@@ -98,13 +99,14 @@ const AdminLeads = () => {
         </div>
 
         <LeadsTable
-          data={leadsData}
+          data={leadsData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={leadsData?.meta?.total}
         />
 
         <ViewLoadsModal

@@ -1,44 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import {
+  useDeleteLoanApplicationMutation,
+  useGetAllLoanApplicationQuery,
+} from "../../redux/features/admin/adminApplication/adminApplicationApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
-import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { applicationData } from "./fakeData";
+import Loading from "../../ui/Loading";
 
 const AdminApplication = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
-  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
+  // api calling
+
+  const { data: loanApplicationData, isLoading } =
+    useGetAllLoanApplicationQuery({
+      page,
+      limit,
+      searchTerm: searchText,
+    });
+  const application = loanApplicationData?.data?.result;
+
+  // delete api
+  const [deleteLoanApplication] = useDeleteLoanApplicationMutation();
+
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  // const showBlockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsBlockModalVisible(true);
-  // };
-  // const showUnblockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsUnblockModalVisible(true);
-  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -47,51 +51,18 @@ const AdminApplication = () => {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsBlockModalVisible(false);
-    setIsUnblockModalVisible(false);
     setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
-  };
-
-  const handleBlock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "blocked",
-        },
-      },
-      "Blocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-  const handleUnblock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "active",
-        },
-      },
-      "Unblocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteLoanApplication,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -99,6 +70,10 @@ const AdminApplication = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -119,15 +94,14 @@ const AdminApplication = () => {
         </div>
 
         <AdminApplicationTable
-          data={applicationData}
+          data={application}
           loading={false}
-          // showBlockModal={showBlockModal}
-          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={loanApplicationData?.data?.meta?.total}
         />
 
         <ViewAdminApplicationModal
@@ -141,20 +115,6 @@ const AdminApplication = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
-        />
-
-        <BlockModal
-          currentRecord={currentRecord}
-          isBlockModalVisible={isBlockModalVisible}
-          handleCancel={handleCancel}
-          handleBlock={handleBlock}
-        />
-
-        <UnblockModal
-          currentRecord={currentRecord}
-          isUnblockModalVisible={isUnblockModalVisible}
-          handleCancel={handleCancel}
-          handleUnblock={handleUnblock}
         />
       </div>
     </div>

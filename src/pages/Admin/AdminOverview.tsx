@@ -5,17 +5,13 @@ import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
-import {
-  useGetAdminCountsQuery,
-  useGetAdminLoanApprovalReportQuery,
-  useGetCollectionChartQuery,
-  useGetRecentOfficerCollectionQuery,
-} from "../../redux/features/adminOverview/adminOverviewApi";
+
 import { useAppSelector } from "../../redux/hooks";
 import Loading from "../../ui/Loading";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 import YearOption from "../../utils/YearOption";
+import { useGetAdminCountsQuery, useGetAdminLoanApprovalReportQuery, useGetCollectionChartQuery, useGetRecentOfficerCollectionQuery } from "../../redux/features/admin/adminOverview/adminOverviewApi";
 
 export const chartData = [
   { month: "Jan", totalPresent: 35 },

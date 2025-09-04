@@ -92,12 +92,12 @@ export const mainTheme = {
     },
     Pagination: {
       colorBgContainer: "#FFFFFF",
-      itemActiveBg: "#fff",
+      itemActiveBg: "#28314e",
       itemActiveColor: "rgb(255,255,255)",
-      colorPrimary: "rgb(255,255,255)",
-      colorPrimaryHover: "rgb(255,255,255)",
-      colorText: "#fff",
-      colorBgTextHover: "#f9dd40",
+      colorPrimary: "#fff",
+      colorPrimaryHover: "#fff",
+      colorText: "#28314e",
+      colorBgTextHover: "#28314e55",
     },
     Input: {
       colorTextPlaceholder: "#535763",

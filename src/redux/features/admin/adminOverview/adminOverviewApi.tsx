@@ -1,5 +1,6 @@
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tagTypes";
+import { baseApi } from "../../../api/baseApi";
+import { tagTypes } from "../../../tagTypes";
+
 
 const overviewApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

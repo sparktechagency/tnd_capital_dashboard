@@ -16,7 +16,7 @@ const ModalItemStyle = ({
         className
       )}
     >
-      <p> {title} :</p> <p>{value}</p>
+      <p className="w-full"> {title} :</p> <p className="w-full">{value}</p>
     </h2>
   );
 };

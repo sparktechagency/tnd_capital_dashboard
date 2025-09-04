@@ -4,10 +4,7 @@ import { useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { FadeLoader } from "react-spinners";
 import { countryCodes } from "../../../pages/Common/settings/ProfileInfo";
-import {
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} from "../../../redux/features/profile/profileApi";
+
 import { useAppSelector } from "../../../redux/hooks";
 import ReuseButton from "../../../ui/Button/ReuseButton";
 import ReusableForm from "../../../ui/Form/ReuseForm";
@@ -18,9 +15,9 @@ import Topbar from "../../Shared/Topbar";
 const EditProfile = () => {
   // const serverUrl = getImageUrl();
   const [form] = Form.useForm();
-  const [updateProfile] = useUpdateProfileMutation();
-  const { data, isFetching } = useGetProfileQuery({});
-  const profileData = data?.data;
+  // const [updateProfile] = useUpdateProfileMutation();
+  // const { data, isFetching } = useGetProfileQuery({});
+  // const profileData = data?.data;
   // const profileImage = serverUrl + profileData?.image;
   const { collapsed } = useAppSelector((state) => state.auth);
 
@@ -57,19 +54,19 @@ const EditProfile = () => {
     };
     formData.append("data", JSON.stringify(data));
     await tryCatchWrapper(
-      updateProfile,
+      // updateProfile,
       { body: formData },
       "Updating Profile..."
     );
   };
 
-  if (isFetching) {
-    return (
-      <div className="flex justify-center items-center h-[88vh]">
-        <FadeLoader color="#28314E" />
-      </div>
-    );
-  }
+  // if (isFetching) {
+  //   return (
+  //     <div className="flex justify-center items-center h-[88vh]">
+  //       <FadeLoader color="#28314E" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen">
@@ -83,7 +80,7 @@ const EditProfile = () => {
             form={form}
             handleFinish={onFinish}
             className="p-10 w-full lg:w-[70%]"
-            defaultValues={profileData}
+            // defaultValues={profileData}
           >
             <div className="flex flex-col md:flex-row items-center gap-8 rounded-md mt-10">
               {/* Left Side - Image & Role */}

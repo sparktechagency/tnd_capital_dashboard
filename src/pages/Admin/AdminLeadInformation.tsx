@@ -9,8 +9,9 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import AddLeadsFeaturesModal from "../../ui/Modal/AdminLoads/AddLeadsFeaturesModal";
 import { useState } from "react";
-import { useGetAllLeadsRelatedFieldQuery } from "../../redux/features/adminLeads/adminLeadsApi";
+
 import Loading from "../../ui/Loading";
+import { useGetAllLeadsRelatedFieldQuery } from "../../redux/features/admin/adminLeads/adminLeadsApi";
 
 const AdminLeadInformation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);

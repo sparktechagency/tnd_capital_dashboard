@@ -1,6 +1,5 @@
-import { baseApi } from "../../api/baseApi";
-import { tagTypes } from "../../tagTypes";
-
+import { baseApi } from "../../../api/baseApi";
+import { tagTypes } from "../../../tagTypes";
 
 const leads_and_clients_url = "/leads_and_clients";
 const leads_and_clients_field_url = "/leads_and_clients_field";

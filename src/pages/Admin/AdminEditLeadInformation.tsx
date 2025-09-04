@@ -4,10 +4,7 @@ import { useState } from "react";
 import deleteIcon from "../../../public/images/icons/delete.svg";
 import down from "../../../public/images/icons/down.svg";
 import Topbar from "../../Components/Shared/Topbar";
-import {
-  useGetAllLeadsRelatedFieldQuery,
-  useUpdateLeadsFieldMutation,
-} from "../../redux/features/adminLeads/adminLeadsApi";
+
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
@@ -15,6 +12,7 @@ import ReuseInput from "../../ui/Form/ReuseInput";
 import Loading from "../../ui/Loading";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useGetAllLeadsRelatedFieldQuery, useUpdateLeadsFieldMutation } from "../../redux/features/admin/adminLeads/adminLeadsApi";
 
 type FieldData = {
   inputName?: string;

@@ -4,7 +4,8 @@ export const tagTypes = {
   adminOverview: "AdminOverview",
   profile: "Profile",
   adminLeads: "AdminLeads",
-  adminLeadsField : "AdminLeadsField",
+  adminLeadsField: "AdminLeadsField",
+  adminLoanApplication: "AdminLoanApplication",
 };
 
 export const tagTypesList = [
@@ -13,5 +14,6 @@ export const tagTypesList = [
   tagTypes.adminOverview,
   tagTypes.profile,
   tagTypes.adminLeads,
-  tagTypes.adminLeadsField
+  tagTypes.adminLeadsField,
+  tagTypes.adminLoanApplication,
 ];
