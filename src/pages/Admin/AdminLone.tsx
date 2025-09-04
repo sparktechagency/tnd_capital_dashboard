@@ -15,6 +15,7 @@ import {
   useDeleteLoansMutation,
   useGetAllLoansQuery,
 } from "../../redux/features/admin/adminLoan/adminLoanApi";
+import Loading from "../../ui/Loading";
 
 const AdminLone = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -42,7 +43,7 @@ const AdminLone = () => {
   };
 
   // api calling
-  const { data: loans } = useGetAllLoansQuery({});
+  const { data: loans, isLoading } = useGetAllLoansQuery({});
   const [deleteLoan] = useDeleteLoansMutation();
 
   const handleDelete = async () => {
@@ -55,6 +56,10 @@ const AdminLone = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen">

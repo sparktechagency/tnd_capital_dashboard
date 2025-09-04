@@ -12,6 +12,7 @@ import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import Loading from "../../ui/Loading";
 
 const AdminClients = () => {
   const [page, setPage] = useState<number>(1);
@@ -26,7 +27,7 @@ const AdminClients = () => {
 
   // api calling
 
-  const { data: adminClients } = useGetAllClientsQuery({
+  const { data: adminClients, isLoading } = useGetAllClientsQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -67,6 +68,10 @@ const AdminClients = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>

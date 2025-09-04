@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 // import { MdBlock } from "react-icons/md";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import dayjs from "dayjs";
 
 interface AdminRepaymentsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
-
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  // showBlockModal: (record: any) => void; // Function to handle blocking a user
-  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +21,6 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
   data,
   loading,
   showViewModal,
-  // showBlockModal,
-  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -38,7 +35,11 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
       render: (_text: any, record: any) => (
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <img
-            src={record.image} // Replace with your actual image key
+            src={
+              record?.client?.customFields?.image
+                ? getImageUrl() + record?.client?.customFields?.image
+                : AllImages.profile
+            }
             alt={record.fullName}
             style={{
               width: 45,
@@ -47,44 +48,50 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
               objectFit: "cover",
             }}
           />
-          <span>{record.fullName}</span>
+          <span>{record?.client?.customFields?.name}</span>
         </div>
       ),
     },
     {
       title: "Installment Amount",
-      dataIndex: "installmentAmount", // Data key for phoneNumber
+      dataIndex: "installmentAmount",
       key: "installmentAmount",
       align: "center",
     },
     {
       title: "Due Date",
-      dataIndex: "dueDate", // Data key for email
+      dataIndex: "dueDate",
+      render: (text: string) => (
+        <span className="capitalize">{dayjs(text).format("DD-MM-YYYY")}</span>
+      ),
       key: "dueDate",
       align: "center",
     },
 
     {
       title: "Paid On",
-      dataIndex: "paidOn", // Data key for role
+      dataIndex: "paidOn",
+      render: (text: string) => (
+        <span className="capitalize">{dayjs(text).format("DD-MM-YYYY")}</span>
+      ),
       key: "paidOn",
       align: "center",
     },
 
     {
       title: "Penalty",
-      dataIndex: "penalty", // Data key for role
+      dataIndex: "penalty",
       key: "penalty",
       align: "center",
     },
 
     {
       title: "Status",
-      dataIndex: "status", // Data key for role
+      dataIndex: "status",
       render: (text: string) => (
         <div
           className={`${
-            text === "overdue "
+            text === "overdue"
               ? "text-[#EAB90A]"
               : text === "paid"
               ? "text-[#21B14C]"
@@ -120,25 +127,6 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
               <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
-          {/* Block User Tooltip */}
-
-          {/* <Tooltip placement="left" title="Unblock">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
-              onClick={() => showUnblockModal(record)}
-            >
-              <img src={AllIcons.unblock} className="" />
-            </button>
-          </Tooltip>
-
-          <Tooltip placement="left" title="Block">
-            <button
-              className="!p-0 !bg-transparent !border-none cursor-pointer"
-              onClick={() => showBlockModal(record)}
-            >
-              <MdBlock style={{ fontSize: "20px" }} />
-            </button>
-          </Tooltip> */}
         </Space>
       ),
       align: "center",
