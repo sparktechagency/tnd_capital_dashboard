@@ -6,43 +6,9 @@ import ReuseButton from "../../Button/ReuseButton";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import ReuseSelect from "../../Form/ReuseSelect";
 import { useCreateLeadsFieldMutation } from "../../../redux/features/admin/adminLeads/adminLeadsApi";
+import { inputStructure } from "../../../pages/Admin/fakeData";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-const inputStructure = [
-  {
-    name: "label",
-    inputType: "text",
-    placeholder: "Type..",
-    label: "Input Label",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Name is required" }],
-  },
-  {
-    name: "inputName",
-    inputType: "text",
-    placeholder: "Type..",
-    label: "Input Name",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Name is required" }],
-  },
-  // {
-  //   name: "inputType",
-  //   inputType: "text",
-  //   label: "Input Type",
-  //   placeholder: "Type..",
-  //   labelClassName: "!font-normal !text-sm",
-  //   rules: [{ required: true, message: "Name is required" }],
-  // },
-  {
-    name: "placeholder",
-    inputType: "text",
-    label: "Placeholder Text",
-    placeholder: "Type..",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Email is required" }],
-  },
-];
 
 const AddLeadsFeaturesModal = ({
   isAddFeaturesModalOpen,

@@ -3,37 +3,14 @@ import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
 import ReuseSelect from "../../Form/ReuseSelect";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
+import { useCreateRepaymentsFieldMutation } from "../../../redux/features/admin/adminRepayments/adminRepaymentsApi";
+import { inputStructure } from "../../../pages/Admin/fakeData";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const inputStructure = [
-  {
-    name: "name",
-    inputType: "text",
-    placeholder: "Type..",
-    label: "Input Name",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Name is required" }],
-  },
-  {
-    name: "phoneNumber",
-    inputType: "text",
-    label: "Input Type",
-    placeholder: "Type..",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Name is required" }],
-  },
-  {
-    name: "email",
-    inputType: "text",
-    label: "Placeholder Text",
-    placeholder: "Type..",
-    labelClassName: "!font-normal !text-sm",
-    rules: [{ required: true, message: "Email is required" }],
-  },
-];
 
-const FieldOfficerFeaturesModal = ({
+const AdminRepaymentsFeaturesModal = ({
   isAddFeaturesModalOpen,
   handleCancel,
 }: {
@@ -41,8 +18,26 @@ const FieldOfficerFeaturesModal = ({
   handleCancel: () => void;
 }) => {
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+
+  const [createRepaymentsField] = useCreateRepaymentsFieldMutation();
+
+  const onFinish = async (values: any) => {
+    const res = await tryCatchWrapper(
+      createRepaymentsField,
+      {
+        body: {
+          ...values?.features?.[0],
+          inputType: values?.features?.inputType,
+          required: true,
+        },
+      },
+      "Adding Feature..."
+    );
+
+    if (res?.statusCode === 201) {
+      form.resetFields();
+      handleCancel();
+    }
   };
 
   return (
@@ -131,4 +126,4 @@ const FieldOfficerFeaturesModal = ({
   );
 };
 
-export default FieldOfficerFeaturesModal;
+export default AdminRepaymentsFeaturesModal;

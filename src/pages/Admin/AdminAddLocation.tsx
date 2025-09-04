@@ -105,14 +105,12 @@ const AdminAddLocation = () => {
             <ReuseButton
               variant="outline"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
             <ReuseButton
               variant="secondary"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Submit
             </ReuseButton>

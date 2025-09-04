@@ -867,3 +867,32 @@ export const dataSource = [
         role: "manager",
     },
 ];
+
+
+export const inputStructure = [
+    {
+        name: "label",
+        inputType: "text",
+        placeholder: "Type..",
+        label: "Input Label",
+        labelClassName: "!font-normal !text-sm",
+        rules: [{ required: true, message: "Name is required" }],
+    },
+    {
+        name: "inputName",
+        inputType: "text",
+        placeholder: "Type..",
+        label: "Input Name",
+        labelClassName: "!font-normal !text-sm",
+        rules: [{ required: true, message: "Name is required" }],
+    },
+
+    {
+        name: "placeholder",
+        inputType: "text",
+        label: "Placeholder Text",
+        placeholder: "Type..",
+        labelClassName: "!font-normal !text-sm",
+        rules: [{ required: true, message: "Email is required" }],
+    },
+];
