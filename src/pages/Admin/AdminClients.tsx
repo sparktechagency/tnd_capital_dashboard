@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import Topbar from "../../Components/Shared/Topbar";
-import DaysSelection from "../../utils/DaysSelection";
-import DeleteModal from "../../ui/Modal/DeleteModal";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
-import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
-import { applicationData } from "./fakeData";
+import {
+  useDeleteClientsMutation,
+  useGetAllClientsQuery,
+} from "../../redux/features/admin/adminClients/adminClientsApi";
+import { useAppSelector } from "../../redux/hooks";
+import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminClientsModal from "../../ui/Modal/AdminClients/ViewAdminClientsModal";
+import DeleteModal from "../../ui/Modal/DeleteModal";
+import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
+import DaysSelection from "../../utils/DaysSelection";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const AdminClients = () => {
   const [page, setPage] = useState<number>(1);
@@ -18,26 +19,27 @@ const AdminClients = () => {
   console.log(searchText);
   const limit = 12;
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
-  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
+  // api calling
+
+  const { data: adminClients } = useGetAllClientsQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const clients = adminClients?.data;
+
+  const [deleteClients] = useDeleteClientsMutation();
+
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  // const showBlockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsBlockModalVisible(true);
-  // };
-  // const showUnblockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsUnblockModalVisible(true);
-  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -46,52 +48,19 @@ const AdminClients = () => {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsBlockModalVisible(false);
-    setIsUnblockModalVisible(false);
     setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
-  };
-
-  const handleBlock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "blocked",
-        },
-      },
-      "Blocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-  const handleUnblock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "active",
-        },
-      },
-      "Unblocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
-      { params: currentRecord?._id },
+      deleteClients,
+      { params: currentRecord?.client?._id },
       "Deleting..."
     );
     if (res.statusCode === 200) {
@@ -118,15 +87,14 @@ const AdminClients = () => {
         </div>
 
         <AdminClientsTable
-          data={applicationData}
+          data={clients?.result}
           loading={false}
-          // showBlockModal={showBlockModal}
-          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={clients?.meta?.total}
         />
 
         <ViewAdminClientsModal
@@ -140,20 +108,6 @@ const AdminClients = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
-        />
-
-        <BlockModal
-          currentRecord={currentRecord}
-          isBlockModalVisible={isBlockModalVisible}
-          handleCancel={handleCancel}
-          handleBlock={handleBlock}
-        />
-
-        <UnblockModal
-          currentRecord={currentRecord}
-          isUnblockModalVisible={isUnblockModalVisible}
-          handleCancel={handleCancel}
-          handleUnblock={handleUnblock}
         />
       </div>
     </div>

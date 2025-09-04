@@ -7,6 +7,7 @@ export const tagTypes = {
   adminLeadsField: "AdminLeadsField",
   adminLoanApplication: "AdminLoanApplication",
   adminLoan: "AdminLoan",
+  adminClients: "AdminClients",
 };
 
 export const tagTypesList = [
@@ -18,4 +19,5 @@ export const tagTypesList = [
   tagTypes.adminLeadsField,
   tagTypes.adminLoanApplication,
   tagTypes.adminLoan,
+  tagTypes.adminClients,
 ];

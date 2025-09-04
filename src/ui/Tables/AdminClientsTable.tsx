@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 import ReuseTable from "../../utils/ReuseTable";
-import { AllIcons } from "../../../public/images/AllImages";
-// import { MdBlock } from "react-icons/md";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
+
 interface AdminClientsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
-
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  // showBlockModal: (record: any) => void; // Function to handle blocking a user
-  // showUnblockModal: (record: any) => void; // Function to handle unblocking a user
   showDeleteModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +20,6 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
   data,
   loading,
   showViewModal,
-  // showBlockModal,
-  // showUnblockModal,
   showDeleteModal,
   setPage,
   page,
@@ -35,25 +31,31 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (_text: any, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      render: (_text: any, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={
+                record?.client?.customFields?.image
+                  ? getImageUrl() + record?.client?.customFields?.image
+                  : AllImages.profile
+              } 
+              alt={record.fullName}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{record?.client?.customFields?.name}</span>
+          </div>
+        );
+      },
     },
     {
       title: "Phone Number",
-      dataIndex: "phoneNumber", // Data key for phoneNumber
+      dataIndex: ["client", "phoneNumber"], // Data key for phoneNumber
       key: "phoneNumber",
       align: "center",
     },
@@ -79,7 +81,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
 
     {
       title: "Status",
-      dataIndex: "status", // Data key for role
+      dataIndex: "loanStatus", // Data key for role
       render: (text: string) => (
         <div
           className={`${
@@ -119,25 +121,6 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
               <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
-          {/* Block User Tooltip */}
-
-          {/* <Tooltip placement="left" title="Unblock">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer hidden"
-              onClick={() => showUnblockModal(record)}
-            >
-              <img src={AllIcons.unblock} className="" />
-            </button>
-          </Tooltip>
-
-          <Tooltip placement="left" title="Block">
-            <button
-              className="!p-0 !bg-transparent !border-none cursor-pointer"
-              onClick={() => showBlockModal(record)}
-            >
-              <MdBlock style={{ fontSize: "20px" }} />
-            </button>
-          </Tooltip> */}
         </Space>
       ),
       align: "center",

@@ -71,66 +71,68 @@ const AdminLone = () => {
 
       <div className="mt-10 ">
         <div className="grid grid-cols-3 gap-x-10 gap-y-5 ">
-          {loans?.data?.map((data: any, index: number) => (
-            <div
-              key={index}
-              className="rounded-xl shadow-lg p-5 border border-[#dddddd57]"
-            >
-              {/* Top-right action buttons */}
-              <div className=" flex items-center justify-end gap-2">
-                <Tooltip title={data.isActive ? "Active" : "Inactive"}>
-                  <ConfigProvider
-                    theme={{
-                      token: {
-                        colorPrimary: !data.isActive ? "#ddd" : "#000",
-                      },
+          {loans?.data?.map((data: any, index: number) => {
+            return (
+              <div
+                key={index}
+                className="rounded-xl shadow-lg p-5 border border-[#dddddd57]"
+              >
+                {/* Top-right action buttons */}
+                <div className=" flex items-center justify-end gap-2">
+                  <Tooltip title={data.isActive ? "Active" : "Inactive"}>
+                    <ConfigProvider
+                      theme={{
+                        token: {
+                          colorPrimary: !data.isActive ? "#ddd" : "#000",
+                        },
+                      }}
+                    >
+                      <Switch
+                        checked={data.isActive}
+                        onChange={(checked) => handleToggle(data._id, checked)}
+                        size="small"
+                        className="custom-yellow-switch"
+                      />
+                    </ConfigProvider>
+                  </Tooltip>
+                  <div
+                    onClick={() => {
+                      setCurrentRecord(data);
+                      setisDeleteModalVisible(true);
                     }}
+                    className="p-1 rounded-full cursor-pointer hover:bg-gray-100"
                   >
-                    <Switch
-                      checked={data.isActive}
-                      onChange={(checked) => handleToggle(data._id, checked)}
-                      size="small"
-                      className="custom-yellow-switch"
-                    />
-                  </ConfigProvider>
-                </Tooltip>
-                <div
-                  onClick={() => {
-                    setCurrentRecord(data);
-                    setisDeleteModalVisible(true);
-                  }}
-                  className="p-1 rounded-full cursor-pointer hover:bg-gray-100"
-                >
-                  <img src={AllIcons.deleteIcon} alt="" />
+                    <img src={AllIcons.deleteIcon} alt="" />
+                  </div>
+                  <div
+                    onClick={() => {
+                      setCurrentRecord(data);
+                      setIsEditModalVisible(true);
+                    }}
+                    className="p-1 rounded-full cursor-pointer hover:bg-gray-100"
+                  >
+                    <img src={AllIcons.pen} alt="" />
+                  </div>
                 </div>
-                <div
-                  onClick={() => {
-                    setCurrentRecord(data);
-                    setIsEditModalVisible(true);
-                  }}
-                  className="p-1 rounded-full cursor-pointer hover:bg-gray-100"
-                >
-                  <img src={AllIcons.pen} alt="" />
-                </div>
-              </div>
 
-              <div className="my-4 px-10">
-                <p className="text-xl font-medium">{data.title}</p>
-                <ul
-                  style={{
-                    listStyleType: "numeric",
-                  }}
-                  className="space-y-1.5 mt-4 ml-4"
-                >
-                  {data.features.map((feature: any, index: number) => (
-                    <li key={index} className="text-sm ">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <div className="my-4 px-10">
+                  <p className="text-xl font-medium">{data.title}</p>
+                  <ul
+                    style={{
+                      listStyleType: "numeric",
+                    }}
+                    className="space-y-1.5 mt-4 ml-4"
+                  >
+                    {data.features.map((feature: any, index: number) => (
+                      <li key={index} className="text-sm ">
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <AddAdminLoan
