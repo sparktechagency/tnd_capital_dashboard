@@ -40,7 +40,7 @@ const AdminAddHrInformation = () => {
       formData.append("image", values?.image?.file?.originFileObj);
     }
     if (values?.cv?.file?.originFileObj) {
-      formData.append("cv", values?.image?.file?.originFileObj);
+      formData.append("cv", values?.cv?.file?.originFileObj);
     }
     const data = {
       name: values?.name,
