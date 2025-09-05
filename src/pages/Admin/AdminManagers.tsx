@@ -2,22 +2,27 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { Manger } from "../../Components/svg/leads";
+import {
+  useDeleteUserMutation,
+  useGetAllManagersQuery,
+  useUserActionMutation,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminManagerModal from "../../ui/Modal/AdminManager/ViewAdminManagerModal";
+import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import AdminMangerTable from "../../ui/Tables/AdminMangerTable";
+import UnblockModal from "../../ui/Modal/UnblockModal";
+import AdminHRTable from "../../ui/Tables/AdminHRTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { officerData } from "./fakeData";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
+import Loading from "../../ui/Loading";
 
 const AdminManger = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -27,6 +32,17 @@ const AdminManger = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data, isLoading } = useGetAllManagersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const allManager = data?.data;
+  const [updateUser] = useUserActionMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -57,12 +73,12 @@ const AdminManger = () => {
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -73,12 +89,12 @@ const AdminManger = () => {
 
   const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      updateUser,
       {
         body: {
-          userId: data?._id,
           action: "blocked",
         },
+        params: data?._id,
       },
       "Blocking..."
     );
@@ -88,12 +104,12 @@ const AdminManger = () => {
   };
   const handleUnblock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      updateUser,
       {
         body: {
-          userId: data?._id,
           action: "active",
         },
+        params: data?._id,
       },
       "Unblocking..."
     );
@@ -101,6 +117,10 @@ const AdminManger = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -126,8 +146,8 @@ const AdminManger = () => {
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
-        <AdminMangerTable
-          data={officerData}
+        <AdminHRTable
+          data={allManager?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
@@ -136,6 +156,7 @@ const AdminManger = () => {
           limit={limit}
           page={page}
           setPage={setPage}
+          total={allManager?.meta?.total}
         />
 
         <ViewAdminManagerModal

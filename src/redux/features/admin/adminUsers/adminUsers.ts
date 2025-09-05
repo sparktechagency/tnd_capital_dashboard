@@ -49,6 +49,18 @@ const adminUsersApi = baseApi.injectEndpoints({
             invalidatesTags: [tagTypes.user],
         }),
 
+        getAllManagers: builder.query({
+            query: ({ page, limit, searchTerm, }) => ({
+                url: `${admin_users}/all_managers`,
+                method: "GET",
+                params: {
+                    page,
+                    limit,
+                    searchTerm,
+                },
+            }),
+            providesTags: [tagTypes.user],
+        }),
         // field related api calling
 
         createUserField: builder.mutation({
@@ -94,6 +106,7 @@ export const {
     useUpdateUserMutation,
     useUserActionMutation,
     useDeleteUserMutation,
+    useGetAllManagersQuery,
     //
     useGetAllUsersRelatedFieldQuery,
     useCreateUserFieldMutation,

@@ -89,47 +89,49 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
     {
       title: "Action",
       key: "action",
-      render: (_: unknown, record: any) => (
-        <Space size="middle">
-          <Tooltip placement="right" title="View Details">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showViewModal(record)}
-            >
-              <img src={AllIcons.eye} />
-            </button>
-          </Tooltip>
-
-          <Tooltip placement="right" title="Delete HR">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
-            </button>
-          </Tooltip>
-
-          {record?.status === "blocked" ? (
-            <Tooltip placement="left" title="Unblock">
+      render: (_: unknown, record: any) => {
+        return (
+          <Space size="middle">
+            <Tooltip placement="right" title="View Details">
               <button
-                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
-                onClick={() => showUnblockModal(record)}
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showViewModal(record)}
               >
-                <img src={AllIcons.unblock} className="" />
+                <img src={AllIcons.eye} />
               </button>
             </Tooltip>
-          ) : (
-            <Tooltip placement="left" title="Block">
+
+            <Tooltip placement="right" title="Delete HR">
               <button
-                className="!p-0 !bg-transparent !border-none cursor-pointer"
-                onClick={() => showBlockModal(record)}
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showDeleteModal(record)}
               >
-                <MdBlock style={{ fontSize: "20px" }} />
+                <img src={AllIcons.deleteIcon} />
               </button>
             </Tooltip>
-          )}
-        </Space>
-      ),
+
+            {record?.status === "blocked" ? (
+              <Tooltip placement="left" title="Unblock">
+                <button
+                  className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
+                  onClick={() => showUnblockModal(record)}
+                >
+                  <img src={AllIcons.unblock} className="" />
+                </button>
+              </Tooltip>
+            ) : (
+              <Tooltip placement="left" title="Block">
+                <button
+                  className="!p-0 !bg-transparent !border-none cursor-pointer"
+                  onClick={() => showBlockModal(record)}
+                >
+                  <MdBlock style={{ fontSize: "20px" }} />
+                </button>
+              </Tooltip>
+            )}
+          </Space>
+        );
+      },
       align: "center",
     },
   ];

@@ -2,22 +2,27 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { FieldOfficer } from "../../Components/svg/leads";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+  useUserActionMutation,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
+import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminFieldOfficerTable from "../../ui/Tables/AdminFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { officerData } from "./fakeData";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
 
 const AdminFieldOfficers = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -26,6 +31,19 @@ const AdminFieldOfficers = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calls
+  const { data, isLoading } = useGetUsersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+    role: "fieldOfficer",
+  });
+
+  const fieldOfficerData = data?.data;
+
+  const [userAction] = useUserActionMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -56,12 +74,12 @@ const AdminFieldOfficers = () => {
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -72,12 +90,12 @@ const AdminFieldOfficers = () => {
 
   const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      userAction,
       {
         body: {
-          userId: data?._id,
           action: "blocked",
         },
+        params: data?._id,
       },
       "Blocking..."
     );
@@ -87,12 +105,12 @@ const AdminFieldOfficers = () => {
   };
   const handleUnblock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      userAction,
       {
         body: {
-          userId: data?._id,
           action: "active",
         },
+        params: data?._id,
       },
       "Unblocking..."
     );
@@ -100,6 +118,9 @@ const AdminFieldOfficers = () => {
       handleCancel();
     }
   };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -126,7 +147,7 @@ const AdminFieldOfficers = () => {
         </div>
 
         <AdminFieldOfficerTable
-          data={officerData}
+          data={fieldOfficerData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
@@ -135,6 +156,7 @@ const AdminFieldOfficers = () => {
           limit={limit}
           page={page}
           setPage={setPage}
+          total={fieldOfficerData?.meta?.total}
         />
 
         <ViewAdminFieldOfficerModal

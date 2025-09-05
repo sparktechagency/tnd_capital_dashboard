@@ -22,7 +22,7 @@ import Loading from "../../ui/Loading";
 const AdminHr = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState<boolean>(false);
