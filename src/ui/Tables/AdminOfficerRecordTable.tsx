@@ -1,6 +1,7 @@
 import { Space, Tooltip } from "antd";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { getImageUrl } from "../../helpers/config/envConfig";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface AdminOfficerRecordTableProps {
@@ -26,48 +27,57 @@ const AdminOfficerRecordTable: React.FC<AdminOfficerRecordTableProps> = ({
   const columns = [
     {
       title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
-      render: (_text: string, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      dataIndex: ["fieldOfficer", "customFields", "name"],
+      key: "name",
+      render: (_text: string, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={
+                record?.fieldOfficer?.customFields?.image
+                  ? getImageUrl() + record?.fieldOfficer?.customFields?.image
+                  : AllImages.profile
+              }
+              alt={_text}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{_text}</span>
+          </div>
+        );
+      },
     },
-
     {
       title: "Phone Number",
-      dataIndex: "phoneNumber", // Data key for phoneNumber
+      dataIndex: ["fieldOfficer", "phoneNumber"], // Data key for phoneNumber
       key: "phoneNumber",
       align: "center",
     },
     {
       title: "Email",
-      dataIndex: "email", // Data key for email
-      key: "email",
+      dataIndex: ["fieldOfficer", "email"], // Data key for email
+      render: (fieldOfficer: string) => {
+        return <span>{fieldOfficer}</span>;
+      },
       align: "center",
     },
+
     {
       title: "Date",
-      dataIndex: "date", // Data key for role
-      key: "date",
+      dataIndex: "paidOn", // Data key for role
+      key: "paidOn",
       align: "center",
     },
 
     {
       title: "Collected Amount",
-      dataIndex: "collected_amount", // Data key for role
-      key: "collected_amount",
+      dataIndex: "totalInstallmentAmount", // Data key for collected_amount
+      render: (collected_amount: string) => <span>$ {collected_amount}</span>,
+      key: "totalInstallmentAmount",
       align: "center",
     },
 

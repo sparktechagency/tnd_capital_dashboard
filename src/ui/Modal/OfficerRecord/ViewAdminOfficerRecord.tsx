@@ -1,5 +1,7 @@
 import { Modal } from "antd";
 import ModalItemStyle from "../../../utils/ModalItemStyle";
+import { getImageUrl } from "../../../helpers/config/envConfig";
+import { AllImages } from "../../../../public/images/AllImages";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const ViewAdminOfficerRecord = ({
@@ -11,6 +13,8 @@ const ViewAdminOfficerRecord = ({
   handleCancel: () => void;
   currentRecord: any;
 }) => {
+  console.log(currentRecord, "currentRecord");
+
   return (
     <Modal
       open={isViewModalVisible}
@@ -28,37 +32,48 @@ const ViewAdminOfficerRecord = ({
           <div className="flex flex-col justify-center items-center gap-2 mt-3">
             {/* Avatar */}
             <img
-              src={currentRecord?.image}
-              alt={currentRecord?.fullName}
+              src={
+                currentRecord?.fieldOfficer?.customFields?.image
+                  ? getImageUrl() +
+                    currentRecord?.fieldOfficer?.customFields?.image
+                  : AllImages.profile
+              }
+              alt={currentRecord?.fieldOfficer?.customFields?.name}
               className="size-[180px] object-cover rounded mt-6"
             />
           </div>
           <div className="mt-6 px-3">
-            <ModalItemStyle title="Name" value={currentRecord?.fullName} />
-            <ModalItemStyle title={"Email"} value={currentRecord?.email} />
+            <ModalItemStyle
+              title="Name"
+              value={currentRecord?.fieldOfficer?.customFields?.name}
+            />
+            <ModalItemStyle
+              title={"Email"}
+              value={currentRecord?.fieldOfficer?.email}
+            />
             <ModalItemStyle
               title={"Phone Number"}
-              value={currentRecord?.phoneNumber}
+              value={currentRecord?.fieldOfficer?.phoneNumber}
             />
             <ModalItemStyle
               title={"Home Address:"}
-              value={currentRecord?.address}
+              value={currentRecord?.fieldOfficer?.customFields?.homeAddress}
             />
             <ModalItemStyle
               title={"Hub ID:"}
-              value={currentRecord?.hubId || "12D89"}
+              value={currentRecord?.fieldOfficer?.hubUid}
             />
             <ModalItemStyle
               title={"Spoke Id:"}
-              value={currentRecord?.spokeId || "12D89"}
+              value={currentRecord?.fieldOfficer?.spokeUid}
             />
             <ModalItemStyle
               title={"Set Location:"}
-              value={currentRecord?.address}
+              value={currentRecord?.fieldOfficer?.customFields?.homeAddress}
             />
             <ModalItemStyle
               title={"Collected Amount:"}
-              value={currentRecord?.collected_amount}
+              value={currentRecord?.totalInstallmentAmount}
             />
           </div>
         </div>

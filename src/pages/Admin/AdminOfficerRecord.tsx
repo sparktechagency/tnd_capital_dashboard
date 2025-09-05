@@ -1,23 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useGetRecentOfficerCollectionQuery } from "../../redux/features/admin/adminOverview/adminOverviewApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminOfficerRecord from "../../ui/Modal/OfficerRecord/ViewAdminOfficerRecord";
 import AdminOfficerRecordTable from "../../ui/Tables/AdminOfficerRecordTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { fieldOfficerData } from "./fakeData";
 
 const AdminOfficerRecord = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data } = useGetRecentOfficerCollectionQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const officerCollection = data?.data;
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -48,12 +57,13 @@ const AdminOfficerRecord = () => {
         </div>
 
         <AdminOfficerRecordTable
-          data={fieldOfficerData}
+          data={officerCollection?.result}
           loading={false}
           showViewModal={showViewUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={officerCollection?.meta?.total}
         />
 
         <ViewAdminOfficerRecord
