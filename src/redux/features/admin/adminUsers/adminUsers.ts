@@ -2,6 +2,8 @@ import { baseApi } from "../../../api/baseApi";
 import { tagTypes } from "../../../tagTypes";
 
 const admin_users = "/users";
+const users_field = "/users_field"
+
 
 const adminUsersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -47,6 +49,43 @@ const adminUsersApi = baseApi.injectEndpoints({
             invalidatesTags: [tagTypes.user],
         }),
 
+        // field related api calling
+
+        createUserField: builder.mutation({
+            query: (req) => ({
+                url: `${users_field}/add_field`,
+                method: "POST",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.userField],
+        }),
+
+        getAllUsersRelatedField: builder.query({
+            query: () => ({
+                url: `${users_field}/get_users_fields`,
+                method: "GET",
+            }),
+            providesTags: [tagTypes.userField],
+        }),
+
+        updateUserField: builder.mutation({
+            query: (req) => ({
+                url: `${users_field}/update_field`,
+                method: "PATCH",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.userField],
+        }),
+
+        deleteUserField: builder.mutation({
+            query: (req) => ({
+                url: `${users_field}/delete_field/${req?.params}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: [tagTypes.userField],
+        }),
+
+
     }),
 });
 
@@ -54,5 +93,10 @@ export const {
     useGetUsersQuery,
     useUpdateUserMutation,
     useUserActionMutation,
-    useDeleteUserMutation
+    useDeleteUserMutation,
+    //
+    useGetAllUsersRelatedFieldQuery,
+    useCreateUserFieldMutation,
+    useUpdateUserFieldMutation,
+    useDeleteUserFieldMutation
 } = adminUsersApi;

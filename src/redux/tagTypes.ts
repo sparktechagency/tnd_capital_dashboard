@@ -9,7 +9,8 @@ export const tagTypes = {
   adminLoan: "AdminLoan",
   adminClients: "AdminClients",
   adminRepayments: "AdminRepayments",
-  adminRepaymentsField: "AdminRepaymentsField"
+  adminRepaymentsField: "AdminRepaymentsField",
+  userField: "UserField"
 
 };
 
@@ -24,5 +25,6 @@ export const tagTypesList = [
   tagTypes.adminLoan,
   tagTypes.adminClients,
   tagTypes.adminRepayments,
-  tagTypes.adminRepaymentsField
+  tagTypes.adminRepaymentsField,
+  tagTypes.userField
 ];

@@ -2,9 +2,15 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { Supervisory } from "../../Components/svg/leads";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+  useUserActionMutation,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import ViewAdminHRModal from "../../ui/Modal/AdminHR/ViewAdminHRModal";
 import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
@@ -12,7 +18,6 @@ import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminSupervisorTable from "../../ui/Tables/AdminSupervisorTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { officerData } from "./fakeData";
 
 const AdminSupervisor = () => {
   const [page, setPage] = useState<number>(1);
@@ -28,6 +33,19 @@ const AdminSupervisor = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data, isLoading } = useGetUsersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+    role: "supervisor",
+  });
+
+  const supervisor = data?.data;
+
+  const [updateUser] = useUserActionMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -57,12 +75,12 @@ const AdminSupervisor = () => {
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -73,12 +91,12 @@ const AdminSupervisor = () => {
 
   const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      updateUser,
       {
         body: {
-          userId: data?._id,
           action: "blocked",
         },
+        params: data?._id,
       },
       "Blocking..."
     );
@@ -88,12 +106,12 @@ const AdminSupervisor = () => {
   };
   const handleUnblock = async (data: any) => {
     const res = await tryCatchWrapper(
-      // userAction,
+      updateUser,
       {
         body: {
-          userId: data?._id,
           action: "active",
         },
+        params: data?._id,
       },
       "Unblocking..."
     );
@@ -101,6 +119,10 @@ const AdminSupervisor = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -127,7 +149,7 @@ const AdminSupervisor = () => {
         </div>
 
         <AdminSupervisorTable
-          data={officerData}
+          data={supervisor?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
@@ -136,12 +158,14 @@ const AdminSupervisor = () => {
           limit={limit}
           page={page}
           setPage={setPage}
+          total={supervisor?.meta?.total}
         />
 
         <ViewAdminHRModal
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+          title="Supervisory Details"
         />
 
         <DeleteModal
