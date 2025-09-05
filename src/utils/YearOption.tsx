@@ -18,7 +18,7 @@ const YearOption: React.FC<YearOptionProps> = ({
   setThisYear,
 }) => {
   const [yearOptions, setYearOptions] = useState<YearOption[]>([]); // Type state as an array of YearOption objects
-
+  console.log(currentYear, "currentYear in YearOption");
   useEffect(() => {
     const startYear = 2020;
     const yearRange: YearOption[] = [];

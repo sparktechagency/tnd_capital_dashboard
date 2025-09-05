@@ -11,7 +11,12 @@ import Loading from "../../ui/Loading";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 import YearOption from "../../utils/YearOption";
-import { useGetAdminCountsQuery, useGetAdminLoanApprovalReportQuery, useGetCollectionChartQuery, useGetRecentOfficerCollectionQuery } from "../../redux/features/admin/adminOverview/adminOverviewApi";
+import {
+  useGetAdminCountsQuery,
+  useGetAdminLoanApprovalReportQuery,
+  useGetCollectionChartQuery,
+  useGetRecentOfficerCollectionQuery,
+} from "../../redux/features/admin/adminOverview/adminOverviewApi";
 
 export const chartData = [
   { month: "Jan", totalPresent: 35 },
@@ -37,6 +42,8 @@ const AdminOverview = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const { collapsed } = useAppSelector((state) => state.auth);
   const [currentYear, setCurrentYear] = useState(2025);
+  const [approvalYear, setApprovalYear] = useState(2025);
+
 
   const { data: adminCount, isLoading: countLoading } = useGetAdminCountsQuery(
     {}
@@ -48,7 +55,7 @@ const AdminOverview = () => {
 
   const { data: loanApprovalReport, isLoading: reportLoading } =
     useGetAdminLoanApprovalReportQuery({
-      year: currentYear,
+      year: approvalYear,
     });
 
   const { data: recentApplication } = useGetRecentOfficerCollectionQuery({});
@@ -138,7 +145,11 @@ const AdminOverview = () => {
           <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Collection Report</p>
-              <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+              <YearOption
+                currentYear={currentYear}
+                setThisYear={setCurrentYear}
+                key={""}
+              />
             </div>
             <Area_Chart chartData={collectionChart?.data} />
           </div>
@@ -146,8 +157,8 @@ const AdminOverview = () => {
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Loan Approval</p>
               <YearOption
-                currentYear={2025}
-                setThisYear={setCurrentYear}
+                currentYear={approvalYear}
+                setThisYear={setApprovalYear}
                 key={""}
               />
             </div>

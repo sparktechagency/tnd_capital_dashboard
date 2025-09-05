@@ -7,6 +7,16 @@ const users_field = "/users_field"
 
 const adminUsersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+
+        createUser: builder.mutation({
+            query: (req) => ({
+                url: `${admin_users}/create`,
+                method: "POST",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.user],
+        }),
+
         getUsers: builder.query({
             query: ({ page, limit, searchTerm, role }) => ({
                 url: `${admin_users}`,
@@ -102,6 +112,7 @@ const adminUsersApi = baseApi.injectEndpoints({
 });
 
 export const {
+    useCreateUserMutation,
     useGetUsersQuery,
     useUpdateUserMutation,
     useUserActionMutation,

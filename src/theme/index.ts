@@ -65,12 +65,12 @@ export const mainTheme = {
       colorPrimary: "rgb(27,27,27)",
     },
     Upload: {
-      colorTextQuaternary: "#fff",
+      colorTextQuaternary: "#000",
       colorFillAlter: "rgba(0,0,0,0)",
       colorBorder: "#fff",
       colorBorderHover: "#fff",
-      colorText: "#fff",
-      colorIcon: "#fff",
+      colorText: "#000",
+      colorIcon: "#000",
       actionsColor: "rgba(255,0,0)",
     },
     Table: {
