@@ -2,41 +2,56 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { Location } from "../../Components/svg/leads";
+import { useGetLocationProfileQuery } from "../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminLocationProfileModal from "../../ui/Modal/AdminLocationProfile/ViewAdminLocationProfileModal";
 import AdminLocationProfileTable from "../../ui/Tables/AdminLocationProfileTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { dataSource } from "./fakeData";
+import Loading from "../../ui/Loading";
+import EditLocationProfileModal from "../../ui/Modal/AdminLocationProfile/EditLocationProfileModal";
 
 const AdminLocationProfile = () => {
   const [page, setPage] = useState<number>(1);
   const limit = 10;
 
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-  console.log(currentRecord);
+
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data, isLoading } = useGetLocationProfileQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const locationProfile = data?.data;
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  // const showEditUserModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsEditModalVisible(true);
-  // };
+  const showEditUserModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
+  };
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    // setIsEditModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen">
@@ -65,12 +80,12 @@ const AdminLocationProfile = () => {
         <AdminLocationProfileTable
           loading={false}
           limit={limit}
-          data={dataSource}
+          data={locationProfile?.result}
           showViewModal={showViewUserModal}
-          // showEditModal={showEditUserModal}
+          showEditUserModal={showEditUserModal}
           page={page}
           setPage={setPage}
-          total={0}
+          total={locationProfile?.meta?.total}
         />
 
         <ViewAdminLocationProfileModal
@@ -79,11 +94,11 @@ const AdminLocationProfile = () => {
           currentRecord={currentRecord}
         />
 
-        {/* <EditManagerInfoModal
-          isEditManagerOpen={isEditModalVisible}
+        <EditLocationProfileModal
+          isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        /> */}
+        />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminOfficerRecord from "../../ui/Modal/OfficerRecord/ViewAdminOfficerRecord";
 import AdminOfficerRecordTable from "../../ui/Tables/AdminOfficerRecordTable";
 import DaysSelection from "../../utils/DaysSelection";
+import Loading from "../../ui/Loading";
 
 const AdminOfficerRecord = () => {
   const [page, setPage] = useState<number>(1);
@@ -20,7 +21,7 @@ const AdminOfficerRecord = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data } = useGetRecentOfficerCollectionQuery({
+  const { data, isLoading } = useGetRecentOfficerCollectionQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -37,6 +38,8 @@ const AdminOfficerRecord = () => {
     setIsViewModalVisible(false);
     setCurrentRecord(null);
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div>

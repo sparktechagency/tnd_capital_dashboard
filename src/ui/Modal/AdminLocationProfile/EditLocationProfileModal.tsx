@@ -1,14 +1,21 @@
-import { Form } from "antd";
-import Topbar from "../../Components/Shared/Topbar";
-import { useAppSelector } from "../../redux/hooks";
-import ReuseButton from "../../ui/Button/ReuseButton";
-import ReusableForm from "../../ui/Form/ReuseForm";
-import ReuseInput from "../../ui/Form/ReuseInput";
-import { useCreateLocationProfileMutation } from "../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { Form, Modal } from "antd";
+import { useEffect } from "react";
+import { useUpdateLocationProfileMutation } from "../../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
+import ReuseButton from "../../Button/ReuseButton";
+import ReusableForm from "../../Form/ReuseForm";
+import ReuseInput from "../../Form/ReuseInput";
 
-const AdminAddLocation = () => {
-  const { collapsed } = useAppSelector((state) => state.auth);
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const EditLocationProfileModal = ({
+  isEditModalVisible,
+  handleCancel,
+  currentRecord,
+}: {
+  isEditModalVisible: boolean;
+  handleCancel: () => void;
+  currentRecord: any;
+}) => {
   const [form] = Form.useForm();
 
   const inputStructure = [
@@ -78,35 +85,49 @@ const AdminAddLocation = () => {
     },
   ];
 
+  useEffect(() => {
+    form.setFieldsValue({
+      hubUid: currentRecord?.hubId?.uid,
+      locationName: currentRecord?.locationName,
+      locationId: currentRecord?.locationId,
+      email: currentRecord?.email,
+      address: currentRecord?.address,
+      phoneNumber: currentRecord?.phoneNumber,
+      currency: currentRecord?.currency,
+      excelFormula: currentRecord?.excelFormula,
+    });
+  }, [currentRecord, form]);
+
   // api calling
-  const [createLocationProfile] = useCreateLocationProfileMutation();
+  const [updateLocationProfile] = useUpdateLocationProfileMutation();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = async (values: any) => {
     const res = await tryCatchWrapper(
-      createLocationProfile,
-      { body: values },
-      "Creating..."
+      updateLocationProfile,
+      { body: values, params: currentRecord?._id },
+      "Updating..."
     );
 
-    if (res?.statusCode === 201) {
+    if (res?.statusCode === 200) {
       form.resetFields();
+      handleCancel();
     }
   };
 
   return (
-    <div className="min-h-screen">
-      <Topbar collapsed={collapsed}></Topbar>
-
+    <Modal
+      open={isEditModalVisible}
+      onCancel={handleCancel}
+      footer={null}
+      centered
+      width={800}
+    >
       <div className="mt-4">
-        <p className="text-xl font-medium ">Location Information</p>
+        <p className="text-xl font-medium ">Edit Location Information</p>
 
-        <ReusableForm
-          form={form}
-          handleFinish={onFinish}
-          className="!px-32 !mt-10"
-        >
-          <div className="grid grid-cols-2 gap-x-52">
+        <ReusableForm form={form} handleFinish={onFinish} className=" !mt-10">
+          <div className="grid grid-cols-2 gap-x-5">
             {inputStructure.map((input, index) => (
               <ReuseInput
                 key={index}
@@ -122,7 +143,7 @@ const AdminAddLocation = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
+          <div className="grid grid-cols-2 gap-x-20 px-28 my-5">
             <ReuseButton
               variant="outline"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
@@ -131,16 +152,16 @@ const AdminAddLocation = () => {
             </ReuseButton>
             <ReuseButton
               variant="secondary"
-              className="!py-6 !px-9 !font-bold rounded-lg !w-full"
               htmlType="submit"
+              className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Submit
             </ReuseButton>
           </div>
         </ReusableForm>
       </div>
-    </div>
+    </Modal>
   );
 };
 
-export default AdminAddLocation;
+export default EditLocationProfileModal;

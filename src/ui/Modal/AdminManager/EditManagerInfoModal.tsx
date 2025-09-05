@@ -4,14 +4,29 @@ import Topbar from "../../../Components/Shared/Topbar";
 import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
+import { useEffect } from "react";
+import { useUpdateLocationProfileMutation } from "../../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 
 const EditManagerInfoModal = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
 
+  const data = JSON.parse(localStorage.getItem("currentRecord") || "{}");
+
+  console.log(data);
+
   const inputStructure = [
     {
-      name: "name",
+      name: "hubUid",
+      inputType: "text",
+      placeholder: "Location Name",
+      label: "Hub ID",
+      labelClassName: "!font-normal !text-sm",
+      rules: [{ required: true, message: "Location Name is required" }],
+    },
+    {
+      name: "locationName",
       inputType: "text",
       placeholder: "Location Name",
       label: "Location Name",
@@ -19,7 +34,7 @@ const EditManagerInfoModal = () => {
       rules: [{ required: true, message: "Location Name is required" }],
     },
     {
-      name: "phoneNumber",
+      name: "locationId",
       inputType: "text",
       label: "Location ID",
       placeholder: "Location ID",
@@ -35,7 +50,7 @@ const EditManagerInfoModal = () => {
       rules: [{ required: true, message: "Email is required" }],
     },
     {
-      name: "Home Address",
+      name: "address",
       inputType: "text",
       label: "Address",
       placeholder: "Address",
@@ -43,7 +58,7 @@ const EditManagerInfoModal = () => {
       rules: [{ required: true, message: "Address is required" }],
     },
     {
-      name: "nid",
+      name: "phoneNumber",
       inputType: "text",
       label: "Phone Number",
       placeholder: "Phone Number",
@@ -51,7 +66,7 @@ const EditManagerInfoModal = () => {
       rules: [{ required: true, message: "Phone Number is required" }],
     },
     {
-      name: "nid",
+      name: "currency",
       inputType: "text",
       label: "Currency",
       placeholder: "Currency",
@@ -59,7 +74,7 @@ const EditManagerInfoModal = () => {
       rules: [{ required: true, message: "Currency is required" }],
     },
     {
-      name: "nid",
+      name: "excelFormula",
       inputType: "text",
       label: "Excel Formula",
       placeholder: "Excel Formula",
@@ -68,9 +83,33 @@ const EditManagerInfoModal = () => {
     },
   ];
 
+  useEffect(() => {
+    form.setFieldsValue({
+      hubUid: data.hubId?.uid,
+      locationName: data.locationName,
+      locationId: data.locationId,
+      email: data.email,
+      address: data.address,
+      phoneNumber: data.phoneNumber,
+      currency: data.currency,
+      excelFormula: data.excelFormula,
+    });
+  }, [data, form]);
+
+  // api calling
+  const [updateLocationProfile] = useUpdateLocationProfileMutation();
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = async (values: any) => {
+    const res = await tryCatchWrapper(
+      updateLocationProfile,
+      { body: values, params: data._id },
+      "Updating..."
+    );
+
+    if (res?.statusCode === 200) {
+      form.resetFields();
+    }
   };
 
   return (
@@ -105,14 +144,13 @@ const EditManagerInfoModal = () => {
             <ReuseButton
               variant="outline"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
             <ReuseButton
               variant="secondary"
+              htmlType="submit"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Submit
             </ReuseButton>

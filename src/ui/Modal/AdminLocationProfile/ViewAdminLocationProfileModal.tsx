@@ -1,5 +1,6 @@
 import { Modal } from "antd";
 import ModalItemStyle from "../../../utils/ModalItemStyle";
+import dayjs from "dayjs";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const ViewAdminLocationProfileModal = ({
@@ -17,7 +18,7 @@ const ViewAdminLocationProfileModal = ({
       onCancel={handleCancel}
       footer={null}
       centered
-      width={580}
+      width={700}
     >
       <div className="py-5">
         <div className="text-base-color">
@@ -25,33 +26,26 @@ const ViewAdminLocationProfileModal = ({
             Location Profile
           </h3>
 
-          {/* <div className="flex flex-col justify-center items-center gap-2 mt-3">
-            <img
-              src={currentRecord?.image}
-              alt={currentRecord?.fullName}
-              className="size-[180px] object-cover rounded mt-6"
-            />
-          </div> */}
           <div className="mt-6 px-3">
             <ModalItemStyle
               title="Location Name"
               value={currentRecord?.locationName}
             />
-            <ModalItemStyle
-              title="Location ID"
-              value={"QCJ5+82 Dhaka"}
-            />
+            <ModalItemStyle title="Location ID" value={"QCJ5+82 Dhaka"} />
             <ModalItemStyle title={"Email"} value={currentRecord?.email} />
             <ModalItemStyle
               title={"Phone Number"}
               value={currentRecord?.phoneNumber}
             />
-            <ModalItemStyle title={"Date"} value={currentRecord?.date} />
+            <ModalItemStyle
+              title={"Date"}
+              value={dayjs(currentRecord?.createdAt).format("DD-MM-YYYY")}
+            />
             <ModalItemStyle title={"Address"} value={currentRecord?.address} />
-            <ModalItemStyle title={"Currency"} value={"USD"} />
+            <ModalItemStyle title={"Currency"} value={currentRecord?.currency} />
             <ModalItemStyle
               title={"Excel Formula"}
-              value={"(1.35 * P + 19 + IF(m > 6, (m - 6) * 0.018 * P, 0)) / m"}
+              value={currentRecord?.excelFormula}
             />
           </div>
         </div>

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import ReuseTable from "../../utils/ReuseTable";
+import dayjs from "dayjs";
 import { AllIcons } from "../../../public/images/AllImages";
-import { Link } from "react-router-dom";
+import ReuseTable from "../../utils/ReuseTable";
 
 interface AdminLocationProfileTable {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -10,7 +10,7 @@ interface AdminLocationProfileTable {
   setPage?: (page: number) => void; // Function to handle pagination
   showViewModal: (record: any) => void;
   showEditModal?: (record: any) => void;
-
+  showEditUserModal: (record: any) => void;
   page?: number;
   total?: number;
   limit?: number;
@@ -20,6 +20,7 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
   loading,
   setPage,
   showViewModal,
+  showEditUserModal,
   page,
   total,
   limit,
@@ -44,7 +45,9 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
     },
     {
       title: "Date",
-      dataIndex: "date", // Data key for role
+      dataIndex: "createdAt", // Data key for role
+      render: (_text: string, record: any) =>
+        dayjs(record.createdAt).format("DD-MM-YYYY"),
       key: "date",
       align: "center",
     },
@@ -70,14 +73,12 @@ const AdminLocationProfileTable: React.FC<AdminLocationProfileTable> = ({
           </Tooltip>
 
           <Tooltip placement="left" title="Block">
-            <Link to={`/admin/location/edit-location/${record.key}`}>
-              <button
-                className="!p-0 !bg-transparent !border-none cursor-pointer"
-                // onClick={() => showEditModal(record)}
-              >
-                <img src={AllIcons.pen} />
-              </button>
-            </Link>
+            <button
+              className="!p-0 !bg-transparent !border-none cursor-pointer"
+              onClick={() => showEditUserModal(record)}
+            >
+              <img src={AllIcons.pen} />
+            </button>
           </Tooltip>
         </Space>
       ),
