@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 // import { MdBlock } from "react-icons/md";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
 import { getImageUrl } from "../../helpers/config/envConfig";
 
@@ -35,7 +35,11 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
         return (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <img
-              src={getImageUrl() + record?.customFields?.image}
+              src={
+                record?.customFields?.image
+                  ? getImageUrl() + record?.customFields?.image
+                  : AllImages.profile
+              }
               alt={_text}
               style={{
                 width: 45,
