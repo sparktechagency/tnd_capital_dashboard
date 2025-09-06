@@ -12,13 +12,13 @@ import {
 
 // Define the structure of each data point in the chart
 interface ChartData {
-  name: string;
-  uv: number;
+  month: string;
+  count: number;
 }
 
 interface CustomTooltipProps {
   active?: boolean;
-  payload?: { payload: ChartData; uv: number }[];
+  payload?: { payload: ChartData; count: number }[];
 }
 
 const Bar_Chart: React.FC<any> = ({ data }: any) => {
@@ -29,11 +29,13 @@ const Bar_Chart: React.FC<any> = ({ data }: any) => {
       return (
         <div className="bg-white shadow-md p-2 rounded-md border border-gray-300">
           <p className="text-sm font-semibold text-gray-800">
-            {payload[0].payload.name}
+            {payload[0].payload.month}
           </p>
           <p className="text-xs text-gray-600">
-            Total Income:{" "}
-            <span className="font-semibold">${payload[0].uv}</span>
+            Total:
+            <span className="font-semibold">
+              {payload?.[0]?.payload?.count}
+            </span>
           </p>
         </div>
       );
@@ -57,7 +59,7 @@ const Bar_Chart: React.FC<any> = ({ data }: any) => {
           }}
           barCategoryGap={30} // Adjust the gap between bars if necessary
         >
-          <RechartsTooltip content={<CustomTooltip />} />
+          <RechartsTooltip content={<CustomTooltip payload={data} />} />
           <XAxis dataKey="month" tick={{ ...tickStyle }} tickMargin={6} />
           <YAxis
             tick={{ ...tickStyle }}

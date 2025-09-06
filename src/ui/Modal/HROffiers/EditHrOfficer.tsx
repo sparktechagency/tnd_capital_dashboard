@@ -134,6 +134,7 @@ const EditHrOfficerModal = ({
                     Typolevel={4}
                     inputType={field.inputType}
                     placeholder={field.placeholder}
+                    readOnly={field?.inputName === "email" || field?.inputName === "hubUid"}
                     labelClassName="!font-normal !text-sm"
                     rules={field.rules}
                     inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"

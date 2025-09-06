@@ -2,6 +2,10 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
+import {
+  useDeleteUserMutation,
+  useGetAllManagersQuery,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
@@ -10,7 +14,8 @@ import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
 import HRManagersTable from "../../ui/Tables/HRManagersTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { spokeManagerFieldOfficerData } from "../Admin/fakeData";
+import Loading from "../../ui/Loading";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 
 const HRManagers = () => {
   const [page, setPage] = useState<number>(1);
@@ -21,12 +26,25 @@ const HRManagers = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data, isLoading } = useGetAllManagersQuery({
+    page: 1,
+    limit: 10,
+  });
+  const mangersData = data?.data;
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
+  };
+  const showEditUserModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
   };
 
   const showDeleteModal = (record: any) => {
@@ -37,17 +55,18 @@ const HRManagers = () => {
   const handleCancel = () => {
     setIsDeleteModalVisible(false);
     setIsViewModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -55,6 +74,8 @@ const HRManagers = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="min-h-screen">
@@ -81,13 +102,15 @@ const HRManagers = () => {
         </div>
 
         <HRManagersTable
-          data={spokeManagerFieldOfficerData}
+          data={mangersData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          showEditUserModal={showEditUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={mangersData?.meta?.total}
         />
 
         <ViewHRManager
@@ -101,6 +124,12 @@ const HRManagers = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
+        />
+
+        <EditHrOfficerModal
+          isEditModalVisible={isEditModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
         />
       </div>
     </div>

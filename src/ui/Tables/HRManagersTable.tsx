@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons } from "../../../public/images/AllImages";
+import dayjs from "dayjs";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
 import ReuseTable from "../../utils/ReuseTable";
-import { Link } from "react-router-dom";
 
 interface AdminHRManagersTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void;
+  showEditUserModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -20,6 +22,7 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
   loading,
   showViewModal,
   showDeleteModal,
+  showEditUserModal,
   setPage,
   page,
   total,
@@ -30,47 +33,66 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (_text: string, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      render: (_text: string, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={
+                record?.customFields?.image
+                  ? getImageUrl() + record?.customFields?.image
+                  : AllImages.profile
+              }
+              alt={_text}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{record?.customFields?.name}</span>
+          </div>
+        );
+      },
     },
 
     {
       title: "Phone Number",
-      dataIndex: "phoneNumber", // Data key for phoneNumber
+      dataIndex: "phoneNumber",
       key: "phoneNumber",
       align: "center",
     },
     {
       title: "Email",
-      dataIndex: "email", // Data key for email
+      dataIndex: "email",
       key: "email",
       align: "center",
     },
     {
       title: "Date",
-      dataIndex: "date", // Data key for role
+      dataIndex: "createdAt",
+      render: () => <span>{dayjs().format("DD-MM-YYYY")}</span>,
       key: "date",
       align: "center",
     },
 
     {
       title: "Address",
-      dataIndex: "address", // Data key for role
+      dataIndex: ["customFields", "homeAddress"],
       key: "address",
       align: "center",
+    },
+    {
+      title: "Type",
+      dataIndex: "role",
+      key: "role",
+      align: "center",
+      filters: [
+        { text: "Spoke Manager", value: "spokeManager" },
+        { text: "Hub Manager", value: "hubManager" },
+      ],
+      onFilter: (value: string, record: any) => record.role === value,
+      render: (text: string) => <span className="capitalize">{text}</span>,
     },
 
     {
@@ -96,11 +118,12 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
             </button>
           </Tooltip>
           <Tooltip placement="right">
-            <Link to={`edit-manager/${record.key}`}>
-              <button className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer">
-                <img src={AllIcons.pen} />
-              </button>
-            </Link>
+            <button
+              onClick={() => showEditUserModal(record)}
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+            >
+              <img src={AllIcons.pen} />
+            </button>
           </Tooltip>
         </Space>
       ),
