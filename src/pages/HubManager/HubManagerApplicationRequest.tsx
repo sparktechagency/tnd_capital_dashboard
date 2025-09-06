@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { AllImages } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
@@ -5,14 +6,27 @@ import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import { Link } from "react-router-dom";
+import { useGetAllHubManagerLoanApplicationQuery } from "../../redux/features/HubManager/hubManagerApplicationApi";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import Loading from "../../ui/Loading";
 
 const HubManagerApplicationRequest = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   const [searchText, setSearchText] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  
-  console.log(searchText, page);
+
+  const { data, isLoading } = useGetAllHubManagerLoanApplicationQuery({
+    page,
+    limit: 12,
+    searchTerm: searchText,
+    supervisorApproval: "approved",
+    hubManagerApproval: "pending",
+  });
+
+  const application = data?.data;
+
+  if (isLoading) return <Loading />;
   return (
     <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
@@ -28,22 +42,37 @@ const HubManagerApplicationRequest = () => {
       <div className="mt-10 shadow border border-gray-100 rounded-xl p-5">
         <p className="text-xl font-medium">Apply Request</p>
         <div className="grid grid-cols-4 gap-5 mt-5">
-          {Array.from({ length: 100 }).map((_, index) => (
+          {application?.result.map((item: any, index: number) => (
             <Link
+              onClick={() =>
+                localStorage.setItem("clientId", JSON.stringify(item))
+              }
               key={index}
-              to={`/hubManager/applications/all-application-requests-details/${index}`}
+              to={`/hubManager/applications/all-application-requests-details/${item._id}`}
               className="flex items-center justify-between gap-x-3 border border-gray-100 p-5 rounded-xl shadow"
             >
               <div className="flex items-center gap-x-3">
                 <img
-                  src={AllImages.profile}
+                  src={
+                    item?.clientId?.customFields?.image
+                      ? getImageUrl() + item?.clientId?.customFields?.image
+                      : AllImages.profile
+                  }
                   alt="profile_pic"
                   className="rounded-full size-[80px]"
                 />
                 <div>
-                  <p className="text-lg font-medium text-black">Dianne Russell</p>
+                  <p className="text-lg font-medium text-black">
+                    {item?.clientId?.customFields?.name}
+                  </p>
                   <div className="flex items-center gap-x-5 mt-3">
-                    <ReuseButton variant="secondary" className="!text-sm !px-3">
+                    <ReuseButton
+                      onClick={() =>
+                        localStorage.setItem("clientId", JSON.stringify(item))
+                      }
+                      variant="secondary"
+                      className="!text-sm !px-3"
+                    >
                       See Details
                     </ReuseButton>
                     <ReuseButton className="!text-sm !px-6">Delete</ReuseButton>

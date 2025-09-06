@@ -5,14 +5,48 @@ import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ConfirmationModal from "../../ui/Modal/User/ConfirmationModal";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import dayjs from "dayjs";
+import { useApplicationActionMutation } from "../../redux/features/HubManager/hubManagerApplicationApi";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useNavigate } from "react-router-dom";
 
 const HubManagerApplicationRequestDetails = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [viewConfirmation, setViewConfirmation] = useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
 
-  const handleAccept = (data: any) => {
-    console.log(data);
+  const data = localStorage.getItem("clientId");
+  const pareseData = JSON.parse(data || "{}");
+  const client = pareseData?.clientId;
+  const navigation = useNavigate();
+
+  const [applicationAction] = useApplicationActionMutation();
+
+  const handleAccept = async () => {
+    const res = await tryCatchWrapper(
+      applicationAction,
+      { body: { action: "approved", loanId: pareseData?._id } },
+      "Accepting..."
+    );
+    if (res.statusCode === 200) {
+      localStorage.removeItem("clientId");
+      setViewConfirmation(false);
+      navigation(-1);
+    }
+  };
+
+  const handleDelete = async () => {
+    const res = await tryCatchWrapper(
+      applicationAction,
+      { body: { action: "rejected", loanId: pareseData?._id } },
+      "Rejecting ..."
+    );
+    if (res.statusCode === 200) {
+      localStorage.removeItem("clientId");
+      setViewConfirmation(false);
+      navigation(-1);
+    }
   };
 
   return (
@@ -24,12 +58,18 @@ const HubManagerApplicationRequestDetails = () => {
         <div className="flex items-center justify-between gap-x-3 mt-8">
           <div className="flex items-center gap-x-3">
             <img
-              src={AllImages.profile}
+              src={
+                pareseData?.clientId?.customFields?.image
+                  ? getImageUrl() + pareseData?.clientId?.customFields?.image
+                  : AllImages.profile
+              }
               alt="profile_pic"
               className="rounded-full size-[80px]"
             />
             <div>
-              <p className="text-lg font-medium text-black">Dianne Russell</p>
+              <p className="text-lg font-medium text-black">
+                {pareseData?.clientId?.customFields?.name}
+              </p>
               <div className="flex items-center gap-x-5 mt-3">
                 <ReuseButton
                   onClick={() => {
@@ -47,7 +87,12 @@ const HubManagerApplicationRequestDetails = () => {
                   handleCancel={() => setViewConfirmation(false)}
                   handleAccept={handleAccept}
                 />
-                <ReuseButton className="!text-sm ">Delete</ReuseButton>
+                <ReuseButton
+                  onClick={() => handleDelete()}
+                  className="!text-sm "
+                >
+                  Delete
+                </ReuseButton>
               </div>
             </div>
           </div>
@@ -57,70 +102,78 @@ const HubManagerApplicationRequestDetails = () => {
           <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-sm text-gray-700">
             <p>
-              <span className="font-medium">Name:</span> Dianne Russell
+              <span className="font-medium">Name:</span>{" "}
+              {client?.customFields?.name}
             </p>
             <p>
-              <span className="font-medium">Phone:</span> +983 54594586
+              <span className="font-medium">Phone:</span> {client?.phoneNumber}
             </p>
 
             <p>
-              <span className="font-medium">Email:</span>{" "}
-              diannerussell@gmail.com
+              <span className="font-medium">Email:</span> {client?.email}
             </p>
             <p>
-              <span className="font-medium">Home Address:</span> New York, NY
-              10003, USA
+              <span className="font-medium">Home Address:</span>{" "}
+              {client?.customFields?.homeAddress}
             </p>
 
             <p>
               <span className="font-medium">Type of Financing Requested:</span>{" "}
-              Cost plus profit (CPP) Murabaha Bussiness
+              {pareseData?.typeofFinancingRequested}
             </p>
             <p>
-              <span className="font-medium">Purpose of Financing:</span>{" "}
-              Bussines
+              <span className="font-medium">Purpose of Financing:</span>
+
+              {pareseData?.purposeOfFinancing}
             </p>
 
             <p>
               <span className="font-medium">Loan Amount Requested:</span>{" "}
-              $50,000
+              {pareseData?.loanAmountRequested}
             </p>
             <p>
-              <span className="font-medium">Employment Status:</span> Others
+              <span className="font-medium">Employment Status:</span>{" "}
+              {pareseData?.employmentStatus}
             </p>
 
             <p>
-              <span className="font-medium">Where are you located:</span> New
-              York, NY 10003
+              <span className="font-medium">Where are you located:</span>
+              {pareseData?.whereAreYouLocated}
             </p>
             <p>
-              <span className="font-medium">Monthly Income:</span> $10,000
+              <span className="font-medium">Monthly Income:</span>{" "}
+              {pareseData?.monthlyIncome}
             </p>
 
             <p>
               <span className="font-medium">Preferred Contact Method:</span>{" "}
-              0160000000
+              {pareseData?.preferredContact}
             </p>
             <p>
-              <span className="font-medium">Term:</span> Monthly
+              <span className="font-medium">Term:</span> {pareseData?.term}
             </p>
 
             <p>
-              <span className="font-medium">NID:</span> 0000000000
+              <span className="font-medium">NID:</span> {pareseData?.nid}
             </p>
             <p>
               <span className="font-medium">Status:</span>{" "}
-              <span className="text-yellow-500 font-semibold">Pending</span>
+              <span className="text-yellow-500 font-semibold">
+                {pareseData?.loanStatus}
+              </span>
             </p>
 
             <p>
-              <span className="font-medium">Monthly Amount:</span> 5,000
+              <span className="font-medium">Monthly Amount:</span>{" "}
+              {pareseData?.installMentAmount}
             </p>
             <p>
-              <span className="font-medium">Start Date:</span> 10.10.2025
+              <span className="font-medium">Start Date:</span>{" "}
+              {dayjs(pareseData?.startDate).format("DD-MM-YYYY")}
             </p>
             <p>
-              <span className="font-medium">End Date:</span> 10.10.2026
+              <span className="font-medium">End Date:</span>{" "}
+              {dayjs(pareseData?.endDate).format("DD-MM-YYYY")}
             </p>
           </div>
         </div>
