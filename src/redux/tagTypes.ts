@@ -15,6 +15,8 @@ export const tagTypes = {
 
   // hr
   hrDashboardOverview: "hrDashboardOverview",
+  // hub manager
+  hubManagerOverview: "hubManagerOverview"
 };
 
 export const tagTypesList = [
@@ -32,4 +34,5 @@ export const tagTypesList = [
   tagTypes.userField,
   tagTypes.adminLocationProfile,
   tagTypes.hrDashboardOverview,
+  tagTypes.hubManagerOverview
 ];

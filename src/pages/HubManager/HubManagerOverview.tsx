@@ -5,87 +5,98 @@ import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
+import {
+  useGetHubManageFieldOfficerCollectionQuery,
+  useGetHubManagerApprovalReportQuery,
+  useGetHubManagerCollectionReportQuery,
+  useGetHubManagerCountsQuery,
+} from "../../redux/features/HubManager/hubManagerDashbaordApi";
 import { useAppSelector } from "../../redux/hooks";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 import YearOption from "../../utils/YearOption";
-import { fieldOfficerData } from "../Admin/fakeData";
 
-const chartData = [
-  { month: "Jan", totalPresent: 35 },
-  { month: "Feb", totalPresent: 50 },
-  { month: "Mar", totalPresent: 20 },
-  { month: "Apr", totalPresent: 50 },
-  { month: "May", totalPresent: 90 },
-  { month: "Jun", totalPresent: 40 },
-  { month: "Jul", totalPresent: 80 },
-  { month: "Aug", totalPresent: 19 },
-  { month: "Sep", totalPresent: 80 },
-  { month: "Oct", totalPresent: 90 },
-  { month: "Nov", totalPresent: 105 },
-  { month: "Dec", totalPresent: 106 },
-];
-
-const data = [
-  { label: "Rejected", color: "bg-purple-700", percent: 75 },
-  { label: "Pending", color: "bg-green-500", percent: 25 },
-];
-
-const cards = [
-  {
-    id: 1,
-    background: "#FFFFFF",
-    name: "Total Collection",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.collection} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "$2,000",
-  },
-  {
-    id: 2,
-    background: "#FFFFFF",
-    name: "Total Application",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.application} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "100",
-  },
-  {
-    id: 3,
-    background: "#FFFFFF",
-    name: "Overdue",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.overdue} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "$2,000K",
-  },
-  {
-    id: 3,
-    background: "#FFFFFF",
-    name: "Total Clients",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.clients} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "806",
-  },
-];
 const HubManagerOverview = () => {
   const [page, setPage] = useState<number>(1);
-
   const limit = 12;
-
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const { collapsed } = useAppSelector((state) => state.auth);
+  const [year, setYear] = useState(2025);
+  const [approvalYear, setApprovalYear] = useState(2025);
 
+  // api calling
+  const { data: counts } = useGetHubManagerCountsQuery({});
+  const { data: collectionReport } = useGetHubManagerCollectionReportQuery({
+    year: year,
+  });
+  const { data: loanApprovalReport } = useGetHubManagerApprovalReportQuery({
+    year: approvalYear,
+  });
+
+  const { data: fieldOfficerData } = useGetHubManageFieldOfficerCollectionQuery(
+    {}
+  );
+
+  const cards = [
+    {
+      id: 1,
+      background: "#FFFFFF",
+      name: "Total Collection",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.collection} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.totalCollection,
+    },
+    {
+      id: 2,
+      background: "#FFFFFF",
+      name: "Total Application",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.application} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.totalApplication,
+    },
+    {
+      id: 3,
+      background: "#FFFFFF",
+      name: "Overdue",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.overdue} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.totalOverdue,
+    },
+    {
+      id: 3,
+      background: "#FFFFFF",
+      name: "Total Clients",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.clients} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.totalClients,
+    },
+  ];
+
+  const data = [
+    {
+      label: loanApprovalReport?.data[1]?.status,
+      color: "bg-purple-700",
+      percent: loanApprovalReport?.data[1]?.percentage,
+    },
+    {
+      label: loanApprovalReport?.data[0]?.status,
+      color: "bg-green-500",
+      percent: loanApprovalReport?.data[0]?.percentage,
+    },
+  ];
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
@@ -95,6 +106,8 @@ const HubManagerOverview = () => {
     setIsViewModalVisible(false);
     setCurrentRecord(null);
   };
+
+  console.log(fieldOfficerData, "fieldOfficerData hub manager");
 
   return (
     <section>
@@ -107,17 +120,21 @@ const HubManagerOverview = () => {
           <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Collection Report</p>
-              <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+              <YearOption currentYear={year} setThisYear={setYear} key={""} />
             </div>
-            <Area_Chart chartData={chartData} />
+            <Area_Chart chartData={collectionReport?.data} />
           </div>
           <div className="shadow-lg w-[700px] border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Loan Approval</p>
-              <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+              <YearOption
+                currentYear={approvalYear}
+                setThisYear={setApprovalYear}
+                key={""}
+              />
             </div>
             <div className="flex items-center justify-between pr-4">
-              <MultiRingChart />
+              <MultiRingChart loanApprovalReport={loanApprovalReport?.data} />
               <div>
                 <div className="space-y-6">
                   {data.map((item, index) => (
@@ -150,7 +167,7 @@ const HubManagerOverview = () => {
             loading={false}
             showViewModal={showViewUserModal}
             limit={limit}
-            data={fieldOfficerData}
+            data={fieldOfficerData?.data?.result}
             page={page}
             setPage={setPage}
             total={0}

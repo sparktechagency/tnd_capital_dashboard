@@ -12,8 +12,6 @@ const ViewFieldOfficerCollectionModal = ({
   handleCancel: () => void;
   currentRecord: any;
 }) => {
-  console.log(currentRecord, "currentRecord");
-
   return (
     <Modal
       open={isViewModalVisible}
@@ -53,7 +51,7 @@ const ViewFieldOfficerCollectionModal = ({
             />
             <ModalItemStyle
               title={"Home Address:"}
-              value={currentRecord?.fieldOfficer?.customFields?.address}
+              value={currentRecord?.fieldOfficer?.customFields?.homeAddress}
             />
             <ModalItemStyle
               title={"Hub ID:"}

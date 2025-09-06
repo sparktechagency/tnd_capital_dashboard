@@ -25,6 +25,9 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
   total,
   limit,
 }) => {
+
+  console.log(data, "data");
+
   const columns = [
     {
       title: "Full Name",
