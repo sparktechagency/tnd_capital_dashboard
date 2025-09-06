@@ -2,15 +2,20 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import DeleteModal from "../../ui/Modal/DeleteModal";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
+import ViewHROfficers from "../../ui/Modal/HROffiers/ViewHROfficers";
+import HROfficersTable from "../../ui/Tables/HROfficersTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import HROfficersTable from "../../ui/Tables/HROfficersTable";
-import { officerData } from "../Admin/fakeData";
-import ViewHROfficers from "../../ui/Modal/HROffiers/ViewHROfficers";
 
 const HROfficers = () => {
   const [page, setPage] = useState<number>(1);
@@ -18,15 +23,36 @@ const HROfficers = () => {
   console.log(searchText);
   const limit = 12;
 
-  const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isViewModalVisible, setIsViewModalVisible] = useState<boolean>(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] =
+    useState<boolean>(false);
+
+  const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
+  // api calls
+  const { data, isLoading } = useGetUsersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+    role: "fieldOfficer",
+  });
+
+  const fieldOfficerData = data?.data;
+
+  const [deleteUser] = useDeleteUserMutation();
+
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
+  };
+
+  const showEditUserModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
   };
 
   const showDeleteModal = (record: any) => {
@@ -37,17 +63,18 @@ const HROfficers = () => {
   const handleCancel = () => {
     setIsDeleteModalVisible(false);
     setIsViewModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -55,6 +82,10 @@ const HROfficers = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -74,24 +105,32 @@ const HROfficers = () => {
         </div>
       </Topbar>
 
-      <div className="mt-14">
+      <div className="mt-14 min-h-screen">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Field Officers</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
         <HROfficersTable
-          data={officerData}
+          data={fieldOfficerData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          showEditUserModal={showEditUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={fieldOfficerData?.meta?.total}
         />
 
         <ViewHROfficers
           isViewModalVisible={isViewModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+        />
+
+        <EditHrOfficerModal
+          isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
         />

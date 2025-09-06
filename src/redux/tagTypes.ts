@@ -11,8 +11,10 @@ export const tagTypes = {
   adminRepayments: "AdminRepayments",
   adminRepaymentsField: "AdminRepaymentsField",
   userField: "UserField",
-  adminLocationProfile: "AdminLocationProfile"
+  adminLocationProfile: "AdminLocationProfile",
 
+  // hr
+  hrDashboardOverview: "hrDashboardOverview",
 };
 
 export const tagTypesList = [
@@ -28,5 +30,6 @@ export const tagTypesList = [
   tagTypes.adminRepayments,
   tagTypes.adminRepaymentsField,
   tagTypes.userField,
-  tagTypes.adminLocationProfile
+  tagTypes.adminLocationProfile,
+  tagTypes.hrDashboardOverview,
 ];

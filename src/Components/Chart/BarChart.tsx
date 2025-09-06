@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
   BarChart,
@@ -15,28 +16,14 @@ interface ChartData {
   uv: number;
 }
 
-const data: ChartData[] = [
-  { name: "Jan", uv: 80 },
-  { name: "Feb", uv: 70 },
-  { name: "Mar", uv: 50 },
-  { name: "Apr", uv: 60 },
-  { name: "May", uv: 30 },
-  { name: "Jun", uv: 20 },
-  { name: "Jul", uv: 45 },
-  { name: "Aug", uv: 36 },
-  { name: "Sep", uv: 53 },
-  { name: "Oct", uv: 69 },
-  { name: "Nov", uv: 78 },
-  { name: "Dec", uv: 36 },
-];
-
 interface CustomTooltipProps {
   active?: boolean;
   payload?: { payload: ChartData; uv: number }[];
 }
 
-const Bar_Chart: React.FC = () => {
+const Bar_Chart: React.FC<any> = ({ data }: any) => {
   // Custom tooltip to display the information
+
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -71,7 +58,7 @@ const Bar_Chart: React.FC = () => {
           barCategoryGap={30} // Adjust the gap between bars if necessary
         >
           <RechartsTooltip content={<CustomTooltip />} />
-          <XAxis dataKey="name" tick={{ ...tickStyle }} tickMargin={6} />
+          <XAxis dataKey="month" tick={{ ...tickStyle }} tickMargin={6} />
           <YAxis
             tick={{ ...tickStyle }}
             axisLine={{
@@ -89,7 +76,7 @@ const Bar_Chart: React.FC = () => {
           <ReferenceLine y={50} stroke="#E5E5EF" />
           <ReferenceLine y={60} stroke="#E5E5EF" />
           <Bar
-            dataKey="uv"
+            dataKey="count"
             fill="url(#incomeGradient)" // Bar color
             barSize={20} // Width of each bar
             radius={[4, 4, 0, 0]} // Rounded corners for bars
