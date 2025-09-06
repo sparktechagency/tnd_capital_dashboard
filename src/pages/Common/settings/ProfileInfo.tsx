@@ -1,5 +1,9 @@
 import { Select, Typography } from "antd";
 import ReuseInput from "../../../ui/Form/ReuseInput";
+import { useGetProfileQuery } from "../../../redux/features/auth/authApi";
+import { getImageUrl } from "../../../helpers/config/envConfig";
+import { AllImages } from "../../../../public/images/AllImages";
+import Loading from "../../../ui/Loading";
 
 const { Title, Text } = Typography;
 
@@ -14,18 +18,25 @@ export const countryCodes = [
 ];
 
 const ProfileInfo = () => {
+  const { data, isLoading } = useGetProfileQuery({});
+
+  if (isLoading) return <Loading />;
   return (
     <div className="flex flex-col md:flex-row items-center gap-8 rounded-md mt-10">
       {/* Left Side - Image & Role */}
       <div className="flex flex-col items-center justify-center bg-gray-100 p-4 rounded-md w-[350px] h-[350px] border border-[#EBCD6E] pt-10">
         <img
-          src="https://randomuser.me/api/portraits/women/44.jpg"
+          src={
+            data?.data?.customFields?.image
+              ? getImageUrl() + data?.data?.customFields?.image
+              : AllImages.profile
+          }
           alt="Profile"
           className="size-44 rounded-full object-cover mb-4"
         />
         <Text className="text-gray-500 !text-lg">Profile</Text>
-        <Title level={4} className="m-0">
-          Admin
+        <Title level={4} className="m-0 capitalize">
+          {data?.data?.role}
         </Title>
       </div>
 
@@ -36,7 +47,8 @@ const ProfileInfo = () => {
           label="Name"
           disabled
           value="Enrique"
-          placeholder="John Doe"
+          // defaultValue=
+          placeholder={data?.data?.customFields?.name || "N/A"}
           name="name"
           labelClassName="!font-normal !text-xl"
           inputClassName="!bg-[#F5F5F5] !text-[#535763] !border-none h-11"
@@ -46,7 +58,7 @@ const ProfileInfo = () => {
           label="Email"
           disabled
           value="Enrique"
-          placeholder="john.doe@example.com"
+          placeholder={data?.data?.email || "N/A"}
           name="email"
           labelClassName="!font-normal !text-xl"
           inputClassName="!bg-[#F5F5F5] !text-[#535763] !border-none h-11"
@@ -86,7 +98,7 @@ const ProfileInfo = () => {
                     readOnly
                     disabled
                     value="Enrique"
-                    placeholder="john.doe@example.com"
+                    placeholder={data?.data?.phoneNumber || "N/A"}
                     name="email"
                     labelClassName="!font-normal !text-xl"
                     inputClassName="!bg-[#F5F5F5] !text-[#535763] !border-none h-11"

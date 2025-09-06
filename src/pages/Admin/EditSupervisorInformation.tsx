@@ -17,6 +17,7 @@ import {
 } from "../../redux/features/admin/adminUsers/adminUsers";
 import Loading from "../../ui/Loading";
 import { groupedDataFunction } from "../../utils/groupedData";
+import { useNavigate } from "react-router-dom";
 
 const EditSupervisorInformation = () => {
   const [form] = Form.useForm();
@@ -24,6 +25,9 @@ const EditSupervisorInformation = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
 
+  const navigation = useNavigate();
+
+  // api calling
   const { data: userField, isLoading } = useGetAllUsersRelatedFieldQuery({});
   const [deleteUserField] = useDeleteUserFieldMutation();
   const [updateUserField] = useUpdateUserFieldMutation();
@@ -31,7 +35,7 @@ const EditSupervisorInformation = () => {
   const handleCancel = () => {
     setIsDeleteModalOpen(false);
   };
-  
+
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
       deleteUserField,
@@ -136,6 +140,7 @@ const EditSupervisorInformation = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Cancel

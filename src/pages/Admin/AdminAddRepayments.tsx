@@ -10,12 +10,15 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import AdminRepaymentsFeaturesModal from "../../ui/Modal/AdminRepayments/AdminRepaymentsFeaturesModal";
+import { useNavigate } from "react-router-dom";
 
 const AdminAddRepayments = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
     useState<boolean>(false);
+
+  const navigation = useNavigate();
 
   const { data: repaymentsField } = useGetAllRepaymentsFieldQuery({});
 
@@ -118,15 +121,14 @@ const AdminAddRepayments = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
             <ReuseButton
               variant="secondary"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Submit
             </ReuseButton>

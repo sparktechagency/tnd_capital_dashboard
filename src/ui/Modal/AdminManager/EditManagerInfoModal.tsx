@@ -14,8 +14,6 @@ const EditManagerInfoModal = () => {
 
   const data = JSON.parse(localStorage.getItem("currentRecord") || "{}");
 
-  console.log(data);
-
   const inputStructure = [
     {
       name: "hubUid",
@@ -143,6 +141,7 @@ const EditManagerInfoModal = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Cancel

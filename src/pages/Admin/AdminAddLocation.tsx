@@ -6,10 +6,12 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import { useCreateLocationProfileMutation } from "../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useNavigate } from "react-router-dom";
 
 const AdminAddLocation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
+  const navigation = useNavigate();
 
   const inputStructure = [
     {
@@ -125,6 +127,7 @@ const AdminAddLocation = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Cancel

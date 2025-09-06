@@ -1,30 +1,66 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
 import { EditIcon, PlusIcon } from "../../Components/svg/leads";
-import { useGetAllUsersRelatedFieldQuery } from "../../redux/features/admin/adminUsers/adminUsers";
+import {
+  useCreateUserMutation,
+  useGetAllUsersRelatedFieldQuery,
+} from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import Loading from "../../ui/Loading";
 import AdminHRFeaturesModal from "../../ui/Modal/AdminHR/AdminHRFeaturesModal";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const AdminAddSupervisor = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
     useState<boolean>(false);
+  const { pathname } = useLocation();
+  const currentPath = pathname.split("/")[2];
+
+  const navigation = useNavigate();
 
   // api calling
 
   const { data: userField, isLoading } = useGetAllUsersRelatedFieldQuery({});
+  const [createUser] = useCreateUserMutation();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = async (values: any) => {
+    console.log("HR information:", values);
+
+    const formData = new FormData();
+    if (values?.image?.file?.originFileObj) {
+      formData.append("image", values?.image?.file?.originFileObj);
+    }
+    if (values?.cv?.file?.originFileObj) {
+      formData.append("cv", values?.cv?.file?.originFileObj);
+    }
+    const data = {
+      name: values?.name,
+      email: values?.email,
+      phoneNumber: values?.phoneNumber,
+      homeAddress: values?.homeAddress,
+      nid: values?.nid,
+      role: "supervisor",
+    };
+    formData.append("data", JSON.stringify(data));
+
+    const res = await tryCatchWrapper(
+      createUser,
+      { body: formData },
+      "Creating supervisor ..."
+    );
+
+    if (res?.statusCode === 200) {
+      form.resetFields();
+    }
   };
 
   const handleCancel = () => {
@@ -68,6 +104,13 @@ const AdminAddSupervisor = () => {
         >
           <div className="grid grid-cols-2 gap-x-52">
             {userField?.data?.map((field: any, index: number) => {
+              if (
+                field.inputName === "hubUid" &&
+                currentPath === "supervisory"
+              ) {
+                return null;
+              }
+
               return (
                 <>
                   {field?.inputType === "file" ? (
@@ -124,15 +167,15 @@ const AdminAddSupervisor = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
             <ReuseButton
               variant="secondary"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
+              htmlType="submit"
             >
               Submit
             </ReuseButton>

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
@@ -18,6 +19,13 @@ const AdminManagerInformation = () => {
   const [form] = Form.useForm();
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
     useState<boolean>(false);
+
+  const [role, setRole] = useState<string>("hubManager"); // [selectRole ]
+
+  const { pathname } = useLocation();
+  const currentPath = pathname.split("/")[2];
+
+  const navigation = useNavigate();
 
   // api calling
 
@@ -64,15 +72,40 @@ const AdminManagerInformation = () => {
           <div className="w-[480px] mx-auto">
             <ReuseSelect
               name="role"
+              defaultValue={role}
               label="Add Manager Type"
+              onChange={(value) => setRole(value)}
               options={[
-                { value: "Manager", label: "Hub Manager" },
-                { value: "Field Officer", label: "Spoke Manager" },
+                { value: "hubManager", label: "Hub Manager" },
+                { value: "spokeManager", label: "Spoke Manager" },
               ]}
             />
+
+            {role === "spokeManager" && (
+              <ReuseInput
+                name="hubUid"
+                label="Hub ID"
+                Typolevel={4}
+                inputType="text"
+                placeholder="Enter Hub ID"
+                labelClassName="!font-normal !text-sm"
+                rules={[
+                  {
+                    required: true,
+                    message: "Current password is required",
+                  },
+                ]}
+                inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
+              />
+            )}
           </div>
           <div className="grid grid-cols-2 gap-x-52">
             {userField?.data?.map((field: any, index: number) => {
+              // Check if the field is 'hubUid' and the current path is 'hr'
+              if (field.inputName === "hubUid" && currentPath === "managers") {
+                return null; // Skip rendering the 'hubUid' field
+              }
+
               return (
                 <>
                   {field?.inputType === "file" ? (
@@ -130,8 +163,8 @@ const AdminManagerInformation = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Cancel
             </ReuseButton>
@@ -139,7 +172,6 @@ const AdminManagerInformation = () => {
               variant="secondary"
               url="/admin/managers/edit-manager-information"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
-              // icon={allIcons.arrowRight}
             >
               Edit Features
             </ReuseButton>

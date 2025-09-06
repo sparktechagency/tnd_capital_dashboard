@@ -2,6 +2,7 @@ import { baseApi } from "../../api/baseApi";
 import { tagTypes } from "../../tagTypes";
 
 const auth_url = "/auth";
+const user_url = "/users";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -57,11 +58,32 @@ const authApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: [tagTypes.auth],
+    }),
+
+    getProfile: build.query({
+      query: () => {
+        return {
+          url: `${user_url}/profile`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.auth],
+    }),
+
+    updateProfile: build.mutation({
+      query: (req) => {
+        return {
+          url: `${user_url}/update_profile`,
+          method: "PATCH",
+          body: req.body,
+        };
+      },
+      invalidatesTags: [tagTypes.auth],
     })
   }),
 });
 
-export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation } =
+export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation, useGetProfileQuery, useUpdateProfileMutation } =
   authApi;
 
 export default authApi;

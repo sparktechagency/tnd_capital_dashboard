@@ -1,25 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Select, Upload } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
-import { FadeLoader } from "react-spinners";
 import { countryCodes } from "../../../pages/Common/settings/ProfileInfo";
 
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "../../../redux/features/auth/authApi";
 import { useAppSelector } from "../../../redux/hooks";
 import ReuseButton from "../../../ui/Button/ReuseButton";
 import ReusableForm from "../../../ui/Form/ReuseForm";
 import ReuseInput from "../../../ui/Form/ReuseInput";
+import Loading from "../../../ui/Loading";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import Topbar from "../../Shared/Topbar";
+import { getImageUrl } from "../../../helpers/config/envConfig";
 
 const EditProfile = () => {
   // const serverUrl = getImageUrl();
   const [form] = Form.useForm();
-  // const [updateProfile] = useUpdateProfileMutation();
-  // const { data, isFetching } = useGetProfileQuery({});
+  const [updateProfile] = useUpdateProfileMutation();
+  const { data, isFetching } = useGetProfileQuery({});
   // const profileData = data?.data;
   // const profileImage = serverUrl + profileData?.image;
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue({
+        name: data?.data?.customFields?.name || "N/A",
+        email: data?.data?.email,
+        phoneNumber: data?.data?.phoneNumber,
+      });
+    }
+  }, [data, form]);
 
   // const handleImageUpload = (info: any) => {
   //   if (info.file.status === "removed") {
@@ -35,6 +50,7 @@ const EditProfile = () => {
   // };
 
   const [imageUrl, setImageUrl] = useState<any>(null);
+  console.log(imageUrl, "image url");
 
   const handleImageUpload = (info: any) => {
     if (info.file.status === "done") {
@@ -51,22 +67,20 @@ const EditProfile = () => {
     }
     const data = {
       name: values?.name,
+      phoneNumber: values?.phoneNumber,
     };
+
     formData.append("data", JSON.stringify(data));
     await tryCatchWrapper(
-      // updateProfile,
+      updateProfile,
       { body: formData },
       "Updating Profile..."
     );
   };
 
-  // if (isFetching) {
-  //   return (
-  //     <div className="flex justify-center items-center h-[88vh]">
-  //       <FadeLoader color="#28314E" />
-  //     </div>
-  //   );
-  // }
+  if (isFetching) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen">
@@ -80,7 +94,7 @@ const EditProfile = () => {
             form={form}
             handleFinish={onFinish}
             className="p-10 w-full lg:w-[70%]"
-            // defaultValues={profileData}
+            // defaultValues={data?.data}/
           >
             <div className="flex flex-col md:flex-row items-center gap-8 rounded-md mt-10">
               {/* Left Side - Image & Role */}
@@ -91,7 +105,12 @@ const EditProfile = () => {
                       width={1000}
                       height={1000}
                       className="h-40 w-40 relative rounded-full border border-secondary-color object-contain "
-                      src={imageUrl}
+                      src={
+                        imageUrl &&
+                        (imageUrl instanceof Blob || imageUrl instanceof File)
+                          ? URL.createObjectURL(imageUrl)
+                          : getImageUrl() + data?.data?.customFields?.image
+                      }
                       alt=""
                     />
                     <Form.Item name="image">
@@ -139,7 +158,6 @@ const EditProfile = () => {
               <div className="flex-1 space-y-4">
                 <ReuseInput
                   label="Name"
-                  value="Enrique"
                   placeholder="John Doe"
                   name="name"
                   labelClassName="!font-normal !text-xl"
@@ -147,9 +165,9 @@ const EditProfile = () => {
                 />
                 <ReuseInput
                   label="Email"
-                  value="Enrique"
                   placeholder="john.doe@example.com"
                   name="email"
+                  readOnly
                   labelClassName="!font-normal !text-xl"
                   inputClassName="!bg-[#F5F5F5] !text-[#535763] !border-none h-11"
                 />
@@ -187,9 +205,8 @@ const EditProfile = () => {
                         </Select>
                         <div className="flex-1">
                           <ReuseInput
-                            value="Enrique"
                             placeholder="john.doe@example.com"
-                            name="email"
+                            name="phoneNumber"
                             labelClassName="!font-normal !text-xl"
                             inputClassName="!bg-[#F5F5F5] !text-[#535763] !border-none h-11"
                           />

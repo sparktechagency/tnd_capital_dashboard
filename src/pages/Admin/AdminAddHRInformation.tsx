@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
 import { EditIcon, PlusIcon } from "../../Components/svg/leads";
@@ -25,6 +25,8 @@ const AdminAddHrInformation = () => {
 
   const { pathname } = useLocation();
   const currentPath = pathname.split("/")[2];
+
+  const navigation = useNavigate();
 
   // api calling
 
@@ -166,6 +168,7 @@ const AdminAddHrInformation = () => {
           </div>
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
+              onClick={() => navigation(-1)}
               variant="outline"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >

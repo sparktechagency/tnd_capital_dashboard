@@ -11,12 +11,14 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import Loading from "../../ui/Loading";
 import AdminHRFeaturesModal from "../../ui/Modal/AdminHR/AdminHRFeaturesModal";
+import { useNavigate } from "react-router-dom";
 
 const AdminOfficerInformation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
     useState<boolean>(false);
+  const navigation = useNavigate();
 
   // api calling
 
@@ -119,6 +121,7 @@ const AdminOfficerInformation = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Cancel

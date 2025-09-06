@@ -18,12 +18,14 @@ import {
   useUpdateLeadsFieldMutation,
 } from "../../redux/features/admin/adminLeads/adminLeadsApi";
 import { groupedDataFunction } from "../../utils/groupedData";
+import { useNavigate } from "react-router-dom";
 
 const AdminEditLeadInformation = () => {
   const [form] = Form.useForm();
   const { collapsed } = useAppSelector((state) => state.auth);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any>(null);
+  const navigation = useNavigate();
 
   // api calling
   const { data: leadsField, isFetching } = useGetAllLeadsRelatedFieldQuery({});
@@ -137,6 +139,7 @@ const AdminEditLeadInformation = () => {
           <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
               variant="outline"
+              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Cancel

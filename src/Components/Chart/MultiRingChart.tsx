@@ -1,34 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-const data1 = [
-  { name: "Primary", value: 26.8 },
-  { name: "Secondary", value: 73.2 },
-];
-
-const data2 = [
-  { name: "Primary", value: 24.51 },
-  { name: "Secondary", value: 75.49 },
-];
 export default function MultiRingChart({ loanApprovalReport }: any) {
-  console.log(loanApprovalReport, "loanApprovalReport");
+  let value1 = 30;
+  let value2 = 80;
 
-  // const data1 = [
-  //   {
-  //     name: "Primary",
-  //     value:
-  //       loanApprovalReport?.status === "approved"
-  //         ? loanApprovalReport?.percentage
-  //         : 0,
-  //   },
-  //   {
-  //     name: "Secondary",
-  //     value:
-  //       loanApprovalReport?.status === "approved"
-  //         ? loanApprovalReport?.percentage
-  //         : 0,
-  //   },
-  // ];
+  loanApprovalReport?.map((data: any) => {
+    if (data.status === "approved") {
+      value1 = data.percentage;
+    } else if (data?.status === "rejected") {
+      value2 = data.percentage;
+    }
+  });
 
   return (
     <div style={{ width: 300, height: 290 }}>
@@ -47,11 +30,14 @@ export default function MultiRingChart({ loanApprovalReport }: any) {
 
           <Pie
             dataKey="value"
-            data={data1}
+            data={[
+              { name: "Primary", value: 40 },
+              { name: "Secondary", value: 50 },
+            ]}
             innerRadius={45}
             outerRadius={60}
-            startAngle={90}
-            endAngle={460}
+            startAngle={60}
+            endAngle={500}
             // paddingAngle={0}
             // cornerRadius={15}
           >
@@ -61,13 +47,16 @@ export default function MultiRingChart({ loanApprovalReport }: any) {
 
           {/* Green pie chart  */}
           <Pie
-            data={[{ name: "Primary", value: 26.8 }]}
+            data={[
+              { name: "Primary", value: 50 },
+              { name: "Secondary", value: 0 },
+            ]}
             cx="50%"
             cy="50%"
             innerRadius={45}
             outerRadius={60}
-            startAngle={200}
-            endAngle={50}
+            startAngle={0}
+            endAngle={3.6 * value1}
             cornerRadius={15}
             dataKey="value"
           >
@@ -76,9 +65,12 @@ export default function MultiRingChart({ loanApprovalReport }: any) {
 
           <Pie
             dataKey="value"
-            data={data2}
-            startAngle={90}
-            endAngle={460}
+            data={[
+              { name: "Primary", value: 40 },
+              { name: "Secondary", value: 50 },
+            ]}
+            startAngle={60}
+            endAngle={500}
             innerRadius={75}
             outerRadius={95}
           >
@@ -88,13 +80,16 @@ export default function MultiRingChart({ loanApprovalReport }: any) {
 
           {/* Purple pie chart  */}
           <Pie
-            data={[{ name: "Primary", value: 26.8 }]}
+            data={[
+              { name: "Primary", value: 50 },
+              { name: "Secondary", value: 0 },
+            ]}
             cx="50%"
             cy="50%"
             innerRadius={75}
             outerRadius={95}
-            startAngle={200}
-            endAngle={50}
+            startAngle={0}
+            endAngle={3.6 * value2}
             cornerRadius={15}
             dataKey="value"
           >
