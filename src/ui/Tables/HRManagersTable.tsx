@@ -9,8 +9,9 @@ interface AdminHRManagersTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
+  showDeleteModal?: (record: any) => void;
   showEditUserModal: (record: any) => void;
+  deleteModalShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -23,6 +24,7 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
   showViewModal,
   showDeleteModal,
   showEditUserModal,
+  deleteModalShow = true,
   setPage,
   page,
   total,
@@ -109,14 +111,17 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="View Details">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
-            </button>
-          </Tooltip>
+          {deleteModalShow && (
+            <Tooltip placement="right" title="View Details">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showDeleteModal?.(record)}
+              >
+                <img src={AllIcons.deleteIcon} />
+              </button>
+            </Tooltip>
+          )}
+
           <Tooltip placement="right">
             <button
               onClick={() => showEditUserModal(record)}

@@ -38,7 +38,7 @@ const adminUsersApi = baseApi.injectEndpoints({
                 method: "PATCH",
                 body: req.body,
             }),
-            invalidatesTags: [tagTypes.user],
+            invalidatesTags: [tagTypes.user, tagTypes.hubManageSpokeManager],
         }),
 
 
@@ -56,7 +56,7 @@ const adminUsersApi = baseApi.injectEndpoints({
                 url: `${admin_users}/delete_users/${req?.params}`,
                 method: "DELETE",
             }),
-            invalidatesTags: [tagTypes.user],
+            invalidatesTags: [tagTypes.user,],
         }),
 
         getAllManagers: builder.query({

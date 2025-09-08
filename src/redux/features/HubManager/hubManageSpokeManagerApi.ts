@@ -14,7 +14,7 @@ const hubManagerSpokeManagerApi = baseApi.injectEndpoints({
                     searchTerm,
                 },
             }),
-            providesTags: [tagTypes.hubManageRepayments],
+            providesTags: [tagTypes.hubManageSpokeManager],
         })
     }),
 });

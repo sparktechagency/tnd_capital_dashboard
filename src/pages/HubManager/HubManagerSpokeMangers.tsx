@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
-import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DeleteModal from "../../ui/Modal/DeleteModal";
-
 import { useGetAllSpokeMangerQuery } from "../../redux/features/HubManager/hubManageSpokeManagerApi";
 import Loading from "../../ui/Loading";
 import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
 import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 import HRManagersTable from "../../ui/Tables/HRManagersTable";
 import DaysSelection from "../../utils/DaysSelection";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const HubManagerSpokeMangers = () => {
   const [page, setPage] = useState<number>(1);
@@ -21,7 +17,6 @@ const HubManagerSpokeMangers = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
@@ -33,7 +28,6 @@ const HubManagerSpokeMangers = () => {
     limit: 10,
   });
   const mangersData = data?.data;
-  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -44,32 +38,10 @@ const HubManagerSpokeMangers = () => {
     setIsEditModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
-
   const handleCancel = () => {
-    setIsDeleteModalVisible(false);
     setIsViewModalVisible(false);
     setIsEditModalVisible(false);
     setCurrentRecord(null);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      deleteUser,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
   };
 
   if (isLoading) return <Loading />;
@@ -96,25 +68,18 @@ const HubManagerSpokeMangers = () => {
           data={mangersData?.result}
           loading={false}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           showEditUserModal={showEditUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
           total={mangersData?.meta?.total}
+          deleteModalShow={false}
         />
 
         <ViewHRManager
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        />
-
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
         />
 
         <EditHrOfficerModal
