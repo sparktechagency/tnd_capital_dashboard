@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import { AllIcons } from "../../../public/images/AllImages";
-import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Topbar from "../../Components/Shared/Topbar";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
-import DaysSelection from "../../utils/DaysSelection";
-import AdminRepaymentsTable from "../../ui/Tables/AdminRepaymentsTable";
-import { installmentData } from "../Admin/fakeData";
+import Topbar from "../../Components/Shared/Topbar";
+import { useGetAllHubManagerRepaymentsQuery } from "../../redux/features/HubManager/hubManagerRepaymentsApi";
+import { useAppSelector } from "../../redux/hooks";
+import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
+import AdminRepaymentsTable from "../../ui/Tables/AdminRepaymentsTable";
+import DaysSelection from "../../utils/DaysSelection";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import {
+  useDeleteRepaymentsMutation,
+  useRepaymentCountQuery,
+} from "../../redux/features/admin/adminRepayments/adminRepaymentsApi";
+import Loading from "../../ui/Loading";
 
 const HubManagerRepayments = () => {
   const [page, setPage] = useState<number>(1);
@@ -21,26 +24,29 @@ const HubManagerRepayments = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
-  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
+  // api calling
+
+  const { data, isLoading } = useGetAllHubManagerRepaymentsQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const repaymentsData = data?.data;
+
+  const { data: repaymentCount, isLoading: repaymentCountLoading } =
+    useRepaymentCountQuery({});
+  const [deleteRepayments] = useDeleteRepaymentsMutation();
+
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  // const showBlockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsBlockModalVisible(true);
-  // };
-  // const showUnblockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsUnblockModalVisible(true);
-  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -49,51 +55,18 @@ const HubManagerRepayments = () => {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsBlockModalVisible(false);
-    setIsUnblockModalVisible(false);
     setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
-  };
-
-  const handleBlock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "blocked",
-        },
-      },
-      "Blocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-  const handleUnblock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "active",
-        },
-      },
-      "Unblocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteRepayments,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -106,26 +79,30 @@ const HubManagerRepayments = () => {
     {
       id: 1,
       background: "#FFFFFF",
-      name: "Total Collection",
+      name: "Todays Collection",
       icon: (
         <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
           <img src={AllIcons.collection} className="size-7" alt="icon" />
         </div>
       ),
-      count: "$2,000",
+      count: repaymentCount?.data?.todayCollection,
     },
     {
       id: 2,
       background: "#FFFFFF",
-      name: "Total Application",
+      name: "Total Overdue",
       icon: (
         <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
           <img src={AllIcons.application} className="size-7" alt="icon" />
         </div>
       ),
-      count: "100",
+      count: repaymentCount?.data?.overdue,
     },
   ];
+
+  if (isLoading || repaymentCountLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -150,15 +127,14 @@ const HubManagerRepayments = () => {
         </div>
 
         <AdminRepaymentsTable
-          data={installmentData}
+          data={repaymentsData?.result}
           loading={false}
-          // showBlockModal={showBlockModal}
-          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={repaymentsData?.meta?.total}
         />
 
         <ViewAdminRepaymentsModal
@@ -172,20 +148,6 @@ const HubManagerRepayments = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
-        />
-
-        <BlockModal
-          currentRecord={currentRecord}
-          isBlockModalVisible={isBlockModalVisible}
-          handleCancel={handleCancel}
-          handleBlock={handleBlock}
-        />
-
-        <UnblockModal
-          currentRecord={currentRecord}
-          isUnblockModalVisible={isUnblockModalVisible}
-          handleCancel={handleCancel}
-          handleUnblock={handleUnblock}
         />
       </div>
     </div>

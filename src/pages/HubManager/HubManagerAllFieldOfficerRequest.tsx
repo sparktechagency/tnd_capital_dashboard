@@ -24,6 +24,16 @@ const HubManagerAllFieldOfficerRequest = () => {
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
+
+  // api calling
+
+  const { data, isLoading } = useGetAllFieldOfficersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+  const fieldOfficers = data?.data;
+
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);

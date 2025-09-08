@@ -24,7 +24,7 @@ const adminRepayments = baseApi.injectEndpoints({
                 url: `${admin_repayments_url}/delete/${req?.params}`,
                 method: "DELETE",
             }),
-            invalidatesTags: [tagTypes.adminRepayments],
+            invalidatesTags: [tagTypes.adminRepayments, tagTypes.hubManageRepayments],
         }),
 
         repaymentCount: builder.query({
