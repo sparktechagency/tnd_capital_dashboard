@@ -11,11 +11,11 @@ import AddSpoke from "../../ui/Modal/HubManager/AddSpoke";
 import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 
 const HubManagerAllFieldOfficerRequest = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -33,6 +33,8 @@ const HubManagerAllFieldOfficerRequest = () => {
     searchTerm: searchText,
   });
   const fieldOfficers = data?.data;
+  const [deleteUser] = useDeleteUserMutation();
+
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -63,7 +65,7 @@ const HubManagerAllFieldOfficerRequest = () => {
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );

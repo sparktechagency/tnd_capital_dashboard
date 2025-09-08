@@ -15,6 +15,7 @@ import { useAppSelector } from "../../redux/hooks";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 import YearOption from "../../utils/YearOption";
+import Loading from "../../ui/Loading";
 
 const HubManagerOverview = () => {
   const [page, setPage] = useState<number>(1);
@@ -26,17 +27,18 @@ const HubManagerOverview = () => {
   const [approvalYear, setApprovalYear] = useState(2025);
 
   // api calling
-  const { data: counts } = useGetHubManagerCountsQuery({});
-  const { data: collectionReport } = useGetHubManagerCollectionReportQuery({
-    year: year,
-  });
-  const { data: loanApprovalReport } = useGetHubManagerApprovalReportQuery({
-    year: approvalYear,
-  });
+  const { data: counts, isLoading } = useGetHubManagerCountsQuery({});
+  const { data: collectionReport, isLoading: collectionReportLoading } =
+    useGetHubManagerCollectionReportQuery({
+      year: year,
+    });
+  const { data: loanApprovalReport, isLoading: reportLoading } =
+    useGetHubManagerApprovalReportQuery({
+      year: approvalYear,
+    });
 
-  const { data: fieldOfficerData } = useGetHubManageFieldOfficerCollectionQuery(
-    {}
-  );
+  const { data: fieldOfficerData, isLoading: fieldOfficerLoading } =
+    useGetHubManageFieldOfficerCollectionQuery({});
 
   const cards = [
     {
@@ -107,7 +109,14 @@ const HubManagerOverview = () => {
     setCurrentRecord(null);
   };
 
-  console.log(fieldOfficerData, "fieldOfficerData hub manager");
+  if (
+    isLoading ||
+    collectionReportLoading ||
+    reportLoading ||
+    fieldOfficerLoading
+  ) {
+    return <Loading />;
+  }
 
   return (
     <section>

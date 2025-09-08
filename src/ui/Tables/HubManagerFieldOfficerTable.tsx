@@ -10,6 +10,7 @@ interface AdminAdminFieldOfficerTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void;
   showSpokeModal?: (record: any | undefined) => void | undefined;
+  showEditUserModal?: (record: any) => void;
   isPenIconShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -26,6 +27,7 @@ const HubManagerFieldOfficerTable: React.FC<
   showViewModal,
   showDeleteModal,
   showSpokeModal,
+  showEditUserModal,
   isPenIconShow = false,
   setPage,
   page,
@@ -130,7 +132,7 @@ const HubManagerFieldOfficerTable: React.FC<
             <Tooltip placement="right" title="View Details">
               <button
                 className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-                onClick={() => showDeleteModal(record)}
+                onClick={() => showEditUserModal?.(record)}
               >
                 <img src={AllIcons.pen} />
               </button>

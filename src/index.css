@@ -180,3 +180,8 @@ input[type="number"]::-webkit-outer-spin-button {
 .ant-select .ant-select-selector {
   border: none !important;
 }
+
+
+.ant-menu-submenu-selected .ant-menu-submenu-title {
+  background-color: #0C2752 !important;
+}

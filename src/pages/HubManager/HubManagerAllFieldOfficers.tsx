@@ -9,6 +9,9 @@ import DeleteModal from "../../ui/Modal/DeleteModal";
 import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import Loading from "../../ui/Loading";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
+import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 
 const HubManagerAllFieldOfficers = () => {
   const [page, setPage] = useState<number>(1);
@@ -18,22 +21,28 @@ const HubManagerAllFieldOfficers = () => {
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data } = useGetAllFieldOfficersQuery({
+  const { data, isLoading } = useGetAllFieldOfficersQuery({
     page,
     limit,
     searchTerm: searchText,
   });
 
   const officerData = data?.data;
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
+  };
+  const showEditUserModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
   };
 
   const showDeleteModal = (record: any) => {
@@ -44,6 +53,7 @@ const HubManagerAllFieldOfficers = () => {
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -54,7 +64,7 @@ const HubManagerAllFieldOfficers = () => {
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -62,6 +72,8 @@ const HubManagerAllFieldOfficers = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div>
@@ -86,6 +98,7 @@ const HubManagerAllFieldOfficers = () => {
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          showEditUserModal={showEditUserModal}
           isPenIconShow={true}
           limit={limit}
           page={page}
@@ -104,6 +117,12 @@ const HubManagerAllFieldOfficers = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
+        />
+
+        <EditHrOfficerModal
+          isEditModalVisible={isEditModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
         />
       </div>
     </div>
