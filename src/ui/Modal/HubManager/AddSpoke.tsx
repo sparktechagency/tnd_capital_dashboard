@@ -3,6 +3,8 @@ import { Modal } from "antd";
 import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 import ReuseButton from "../../Button/ReuseButton";
+import { useAssignSpokeToFieldOfficerMutation } from "../../../redux/features/HubManager/hubManagerFieldOfficerApi";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 
 interface AddSpokeProps<T> {
   isAddSpokeVisible: boolean;
@@ -13,9 +15,24 @@ interface AddSpokeProps<T> {
 const AddSpoke: React.FC<AddSpokeProps<any>> = ({
   isAddSpokeVisible,
   handleCancel,
+  currentRecord,
 }) => {
-  const onFinish = (values: any) => {
-    console.log(values);
+  const [assignSpokeToFieldOfficer] = useAssignSpokeToFieldOfficerMutation();
+
+  const onFinish = async (values: any) => {
+    const res = await tryCatchWrapper(
+      assignSpokeToFieldOfficer,
+      {
+        body: {
+          fieldOfficerId: currentRecord?._id,
+          spokeUid: values.spoke,
+        },
+      },
+      "Adding Spoke..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
   };
 
   return (
@@ -34,7 +51,7 @@ const AddSpoke: React.FC<AddSpokeProps<any>> = ({
           Typolevel={5}
           inputType="text"
           type="text"
-          label="Spoke"
+          label="Spoke ID"
           placeholder="Type"
           labelClassName="!text-xs"
           rules={[{ required: true, message: "Current password is required" }]}

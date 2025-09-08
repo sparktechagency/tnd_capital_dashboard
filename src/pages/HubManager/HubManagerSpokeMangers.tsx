@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
-import { useGetAllHubManagerFieldOfficerQuery } from "../../redux/features/HubManager/hubManagerFieldOfficerApi";
+import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Loading from "../../ui/Loading";
-import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import AddSpoke from "../../ui/Modal/HubManager/AddSpoke";
-import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
+
+import { useGetAllSpokeMangerQuery } from "../../redux/features/HubManager/hubManageSpokeManagerApi";
+import Loading from "../../ui/Loading";
+import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
+import HRManagersTable from "../../ui/Tables/HRManagersTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
-const HubManagerAllFieldOfficerRequest = () => {
+const HubManagerSpokeMangers = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
   console.log(searchText);
@@ -20,28 +22,26 @@ const HubManagerAllFieldOfficerRequest = () => {
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [isSpokeModalVisible, setIsSpokeModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-
-  const { data, isLoading } = useGetAllHubManagerFieldOfficerQuery({
-    page,
-    limit,
-    searchTerm: searchText,
+  const { data, isLoading } = useGetAllSpokeMangerQuery({
+    page: 1,
+    limit: 10,
   });
-  const fieldOfficers = data?.data;
+  const mangersData = data?.data;
+  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  const showSpokeModal = (record: any) => {
+  const showEditUserModal = (record: any) => {
     setCurrentRecord(record);
-    setIsSpokeModalVisible(true);
+    setIsEditModalVisible(true);
   };
 
   const showDeleteModal = (record: any) => {
@@ -50,9 +50,9 @@ const HubManagerAllFieldOfficerRequest = () => {
   };
 
   const handleCancel = () => {
-    setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
-    setIsSpokeModalVisible(false);
+    setIsViewModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -63,7 +63,7 @@ const HubManagerAllFieldOfficerRequest = () => {
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
+      deleteUser,
       { params: currentRecord?._id },
       "Deleting..."
     );
@@ -75,7 +75,7 @@ const HubManagerAllFieldOfficerRequest = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
         <div className="flex items-center  gap-x-10 py-5">
           <ReuseSearchInput
@@ -88,24 +88,23 @@ const HubManagerAllFieldOfficerRequest = () => {
 
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">All Request </p>
+          <p className="text-xl font-semibold">Spoke Managers</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
-        <HubManagerFieldOfficerTable
-          data={fieldOfficers?.result}
+        <HRManagersTable
+          data={mangersData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
-          showSpokeModal={showSpokeModal}
-          isPlusButtonShow={true}
+          showEditUserModal={showEditUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
-          total={fieldOfficers?.meta?.total}
+          total={mangersData?.meta?.total}
         />
 
-        <ViewAdminFieldOfficerModal
+        <ViewHRManager
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
@@ -118,14 +117,14 @@ const HubManagerAllFieldOfficerRequest = () => {
           handleDelete={handleDelete}
         />
 
-        <AddSpoke
-          currentRecord={currentRecord}
-          isAddSpokeVisible={isSpokeModalVisible}
+        <EditHrOfficerModal
+          isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
+          currentRecord={currentRecord}
         />
       </div>
     </div>
   );
 };
 
-export default HubManagerAllFieldOfficerRequest;
+export default HubManagerSpokeMangers;

@@ -21,6 +21,7 @@ import HubManagerClients from "../pages/HubManager/HubManagerClients";
 import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
 import HubManagerOverview from "../pages/HubManager/HubManagerOverview";
 import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
+import HubManagerSpokeMangers from "../pages/HubManager/HubManagerSpokeMangers";
 
 export const hubManagerPath = [
   {
@@ -81,7 +82,13 @@ export const hubManagerPath = [
     name: "Repayments",
     icon: fieldOfficer,
   },
-
+  {
+    path: "spokeManager",
+    element: <HubManagerSpokeMangers />,
+    key: "spokeManager",
+    name: "Spoke Managers",
+    icon: settings,
+  },
   {
     key: "fieldOfficer",
     name: "Field Officers",

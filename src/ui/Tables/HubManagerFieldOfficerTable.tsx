@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { getImageUrl } from "../../helpers/config/envConfig";
 
 interface AdminAdminFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -37,50 +38,57 @@ const HubManagerFieldOfficerTable: React.FC<
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (_text: string, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      render: (_text: string, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={
+                record?.customFields?.image
+                  ? getImageUrl() + record?.customFields?.image
+                  : AllImages.profile
+              }
+              alt={_text}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{record?.customFields?.name}</span>
+          </div>
+        );
+      },
     },
     {
       title: "#FO.ID",
-      dataIndex: "foId", // Data key for phoneNumber
+      dataIndex: "uid",
       key: "foId",
       align: "center",
     },
     {
       title: "Phone Number",
-      dataIndex: "phoneNumber", // Data key for phoneNumber
+      dataIndex: "phoneNumber",
       key: "phoneNumber",
       align: "center",
     },
     {
       title: "Email",
-      dataIndex: "email", // Data key for email
+      dataIndex: "email",
       key: "email",
       align: "center",
     },
     {
       title: "Date",
-      dataIndex: "date", // Data key for role
+      dataIndex: "createdAt",
+      render: (_: unknown, record: any) => record?.createdAt?.split("T")[0],
       key: "date",
       align: "center",
     },
 
     {
       title: "Address",
-      dataIndex: "address", // Data key for role
+      dataIndex: ["customFields", "homeAddress"],
       key: "address",
       align: "center",
     },

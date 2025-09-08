@@ -19,7 +19,8 @@ export const tagTypes = {
   hubManagerOverview: "hubManagerOverview",
   hubManagerLeads: "hubManagerLeads", 
   hubManagerApplication: "hubManagerApplication",
-  hubManageRepayments : "hubManageRepayments"
+  hubManageRepayments: "hubManageRepayments",
+  hubManagerFieldOfficer: "hubManagerFieldOfficer",
 };
 
 export const tagTypesList = [
@@ -40,5 +41,6 @@ export const tagTypesList = [
   tagTypes.hubManagerOverview,
   tagTypes.hubManagerLeads,
   tagTypes.hubManagerApplication,
-  tagTypes.hubManageRepayments
+  tagTypes.hubManageRepayments,
+  tagTypes.hubManagerFieldOfficer
 ];

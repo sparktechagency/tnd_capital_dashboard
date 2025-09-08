@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useGetAllFieldOfficersQuery } from "../../redux/features/HubManager/hubManagerFieldOfficerApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
@@ -8,7 +9,6 @@ import DeleteModal from "../../ui/Modal/DeleteModal";
 import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { officerData } from "../Admin/fakeData";
 
 const HubManagerAllFieldOfficers = () => {
   const [page, setPage] = useState<number>(1);
@@ -21,6 +21,15 @@ const HubManagerAllFieldOfficers = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data } = useGetAllFieldOfficersQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const officerData = data?.data;
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -40,7 +49,7 @@ const HubManagerAllFieldOfficers = () => {
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
   const handleDelete = async () => {
@@ -73,7 +82,7 @@ const HubManagerAllFieldOfficers = () => {
         </div>
 
         <HubManagerFieldOfficerTable
-          data={officerData}
+          data={officerData?.result}
           loading={false}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
@@ -81,6 +90,7 @@ const HubManagerAllFieldOfficers = () => {
           limit={limit}
           page={page}
           setPage={setPage}
+          total={officerData?.meta?.total}
         />
 
         <ViewAdminFieldOfficerModal
