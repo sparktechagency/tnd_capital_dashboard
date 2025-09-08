@@ -1,44 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import Topbar from "../../Components/Shared/Topbar";
-import DaysSelection from "../../utils/DaysSelection";
-import DeleteModal from "../../ui/Modal/DeleteModal";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
-import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
-import { applicationData } from "../Admin/fakeData";
+import {
+  useGetAllClientsForHubQuery,
+  useHubManagerDeleteClientsMutation,
+} from "../../redux/features/HubManager/hubManagerLeadsApi";
+import { useAppSelector } from "../../redux/hooks";
+import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import ViewAdminClientsModal from "../../ui/Modal/AdminClients/ViewAdminClientsModal";
+import DeleteModal from "../../ui/Modal/DeleteModal";
+import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
+import DaysSelection from "../../utils/DaysSelection";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const HubManagerClients = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
 
-  console.log(searchText);
   const limit = 12;
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
-  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  const { data, isLoading } = useGetAllClientsForHubQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+  const hubClients = data?.data;
+  const [hubManagerDeleteClients] = useHubManagerDeleteClientsMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  // const showBlockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsBlockModalVisible(true);
-  // };
-  // const showUnblockModal = (record: any) => {
-  //   setCurrentRecord(record);
-  //   setIsUnblockModalVisible(true);
-  // };
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
@@ -47,58 +44,30 @@ const HubManagerClients = () => {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsBlockModalVisible(false);
-    setIsUnblockModalVisible(false);
     setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
   const handleDeleteCancel = () => {
     setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
+    setCurrentRecord(null);
   };
 
-  const handleBlock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "blocked",
-        },
-      },
-      "Blocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-  const handleUnblock = async (data: any) => {
-    const res = await tryCatchWrapper(
-      // userAction,
-      {
-        body: {
-          userId: data?._id,
-          action: "active",
-        },
-      },
-      "Unblocking..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
-
+  console.log(currentRecord, "currentRecord");
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      // deleteAdmin,
-      { params: currentRecord?._id },
+      hubManagerDeleteClients,
+      { params: currentRecord?.client?._id },
       "Deleting..."
     );
     if (res.statusCode === 200) {
       handleCancel();
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -119,15 +88,14 @@ const HubManagerClients = () => {
         </div>
 
         <AdminClientsTable
-          data={applicationData}
+          data={hubClients?.result}
           loading={false}
-          // showBlockModal={showBlockModal}
-          // showUnblockModal={showUnblockModal}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={hubClients?.meta?.total}
         />
 
         <ViewAdminClientsModal
@@ -141,20 +109,6 @@ const HubManagerClients = () => {
           isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleDeleteCancel}
           handleDelete={handleDelete}
-        />
-
-        <BlockModal
-          currentRecord={currentRecord}
-          isBlockModalVisible={isBlockModalVisible}
-          handleCancel={handleCancel}
-          handleBlock={handleBlock}
-        />
-
-        <UnblockModal
-          currentRecord={currentRecord}
-          isUnblockModalVisible={isUnblockModalVisible}
-          handleCancel={handleCancel}
-          handleUnblock={handleUnblock}
         />
       </div>
     </div>
