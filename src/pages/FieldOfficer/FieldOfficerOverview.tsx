@@ -146,7 +146,7 @@ const FieldOfficerOverview = () => {
     },
   ];
 
-  if (isLoading || isLoadingChart || isLoadingLeads) {
+  if (isLoading || isLoadingChart) {
     return <Loading />;
   }
 
@@ -178,7 +178,7 @@ const FieldOfficerOverview = () => {
         <p className="text-2xl font-medium mt-10">Recent Leads</p>
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerLeadsTable
-            loading={false}
+            loading={isLoadingLeads}
             showViewModal={showViewUserModal}
             showEditModal={showEditModal}
             showDeleteModal={showDeleteModal}

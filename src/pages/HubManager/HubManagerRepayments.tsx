@@ -31,7 +31,7 @@ const HubManagerRepayments = () => {
 
   // api calling
 
-  const { data, isLoading } = useGetAllHubManagerRepaymentsQuery({
+  const { data, isFetching } = useGetAllHubManagerRepaymentsQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -100,7 +100,7 @@ const HubManagerRepayments = () => {
     },
   ];
 
-  if (isLoading || repaymentCountLoading) {
+  if ( repaymentCountLoading) {
     return <Loading />;
   }
 
@@ -128,7 +128,7 @@ const HubManagerRepayments = () => {
 
         <AdminRepaymentsTable
           data={repaymentsData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

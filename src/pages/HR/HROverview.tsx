@@ -23,11 +23,10 @@ const HROverview = () => {
     year: currentYear,
   });
 
-  const { data: mangersData, isLoading: mangerLoading } =
-    useGetAllManagersQuery({
-      page: 1,
-      limit: 10,
-    });
+  const { data: mangersData, isFetching } = useGetAllManagersQuery({
+    page: 1,
+    limit: 10,
+  });
 
   const cards = [
     {
@@ -55,7 +54,7 @@ const HROverview = () => {
     },
   ];
 
-  if (isLoading || mangerLoading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   return (
     <section>
@@ -80,7 +79,7 @@ const HROverview = () => {
 
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <HROverviewUserTable
-            loading={false}
+            loading={isFetching}
             limit={limit}
             data={mangersData?.data?.result}
             page={page}

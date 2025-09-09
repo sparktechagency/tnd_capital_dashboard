@@ -12,7 +12,6 @@ import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Loading from "../../ui/Loading";
 
 const HubManagerAllApplications = () => {
   const [page, setPage] = useState<number>(1);
@@ -25,7 +24,7 @@ const HubManagerAllApplications = () => {
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
-  const { data, isLoading } = useGetAllHubManagerLoanApplicationQuery({
+  const { data, isFetching } = useGetAllHubManagerLoanApplicationQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -69,8 +68,6 @@ const HubManagerAllApplications = () => {
     }
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -91,7 +88,7 @@ const HubManagerAllApplications = () => {
 
         <AdminApplicationTable
           data={application?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

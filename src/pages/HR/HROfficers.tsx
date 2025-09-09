@@ -9,7 +9,6 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Loading from "../../ui/Loading";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 import ViewHROfficers from "../../ui/Modal/HROffiers/ViewHROfficers";
@@ -34,7 +33,7 @@ const HROfficers = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calls
-  const { data, isLoading } = useGetUsersQuery({
+  const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -83,10 +82,6 @@ const HROfficers = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -113,7 +108,7 @@ const HROfficers = () => {
 
         <HROfficersTable
           data={fieldOfficerData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showEditUserModal={showEditUserModal}

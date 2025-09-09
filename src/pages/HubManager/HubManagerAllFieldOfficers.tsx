@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 import { useGetAllFieldOfficersQuery } from "../../redux/features/HubManager/hubManagerFieldOfficerApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Loading from "../../ui/Loading";
-import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
-import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 
 const HubManagerAllFieldOfficers = () => {
   const [page, setPage] = useState<number>(1);
@@ -27,7 +26,7 @@ const HubManagerAllFieldOfficers = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data, isLoading } = useGetAllFieldOfficersQuery({
+  const { data, isFetching } = useGetAllFieldOfficersQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -73,8 +72,6 @@ const HubManagerAllFieldOfficers = () => {
     }
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -95,7 +92,7 @@ const HubManagerAllFieldOfficers = () => {
 
         <HubManagerFieldOfficerTable
           data={officerData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showEditUserModal={showEditUserModal}

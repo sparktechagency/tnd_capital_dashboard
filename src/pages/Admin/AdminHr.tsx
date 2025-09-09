@@ -17,7 +17,6 @@ import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminHRTable from "../../ui/Tables/AdminHRTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Loading from "../../ui/Loading";
 
 const AdminHr = () => {
   const [page, setPage] = useState<number>(1);
@@ -35,7 +34,7 @@ const AdminHr = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calls
-  const { data, isLoading } = useGetUsersQuery({
+  const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -120,9 +119,7 @@ const AdminHr = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+
 
   return (
     <div>
@@ -150,7 +147,7 @@ const AdminHr = () => {
 
         <AdminHRTable
           data={hrData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showBlockModal={showBlockModal}

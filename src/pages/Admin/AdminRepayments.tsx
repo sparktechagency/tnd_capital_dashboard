@@ -54,7 +54,7 @@ const AdminRepayments = () => {
 
   // api calling
 
-  const { data: repayments, isLoading } = useGetAllRepaymentsQuery({
+  const { data: repayments, isFetching } = useGetAllRepaymentsQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -104,7 +104,7 @@ const AdminRepayments = () => {
     },
   ];
 
-  if (isLoading || countLoading) {
+  if (countLoading) {
     return <Loading />;
   }
 
@@ -138,7 +138,7 @@ const AdminRepayments = () => {
 
         <AdminRepaymentsTable
           data={repaymentsData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

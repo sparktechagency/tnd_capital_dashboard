@@ -37,11 +37,25 @@ const fieldOfficerLoanApplicationApi = baseApi.injectEndpoints({
             invalidatesTags: [tagTypes.fieldOfficerLoanApplication],
         }),
 
+        getAllClients: builder.query({
+            query: ({ page, limit, searchTerm }) => ({
+                url: `/leads_and_clients/all_clients`,
+                method: "GET",
+                params: {
+                    page,
+                    limit,
+                    searchTerm,
+                },
+            }),
+            providesTags: [tagTypes.fieldOfficerLoanApplication],
+        })
+
     }),
 });
 
 export const {
     useGetAllLoanApplicationQuery,
     useCreateLoanApplicationMutation,
-    useUpdateLoanApplicationMutation
+    useUpdateLoanApplicationMutation,
+    useGetAllClientsQuery
 } = fieldOfficerLoanApplicationApi;

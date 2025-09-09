@@ -10,7 +10,6 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Loading from "../../ui/Loading";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
@@ -33,7 +32,7 @@ const AdminFieldOfficers = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calls
-  const { data, isLoading } = useGetUsersQuery({
+  const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -118,9 +117,6 @@ const AdminFieldOfficers = () => {
       handleCancel();
     }
   };
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <div>
@@ -148,7 +144,7 @@ const AdminFieldOfficers = () => {
 
         <AdminFieldOfficerTable
           data={fieldOfficerData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showBlockModal={showBlockModal}

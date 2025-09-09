@@ -7,7 +7,6 @@ import {
 } from "../../redux/features/HubManager/hubManagerLeadsApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Loading from "../../ui/Loading";
 import ViewAdminClientsModal from "../../ui/Modal/AdminClients/ViewAdminClientsModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminClientsTable from "../../ui/Tables/AdminClientsTable";
@@ -24,7 +23,7 @@ const HubManagerClients = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const { collapsed } = useAppSelector((state) => state.auth);
 
-  const { data, isLoading } = useGetAllClientsForHubQuery({
+  const { data, isFetching } = useGetAllClientsForHubQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -65,10 +64,6 @@ const HubManagerClients = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -89,7 +84,7 @@ const HubManagerClients = () => {
 
         <AdminClientsTable
           data={hubClients?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

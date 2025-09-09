@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { getImageUrl } from "../../helpers/config/envConfig";
 interface AdminClientsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
@@ -27,23 +28,34 @@ const FieldOfficerClientsTable: React.FC<AdminClientsTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (_text: any, record: any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      render: (_text: any, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={
+                record?.client?.customFields?.image
+                  ? getImageUrl() + record?.client?.customFields?.image
+                  : AllImages.profile
+              }
+              alt={record.fullName}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{record?.client?.customFields?.name}</span>
+          </div>
+        );
+      },
     },
-
+    {
+      title: "Phone Number",
+      dataIndex: ["client", "phoneNumber"], // Data key for phoneNumber
+      key: "phoneNumber",
+      align: "center",
+    },
     {
       title: "Loan Amount",
       dataIndex: "loanAmountRequested", // Data key for email
@@ -63,10 +75,9 @@ const FieldOfficerClientsTable: React.FC<AdminClientsTableProps> = ({
       key: "term",
       align: "center",
     },
-
     {
       title: "Status",
-      dataIndex: "status", // Data key for role
+      dataIndex: "loanStatus", // Data key for role
       render: (text: string) => (
         <div
           className={`${

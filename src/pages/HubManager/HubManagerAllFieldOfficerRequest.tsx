@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 import { useGetAllHubManagerFieldOfficerQuery } from "../../redux/features/HubManager/hubManagerFieldOfficerApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Loading from "../../ui/Loading";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import AddSpoke from "../../ui/Modal/HubManager/AddSpoke";
 import HubManagerFieldOfficerTable from "../../ui/Tables/HubManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { useDeleteUserMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 
 const HubManagerAllFieldOfficerRequest = () => {
   const [page, setPage] = useState<number>(1);
@@ -27,7 +26,7 @@ const HubManagerAllFieldOfficerRequest = () => {
 
   // api calling
 
-  const { data, isLoading } = useGetAllHubManagerFieldOfficerQuery({
+  const { data, isFetching } = useGetAllHubManagerFieldOfficerQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -74,7 +73,6 @@ const HubManagerAllFieldOfficerRequest = () => {
     }
   };
 
-  if (isLoading) return <Loading />;
 
   return (
     <div>
@@ -96,7 +94,7 @@ const HubManagerAllFieldOfficerRequest = () => {
 
         <HubManagerFieldOfficerTable
           data={fieldOfficers?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showSpokeModal={showSpokeModal}

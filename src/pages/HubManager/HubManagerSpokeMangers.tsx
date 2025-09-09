@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useGetAllSpokeMangerQuery } from "../../redux/features/HubManager/hubManageSpokeManagerApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import { useGetAllSpokeMangerQuery } from "../../redux/features/HubManager/hubManageSpokeManagerApi";
-import Loading from "../../ui/Loading";
 import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
 import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 import HRManagersTable from "../../ui/Tables/HRManagersTable";
@@ -23,7 +22,7 @@ const HubManagerSpokeMangers = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data, isLoading } = useGetAllSpokeMangerQuery({
+  const { data, isFetching } = useGetAllSpokeMangerQuery({
     page: 1,
     limit: 10,
   });
@@ -43,8 +42,6 @@ const HubManagerSpokeMangers = () => {
     setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
-
-  if (isLoading) return <Loading />;
 
   return (
     <div className="min-h-screen">
@@ -66,7 +63,7 @@ const HubManagerSpokeMangers = () => {
 
         <HRManagersTable
           data={mangersData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showEditUserModal={showEditUserModal}
           limit={limit}

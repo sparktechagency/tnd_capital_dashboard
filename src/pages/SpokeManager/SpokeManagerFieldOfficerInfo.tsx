@@ -19,7 +19,7 @@ const SpokeManagerFieldOfficerInfo = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
-  const { data, isLoading } = useAllFieldOfficerInfoQuery({
+  const { data, isFetching } = useAllFieldOfficerInfoQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -35,7 +35,6 @@ const SpokeManagerFieldOfficerInfo = () => {
     setCurrentRecord(null);
   };
 
-  if (isLoading) return <Loading />;
 
   return (
     <section className="min-h-screen">
@@ -57,7 +56,7 @@ const SpokeManagerFieldOfficerInfo = () => {
 
           <SpokeManagerFieldOfficerTable
             data={data?.data?.result}
-            loading={false}
+            loading={isFetching}
             showViewModal={showViewUserModal}
             limit={limit}
             page={page}

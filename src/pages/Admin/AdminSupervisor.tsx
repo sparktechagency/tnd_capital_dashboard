@@ -10,7 +10,6 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import Loading from "../../ui/Loading";
 import ViewAdminHRModal from "../../ui/Modal/AdminHR/ViewAdminHRModal";
 import BlockModal from "../../ui/Modal/BlockModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
@@ -35,7 +34,7 @@ const AdminSupervisor = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data, isLoading } = useGetUsersQuery({
+  const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -120,10 +119,6 @@ const AdminSupervisor = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -150,7 +145,7 @@ const AdminSupervisor = () => {
 
         <AdminSupervisorTable
           data={supervisor?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showBlockModal={showBlockModal}

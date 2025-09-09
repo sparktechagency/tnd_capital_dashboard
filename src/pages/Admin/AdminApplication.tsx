@@ -28,7 +28,7 @@ const AdminApplication = () => {
 
   // api calling
 
-  const { data: loanApplicationData, isLoading } =
+  const { data: loanApplicationData, isFetching } =
     useGetAllLoanApplicationQuery({
       page,
       limit,
@@ -71,10 +71,6 @@ const AdminApplication = () => {
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -95,7 +91,7 @@ const AdminApplication = () => {
 
         <AdminApplicationTable
           data={application}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

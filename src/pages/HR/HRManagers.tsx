@@ -11,11 +11,10 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 import HRManagersTable from "../../ui/Tables/HRManagersTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Loading from "../../ui/Loading";
-import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 
 const HRManagers = () => {
   const [page, setPage] = useState<number>(1);
@@ -31,7 +30,7 @@ const HRManagers = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data, isLoading } = useGetAllManagersQuery({
+  const { data, isFetching } = useGetAllManagersQuery({
     page: 1,
     limit: 10,
   });
@@ -75,8 +74,6 @@ const HRManagers = () => {
     }
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
@@ -103,7 +100,7 @@ const HRManagers = () => {
 
         <HRManagersTable
           data={mangersData?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           showEditUserModal={showEditUserModal}

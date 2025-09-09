@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useGetAllClientsQuery } from "../../redux/features/fieldOfficer/fieldOfficerLoanApplicationApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminClientsModal from "../../ui/Modal/AdminClients/ViewAdminClientsModal";
 import FieldOfficerClientsTable from "../../ui/Tables/FieldOfficerClientsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { applicationData } from "../Admin/fakeData";
 
 const FieldOfficerClients = () => {
   const [page, setPage] = useState<number>(1);
@@ -18,6 +18,13 @@ const FieldOfficerClients = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  const { data, isFetching } = useGetAllClientsQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+  const clients = data?.data;
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -48,12 +55,13 @@ const FieldOfficerClients = () => {
         </div>
 
         <FieldOfficerClientsTable
-          data={applicationData}
-          loading={false}
+          data={clients?.result}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={clients?.meta?.total}
         />
 
         <ViewAdminClientsModal

@@ -44,7 +44,6 @@ const AdminOverview = () => {
   const [currentYear, setCurrentYear] = useState(2025);
   const [approvalYear, setApprovalYear] = useState(2025);
 
-
   const { data: adminCount, isLoading: countLoading } = useGetAdminCountsQuery(
     {}
   );
@@ -58,7 +57,8 @@ const AdminOverview = () => {
       year: approvalYear,
     });
 
-  const { data: recentApplication } = useGetRecentOfficerCollectionQuery({});
+  const { data: recentApplication, isFetching } =
+    useGetRecentOfficerCollectionQuery({});
 
   const applicationData = recentApplication?.data?.result;
 
@@ -192,7 +192,7 @@ const AdminOverview = () => {
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerTable
             isShowOtherAction={false}
-            loading={false}
+            loading={isFetching}
             showViewModal={showViewUserModal}
             limit={limit}
             data={applicationData}

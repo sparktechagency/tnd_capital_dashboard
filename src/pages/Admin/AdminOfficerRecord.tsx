@@ -21,7 +21,7 @@ const AdminOfficerRecord = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
-  const { data, isLoading } = useGetRecentOfficerCollectionQuery({
+  const { data, isFetching } = useGetRecentOfficerCollectionQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -39,7 +39,6 @@ const AdminOfficerRecord = () => {
     setCurrentRecord(null);
   };
 
-  if (isLoading) return <Loading />;
 
   return (
     <div>
@@ -61,7 +60,7 @@ const AdminOfficerRecord = () => {
 
         <AdminOfficerRecordTable
           data={officerCollection?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           limit={limit}
           page={page}

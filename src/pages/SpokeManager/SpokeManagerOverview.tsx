@@ -36,7 +36,7 @@ const SpokeManagerOverview = () => {
       year: year,
     });
 
-  const { data: fieldOfficerCollection, isLoading: fieldOfficerLoading } =
+  const { data: fieldOfficerCollection, isFetching: fieldOfficerLoading } =
     useSpokeManagerFieldOfficerCollectionQuery({});
 
   const showViewUserModal = (record: any) => {
@@ -99,7 +99,7 @@ const SpokeManagerOverview = () => {
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerTable
             isShowOtherAction={false}
-            loading={false}
+            loading={fieldOfficerLoading}
             showViewModal={showViewUserModal}
             limit={limit}
             data={fieldOfficerCollection?.data?.result}
