@@ -24,6 +24,9 @@ export const tagTypes = {
   hubManageSpokeManager: "hubManageSpokeManager",
   // spoke manager
   spokeManagerOverview: "spokeManagerOverview",
+  // field Officer
+  fieldOfficerOverview: "fieldOfficerOverview",
+  fieldOfficerLeads: "fieldOfficerLeads",
 };
 
 export const tagTypesList = [
@@ -47,5 +50,7 @@ export const tagTypesList = [
   tagTypes.hubManageRepayments,
   tagTypes.hubManagerFieldOfficer,
   tagTypes.hubManageSpokeManager,
-  tagTypes.spokeManagerOverview
+  tagTypes.spokeManagerOverview,
+  tagTypes.fieldOfficerOverview,
+  tagTypes.fieldOfficerLeads,
 ];

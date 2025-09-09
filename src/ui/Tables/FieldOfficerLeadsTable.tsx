@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../../helpers/config/envConfig";
 
 interface AdminFieldOfficerLeadsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -33,38 +34,44 @@ const FieldOfficerLeadsTable: React.FC<AdminFieldOfficerLeadsTableProps> = ({
       title: "Full Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (_text:string, record:any) => (
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <img
-            src={record.image} // Replace with your actual image key
-            alt={record.fullName}
-            style={{
-              width: 45,
-              height: 45,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-          <span>{record.fullName}</span>
-        </div>
-      ),
+      render: (_text: string, record: any) => {
+        return (
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <img
+              src={
+                record?.customFields?.image
+                  ? getImageUrl() + record?.customFields?.image
+                  : AllImages.profile
+              }
+              alt={_text}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+            <span>{record?.customFields?.name}</span>
+          </div>
+        );
+      },
     },
     {
       title: "Phone Number",
-      dataIndex: "phoneNumber", // Data key for phoneNumber
+      dataIndex: "phoneNumber",
       key: "phoneNumber",
       align: "center",
     },
     {
       title: "Email",
-      dataIndex: "email", // Data key for email
+      dataIndex: "email",
       key: "email",
       align: "center",
     },
 
     {
       title: "Address",
-      dataIndex: "address", // Data key for role
+      dataIndex: ["customFields", "homeAddress"],
       key: "address",
       align: "center",
     },
@@ -95,16 +102,16 @@ const FieldOfficerLeadsTable: React.FC<AdminFieldOfficerLeadsTableProps> = ({
           )}
 
           {showEditModal && (
-            <Link to={`edit-new-leads/${record.key}`}>
-              <Tooltip placement="left" title="Edit">
-                <button
-                  className="!p-0 !bg-transparent !border-none cursor-pointer"
-                  onClick={() => showEditModal(record)}
-                >
-                  <img src={AllIcons.pen} />
-                </button>
-              </Tooltip>
-            </Link>
+            // <Link to={`edit-new-leads/${record.key}`}>
+            <Tooltip placement="left" title="Edit">
+              <button
+                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                onClick={() => showEditModal(record)}
+              >
+                <img src={AllIcons.pen} />
+              </button>
+            </Tooltip>
+            // </Link>
           )}
         </Space>
       ),
