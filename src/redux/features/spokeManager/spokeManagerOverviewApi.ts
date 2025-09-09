@@ -27,6 +27,14 @@ const spokeManagerOverviewApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
             providesTags: [tagTypes.spokeManagerOverview],
+        }),
+
+        allFieldOfficerInfo: builder.query({
+            query: () => ({
+                url: `/users?role=fieldOfficer`,
+                method: "GET",
+            }),
+            providesTags: [tagTypes.spokeManagerOverview],
         })
     }),
 });
@@ -34,5 +42,6 @@ const spokeManagerOverviewApi = baseApi.injectEndpoints({
 export const {
     useGetSpokeMangerCountsQuery,
     useSpokeManageCollectionReportQuery,
-    useSpokeManagerFieldOfficerCollectionQuery
+    useSpokeManagerFieldOfficerCollectionQuery,
+    useAllFieldOfficerInfoQuery
 } = spokeManagerOverviewApi;

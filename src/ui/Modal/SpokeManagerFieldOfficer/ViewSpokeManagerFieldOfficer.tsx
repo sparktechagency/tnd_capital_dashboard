@@ -1,6 +1,7 @@
 import { Modal } from "antd";
 import ModalItemStyle from "../../../utils/ModalItemStyle";
-import { AllIcons } from "../../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../../public/images/AllImages";
+import { getImageUrl } from "../../../helpers/config/envConfig";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const ViewSpokeManagerFieldOfficer = ({
@@ -29,38 +30,58 @@ const ViewSpokeManagerFieldOfficer = ({
           <div className="flex flex-col justify-center items-center gap-2 mt-3">
             {/* Avatar */}
             <img
-              src={currentRecord?.image}
+              src={
+                currentRecord?.customFields?.image
+                  ? getImageUrl() + currentRecord?.customFields?.image
+                  : AllImages.profile
+              }
               alt={currentRecord?.fullName}
               className="size-[180px] object-cover rounded mt-6"
             />
           </div>
           <div className="mt-6 px-3">
-            <ModalItemStyle title="#FO.ID" value={currentRecord?.foId} />
-            <ModalItemStyle title="Name" value={currentRecord?.fullName} />
+            <ModalItemStyle title="#FO.ID" value={currentRecord?.uid} />
+            <ModalItemStyle
+              title="Name"
+              value={currentRecord?.customFields?.name}
+            />
             <ModalItemStyle title={"Email"} value={currentRecord?.email} />
             <ModalItemStyle
               title={"Phone Number"}
               value={currentRecord?.phoneNumber}
             />
-            <ModalItemStyle title={"NID"} value={currentRecord?.nid} />
-            <ModalItemStyle title={"Hub ID"} value={currentRecord?.hubId} />
             <ModalItemStyle
-              title={"Home Address:"}
-              value={currentRecord?.address}
+              title={"NID"}
+              value={currentRecord?.customFields?.nid}
+            />
+            <ModalItemStyle title={"Hub ID"} value={currentRecord?.hubUid} />
+            <ModalItemStyle
+              title={"Spoke ID"}
+              value={currentRecord?.spokeUid}
             />
             <ModalItemStyle
-              title={"Set Location:"}
-              value={currentRecord?.setLocation}
+              title={"Home Address:"}
+              value={currentRecord?.customFields?.homeAddress}
             />
 
             <div>
               <p className="text-lg font-medium">CV</p>
-              <div className="w-[100px] h-auto p-2 bg-[#B4B8BD] rounded-lg mt-4">
-                <div className="flex items-center size-[80px] justify-center bg-[#B3CEFC] rounded-full">
-                  <img src={AllIcons.CV} alt="" />
+              <a
+                href={
+                  currentRecord?.customFields?.cv
+                    ? getImageUrl() + currentRecord?.customFields?.cv
+                    : ""
+                }
+                target="_blank"
+              >
+                <div className="w-[100px] h-auto p-2 bg-[#B4B8BD] rounded-lg mt-4">
+                  <div className="flex items-center size-[80px] justify-center bg-[#B3CEFC] rounded-full">
+                    <img src={AllIcons.CV} alt="" />
+                  </div>
+
+                  <p className="text-center mt-2 text-black">CV.pdf</p>
                 </div>
-                <p className="text-center mt-2">CV.pdf</p>
-              </div>
+              </a>
             </div>
           </div>
         </div>

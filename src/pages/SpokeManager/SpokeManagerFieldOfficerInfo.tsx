@@ -1,57 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useAllFieldOfficerInfoQuery } from "../../redux/features/spokeManager/spokeManagerOverviewApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import ViewSpokeManagerFieldOfficer from "../../ui/Modal/SpokeManagerFieldOfficer/ViewSpokeManagerFieldOfficer";
 import SpokeManagerFieldOfficerTable from "../../ui/Tables/SpokeManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { spokeManagerFieldOfficerData } from "../Admin/fakeData";
+import Loading from "../../ui/Loading";
 
 const SpokeManagerFieldOfficerInfo = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+
+  const { data, isLoading } = useAllFieldOfficerInfoQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
-
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    // setCurrentRecord(null);
-  };
+  if (isLoading) return <Loading />;
 
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      // deleteAdmin,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
   return (
     <section className="min-h-screen">
       <Topbar collapsed={collapsed}>
@@ -71,26 +56,19 @@ const SpokeManagerFieldOfficerInfo = () => {
           </div>
 
           <SpokeManagerFieldOfficerTable
-            data={spokeManagerFieldOfficerData}
+            data={data?.data?.result}
             loading={false}
             showViewModal={showViewUserModal}
-            showDeleteModal={showDeleteModal}
             limit={limit}
             page={page}
             setPage={setPage}
+            total={data?.data?.meta?.total}
           />
 
           <ViewSpokeManagerFieldOfficer
             isViewModalVisible={isViewModalVisible}
             handleCancel={handleCancel}
             currentRecord={currentRecord}
-          />
-
-          <DeleteModal
-            currentRecord={currentRecord}
-            isDeleteModalVisible={isDeleteModalVisible}
-            handleCancel={handleDeleteCancel}
-            handleDelete={handleDelete}
           />
         </div>
       </div>
