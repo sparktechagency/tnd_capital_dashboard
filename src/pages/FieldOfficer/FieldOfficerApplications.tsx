@@ -2,18 +2,18 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { LoanApply } from "../../Components/svg/leads";
+import { useGetAllLoanApplicationQuery } from "../../redux/features/fieldOfficer/fieldOfficerLoanApplicationApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
-import FieldOfficerApplication from "../../ui/Tables/FieldOfficerApplication";
+import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { applicationData } from "../Admin/fakeData";
 
 const FieldOfficerApplications = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -21,6 +21,15 @@ const FieldOfficerApplications = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data, isFetching } = useGetAllLoanApplicationQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const applicationData = data?.data;
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -56,13 +65,15 @@ const FieldOfficerApplications = () => {
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
 
-        <FieldOfficerApplication
-          data={applicationData}
-          loading={false}
+        <AdminApplicationTable
+          data={applicationData?.result}
+          loading={isFetching}
+          deleteModalShow={false}
           showViewModal={showViewUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={applicationData?.meta?.total}
         />
 
         <ViewAdminApplicationModal

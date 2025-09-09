@@ -9,7 +9,8 @@ interface AdminApplicationTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
+  showDeleteModal?: (record: any) => void;
+  deleteModalShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -21,6 +22,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
   loading,
   showViewModal,
   showDeleteModal,
+  deleteModalShow = true,
   setPage,
   page,
   total,
@@ -110,14 +112,16 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="Delete Application">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
-            </button>
-          </Tooltip>
+          {deleteModalShow && (
+            <Tooltip placement="right" title="Delete Application">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showDeleteModal?.(record)}
+              >
+                <img src={AllIcons.deleteIcon} />
+              </button>
+            </Tooltip>
+          )}
         </Space>
       ),
       align: "center",
