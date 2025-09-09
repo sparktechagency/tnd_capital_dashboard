@@ -9,6 +9,7 @@ import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
 import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
+import EditLoanApplication from "../../ui/Modal/FieldOfficerModals/EditLoanApplication";
 
 const FieldOfficerApplications = () => {
   const [page, setPage] = useState<number>(1);
@@ -17,9 +18,8 @@ const FieldOfficerApplications = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
@@ -36,8 +36,14 @@ const FieldOfficerApplications = () => {
     setIsViewModalVisible(true);
   };
 
+  const showEditUserModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
+  };
+
   const handleCancel = () => {
     setIsViewModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -69,6 +75,8 @@ const FieldOfficerApplications = () => {
           data={applicationData?.result}
           loading={isFetching}
           deleteModalShow={false}
+          editModalShow={true}
+          showEditUserModal={showEditUserModal}
           showViewModal={showViewUserModal}
           limit={limit}
           page={page}
@@ -78,6 +86,12 @@ const FieldOfficerApplications = () => {
 
         <ViewAdminApplicationModal
           isViewModalVisible={isViewModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+        />
+
+        <EditLoanApplication
+          isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
         />

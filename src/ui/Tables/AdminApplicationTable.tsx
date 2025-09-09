@@ -11,6 +11,8 @@ interface AdminApplicationTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal?: (record: any) => void;
   deleteModalShow?: boolean;
+  showEditUserModal?: (record: any) => void;
+  editModalShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -22,7 +24,9 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
   loading,
   showViewModal,
   showDeleteModal,
+  showEditUserModal,
   deleteModalShow = true,
+  editModalShow = false,
   setPage,
   page,
   total,
@@ -119,6 +123,17 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                 onClick={() => showDeleteModal?.(record)}
               >
                 <img src={AllIcons.deleteIcon} />
+              </button>
+            </Tooltip>
+          )}
+
+          {editModalShow && (
+            <Tooltip placement="right" title="Edit">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showEditUserModal?.(record)}
+              >
+                <img src={AllIcons.pen} />
               </button>
             </Tooltip>
           )}

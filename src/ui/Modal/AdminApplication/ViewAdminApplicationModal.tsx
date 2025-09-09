@@ -74,7 +74,10 @@ const ViewAdminApplicationModal = ({
               title="Preferred Contact"
               value={currentRecord?.preferredContact}
             />
-            <ModalItemStyle title="NID" value={currentRecord?.nid} />
+            <ModalItemStyle
+              title="NID"
+              value={currentRecord?.clientId?.customFields?.nid}
+            />
           </div>
 
           {/* Loan Information Section */}
@@ -110,7 +113,11 @@ const ViewAdminApplicationModal = ({
             />
             <ModalItemStyle
               title="Status"
-              className="capitalize"
+              className={
+                currentRecord?.loanStatus === "approved"
+                  ? "text-green-500 capitalize" 
+                  : "text-yellow-500 capitalize"
+              }
               value={currentRecord?.loanStatus}
             />
           </div>

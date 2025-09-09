@@ -50,8 +50,8 @@ export const mainTheme = {
       colorTextHeading: "#fff",
       colorTextDisabled: "#535763",
       colorIcon: "#fff",
-      colorIconHover: "#000",
-      colorPrimary: "#000",
+      colorIconHover: "#fff",
+      colorPrimary: "#fff",
     },
     timePicker: {
       fontSize: 20,
