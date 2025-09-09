@@ -5,6 +5,16 @@ const leads_and_clients = "/leads_and_clients";
 
 const fieldOfficerLeadsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+
+        addLeads: builder.mutation({
+            query: (req) => ({
+                url: `${leads_and_clients}/create`,
+                method: "POST",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.fieldOfficerLeads],
+        }),
+
         allLeads: builder.query({
             query: () => ({
                 url: leads_and_clients,
@@ -44,6 +54,7 @@ const fieldOfficerLeadsApi = baseApi.injectEndpoints({
 });
 
 export const {
+    useAddLeadsMutation,
     useAllLeadsQuery,
     useUpdateFieldOfficerLeadsMutation,
     useDeleteFieldOfficerLeadsMutation,
