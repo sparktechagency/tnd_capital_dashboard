@@ -4,6 +4,7 @@ import { Form, Input, Typography } from "antd";
 import React from "react";
 import type { Rule } from "antd/es/form";
 import { cn } from "../../lib/utils";
+import ReuseDatePicker from "./ReuseDatePicker";
 
 type TInputProps = {
   Typolevel?: 1 | 2 | 3 | 4 | 5;
@@ -81,6 +82,19 @@ const ReuseInput = ({
             rows={rows}
             placeholder={placeholder}
             disabled={disabled}
+          />
+        ) : inputType === "date" ? (
+          <ReuseDatePicker
+            value={value}
+            onChange={onChange}
+            className={cn(
+              "!py-2 !px-3 !rounded-lg !text-lg !border !border-[#535763] !text-base-color",
+              inputClassName
+            )}
+            placeholder={placeholder}
+            disabled={disabled}
+            style={{ width: "100%" }}
+            name={name}
           />
         ) : (
           <Input

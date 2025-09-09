@@ -6,193 +6,57 @@ import ReuseInput from "../../ui/Form/ReuseInput";
 import { AllIcons } from "../../../public/images/AllImages";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSelect from "../../ui/Form/ReuseSelect";
+import { useState } from "react";
+import { getInput } from "./utils";
+import { useCreateLoanApplicationMutation } from "../../redux/features/fieldOfficer/fieldOfficerLoanApplicationApi";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useNavigate } from "react-router-dom";
 
 const FieldOfficerLoanApply = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
-  const inputStructure = [
-    {
-      name: "name",
-      inputType: "text",
-      placeholder: "Full Name",
-      label: "Full Name",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
-    },
-    {
-      name: "phoneNumber",
-      inputType: "text",
-      label: "Phone Number",
-      placeholder: "Phone Number",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
-    },
-    {
-      name: "email",
-      inputType: "email",
-      label: "Email",
-      placeholder: "Email",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "Home Address",
-      inputType: "text",
-      label: "Home Address",
-      placeholder: "Home Address",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      options: [
-        {
-          label: "Cost plus profit (CPP) Murabaha Pareonal",
-          value: "Cost plus profit (CPP) Murabaha Pareonal",
-        },
-        {
-          label: "Cost plus profit (CPP) Murabaha Bussiness",
-          value: "Cost plus profit (CPP) Murabaha Bussiness",
-        },
-        {
-          label: "Thrive Together Partnership (TTP) Mudaraba",
-          value: "Thrive Together Partnership (TTP) Mudaraba",
-        },
-      ],
-      placeholder: "Select Gender",
-      isSelect: true,
-      name: "gender",
-      label: "Type of Financing Requested ",
-    },
+  // Add state to handle Applicant Status
+  const [applicantStatus, setApplicantStatus] = useState<string>("From Leads");
+  const navigation = useNavigate();
 
-    {
-      name: "nid",
-      inputType: "text",
-      label: "Purpose of Financing",
-      placeholder: "Type financing",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "nid",
-      inputType: "text",
-      label: "Loan Amount Requested",
-      placeholder: "Type Amount",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
+  const inputStructure = getInput(applicantStatus);
 
-    {
-      options: [
-        {
-          label: "Employed",
-          value: "Employed",
-        },
-        {
-          label: "Self Employed",
-          value: "Self Employed",
-        },
-        {
-          label: "Unemployed",
-          value: "Unemployed",
-        },
-        {
-          label: "Other ",
-          value: "Other ",
-        },
-      ],
-      placeholder: "Select Gender",
-      isSelect: true,
-      name: "gender",
-      label: "Type of Financing Requested ",
-    },
-
-    {
-      name: "nid",
-      inputType: "text",
-      label: "Where are you located",
-      placeholder: "City, State, Country ",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "nid",
-      inputType: "text",
-      label: "Monthly Income",
-      placeholder: "Type income ",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-
-    {
-      options: [
-        {
-          label: "Phone ",
-          value: "Phone ",
-        },
-        {
-          label: "Email",
-          value: "Email",
-        },
-      ],
-      placeholder: "Select Gender",
-      isSelect: true,
-      name: "gender",
-      label: "Preferred Contact  ",
-    },
-    {
-      options: [
-        {
-          label: "Yearly ",
-          value: "Yearly ",
-        },
-        {
-          label: "M onthly",
-          value: "monthly",
-        },
-      ],
-      placeholder: "Select Gender",
-      isSelect: true,
-      name: "gender",
-      label: "Term   ",
-    },
-
-    {
-      name: "nid",
-      inputType: "text",
-      label: "NID",
-      placeholder: "NID Number",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "hubId",
-      inputType: "text",
-      label: "Hub ID",
-      placeholder: "Hub ID Number",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "hubId",
-      inputType: "text",
-      label: "Start Date",
-      placeholder: "Hub ID Number",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-    {
-      name: "hubId",
-      inputType: "text",
-      label: "End Date",
-      placeholder: "Hub ID Number",
-      labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
-    },
-  ];
+  // api calling
+  const [createLoanApplication] = useCreateLoanApplicationMutation();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = async (values: any) => {
+    const startDate = new Date(values.startDate);
+    const endDate = new Date(values.endDate);
+
+    const formattedData = {
+      ...values,
+      applicantStatus,
+      monthlyIncome: Number(values.monthlyIncome),
+      loanAmountRequested: Number(values.loanAmountRequested),
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+    };
+
+    const formData = new FormData();
+
+    if (values.image?.file?.originFileObj) {
+      formData.append("image", values?.image?.file?.originFileObj);
+    }
+
+    formData.append("data", JSON.stringify(formattedData));
+
+    console.log(formattedData, "formattedData");
+    const res = await tryCatchWrapper(
+      createLoanApplication,
+      { body: formData },
+      "Creating Loan Application..."
+    );
+
+    if (res?.statusCode === 201) {
+      form.resetFields();
+      navigation(-1);
+    }
   };
 
   return (
@@ -208,6 +72,24 @@ const FieldOfficerLoanApply = () => {
             className="!px-32 !mt-10"
           >
             <div className="grid grid-cols-2 gap-x-52">
+              <ReuseSelect
+                options={[
+                  {
+                    label: "From Leads",
+                    value: "From Leads",
+                  },
+                  {
+                    label: "New",
+                    value: "New",
+                  },
+                ]}
+                placeholder="Applicant Status"
+                name="applicantStatus"
+                defaultValue={applicantStatus}
+                label="Applicant Status"
+                onChange={(value) => setApplicantStatus(value)}
+              />
+
               {inputStructure.map((input, index) => (
                 <>
                   {input.isSelect ? (
@@ -217,7 +99,6 @@ const FieldOfficerLoanApply = () => {
                         label={input.label}
                         Typolevel={4}
                         labelClassName="!text-sm"
-                        selectClassName=""
                         options={input.options}
                       />
                     </>
@@ -232,48 +113,54 @@ const FieldOfficerLoanApply = () => {
                         placeholder={input.placeholder}
                         labelClassName={input.labelClassName}
                         rules={input.rules}
-                        inputClassName="!bg-[#F2F2F2] !border-none !rounded-lg !h-12 !text-sm placeholder:!text-[#B4BCC9] placeholder:text-xs"
+                        inputClassName="!bg-[#F2F2F2] !border-none !rounded-lg !h-12 !text-sm placeholder:!text-[#B4BCC9] !placeholder:text-xs"
                       />
                     </>
                   )}
                 </>
               ))}
 
-              <Form.Item name="image" className="mb-8 w-full">
-                <label htmlFor="image" className="block text-sm mb-3">
-                  Upload Picture
-                </label>
-                <Upload
-                  maxCount={1}
-                  listType="text"
-                  accept="image/*"
-                  multiple={false}
-                  customRequest={(options) => {
-                    setTimeout(() => {
-                      options.onSuccess?.("ok");
-                    }, 1000);
-                  }}
-                  className=""
-                >
-                  <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
-                    <p className="text-3xl mb-2">
-                      <img src={AllIcons.upload} alt="" />
-                    </p>
-                    <p className="text-black font-medium">Upload</p>
-                  </div>
-                </Upload>
-              </Form.Item>
+              {applicantStatus === "New" && (
+                <div>
+                  <label htmlFor="image" className="block text-sm mb-3">
+                    Upload Picture
+                  </label>
+                  <Form.Item name="image" className="mb-8 w-full">
+                    <Upload
+                      maxCount={1}
+                      listType="text"
+                      accept="image/*"
+                      multiple={false}
+                      customRequest={(options) => {
+                        setTimeout(() => {
+                          options.onSuccess?.("ok");
+                        }, 1000);
+                      }}
+                      className=""
+                    >
+                      <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                        <p className="text-3xl mb-2">
+                          <img src={AllIcons.upload} alt="" />
+                        </p>
+                        <p className="text-black font-medium">Upload</p>
+                      </div>
+                    </Upload>
+                  </Form.Item>
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
               <ReuseButton
                 variant="outline"
+                onClick={() => navigation(-1)}
                 className="!py-6 !px-9 !font-bold rounded-lg !w-full"
               >
                 Cancel
               </ReuseButton>
               <ReuseButton
                 variant="secondary"
+                htmlType="submit"
                 className="!py-6 !px-9 !font-bold rounded-lg !w-full"
               >
                 Submit Application
