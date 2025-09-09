@@ -17,11 +17,13 @@ export const tagTypes = {
   hrDashboardOverview: "hrDashboardOverview",
   // hub manager
   hubManagerOverview: "hubManagerOverview",
-  hubManagerLeads: "hubManagerLeads", 
+  hubManagerLeads: "hubManagerLeads",
   hubManagerApplication: "hubManagerApplication",
   hubManageRepayments: "hubManageRepayments",
   hubManagerFieldOfficer: "hubManagerFieldOfficer",
   hubManageSpokeManager: "hubManageSpokeManager",
+  // spoke manager
+  spokeManagerOverview: "spokeManagerOverview",
 };
 
 export const tagTypesList = [
@@ -44,5 +46,6 @@ export const tagTypesList = [
   tagTypes.hubManagerApplication,
   tagTypes.hubManageRepayments,
   tagTypes.hubManagerFieldOfficer,
-  tagTypes.hubManageSpokeManager
+  tagTypes.hubManageSpokeManager,
+  tagTypes.spokeManagerOverview
 ];

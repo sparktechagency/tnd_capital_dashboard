@@ -8,34 +8,13 @@ import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOff
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
 
 import Bar_Chart from "../../Components/Chart/BarChart";
+import {
+  useGetSpokeMangerCountsQuery,
+  useSpokeManageCollectionReportQuery,
+  useSpokeManagerFieldOfficerCollectionQuery,
+} from "../../redux/features/spokeManager/spokeManagerOverviewApi";
+import Loading from "../../ui/Loading";
 import YearOption from "../../utils/YearOption";
-import { fieldOfficerData } from "../Admin/fakeData";
-
-const cards = [
-  {
-    id: 1,
-    background: "#FFFFFF",
-    name: "Total Collection",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.collection} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "$2,000",
-  },
-
-  {
-    id: 3,
-    background: "#FFFFFF",
-    name: "Overdue",
-    icon: (
-      <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
-        <img src={AllIcons.overdue} className="size-7" alt="icon" />
-      </div>
-    ),
-    count: "$2,000K",
-  },
-];
 
 const SpokeManagerOverview = () => {
   const [page, setPage] = useState(1);
@@ -45,6 +24,20 @@ const SpokeManagerOverview = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const { collapsed } = useAppSelector((state) => state.auth);
+  const [year, setYear] = useState(2025);
+
+  // api calling
+  const { data: spokeManagerCount, isLoading } = useGetSpokeMangerCountsQuery(
+    {}
+  );
+
+  const { data: collectionReport, isLoading: isLoadingReport } =
+    useSpokeManageCollectionReportQuery({
+      year: year,
+    });
+
+  const { data: fieldOfficerCollection, isLoading: fieldOfficerLoading } =
+    useSpokeManagerFieldOfficerCollectionQuery({});
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -56,6 +49,36 @@ const SpokeManagerOverview = () => {
     setCurrentRecord(null);
   };
 
+  const cards = [
+    {
+      id: 1,
+      background: "#FFFFFF",
+      name: "Todays Collection",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.collection} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: spokeManagerCount?.data?.todayCollection,
+    },
+
+    {
+      id: 3,
+      background: "#FFFFFF",
+      name: "Overdue",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.overdue} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: spokeManagerCount?.data?.overdue,
+    },
+  ];
+
+  if (isLoading || isLoadingReport || fieldOfficerLoading) {
+    return <Loading />;
+  }
+
   return (
     <section>
       <Topbar collapsed={collapsed}></Topbar>
@@ -66,9 +89,9 @@ const SpokeManagerOverview = () => {
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">
           <div className="flex items-center justify-between py-4">
             <p className="text-xl font-medium">Collection Report</p>
-            <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+            <YearOption currentYear={year} setThisYear={setYear} key={""} />
           </div>
-          <Bar_Chart />
+          <Bar_Chart data={collectionReport?.data} />
         </div>
         <p className="text-lg font-medium pt-6 ">
           All Field Officer Collection
@@ -79,7 +102,7 @@ const SpokeManagerOverview = () => {
             loading={false}
             showViewModal={showViewUserModal}
             limit={limit}
-            data={fieldOfficerData}
+            data={fieldOfficerCollection?.data?.result}
             page={page}
             setPage={setPage}
             total={0}
