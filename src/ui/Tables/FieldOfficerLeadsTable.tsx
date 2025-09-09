@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import ReuseTable from "../../utils/ReuseTable";
-import { Link } from "react-router-dom";
 import { getImageUrl } from "../../helpers/config/envConfig";
+import ReuseTable from "../../utils/ReuseTable";
 
 interface AdminFieldOfficerLeadsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array

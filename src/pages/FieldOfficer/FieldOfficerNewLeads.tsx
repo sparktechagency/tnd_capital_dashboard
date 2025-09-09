@@ -2,13 +2,19 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
+import {
+  useAllLeadsQuery,
+  useDeleteFieldOfficerLeadsMutation,
+} from "../../redux/features/fieldOfficer/fieldOfficerLeadsApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import ViewLoadsModal from "../../ui/Modal/AdminLoads/ViewLoadsModal";
+import ViewLeadsModal from "../../ui/Modal/AdminModals/ViewLeadsModal";
 import FieldOfficerLeadsTable from "../../ui/Tables/FieldOfficerLeadsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { leadsData } from "../Admin/fakeData";
+import EditLeadsModal from "../../ui/Modal/FieldOfficerModals/EditLeadsModal";
+import DeleteModal from "../../ui/Modal/DeleteModal";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const FieldOfficerNewLeads = () => {
   const [page, setPage] = useState<number>(1);
@@ -18,11 +24,24 @@ const FieldOfficerNewLeads = () => {
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
 
+  const { data, isFetching: isLoadingLeads } = useAllLeadsQuery({
+    page,
+    limit: limit,
+  });
+  const leads = data?.data;
+  const [deleteFieldOfficerLeads] = useDeleteFieldOfficerLeadsMutation();
+
   const showEditModal = (record: any) => {
+    setIsEditModalVisible(true);
     setCurrentRecord(record);
+  };
+  const showDeleteModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsDeleteModalVisible(true);
   };
 
   const showViewUserModal = (record: any) => {
@@ -32,9 +51,21 @@ const FieldOfficerNewLeads = () => {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
+    setIsEditModalVisible(false);
+    setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
+  const handleDelete = async () => {
+    const res = await tryCatchWrapper(
+      deleteFieldOfficerLeads,
+      { params: currentRecord?._id },
+      "Deleting..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -60,17 +91,32 @@ const FieldOfficerNewLeads = () => {
         </div>
 
         <FieldOfficerLeadsTable
-          data={leadsData}
-          loading={false}
+          data={leads?.result}
+          loading={isLoadingLeads}
           showViewModal={showViewUserModal}
           showEditModal={showEditModal}
+          showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          total={leads?.meta?.total}
         />
 
-        <ViewLoadsModal
+        <ViewLeadsModal
           isViewModalVisible={isViewModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+        />
+
+        <EditLeadsModal
+          isEditModalVisible={isEditModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+        />
+
+        <DeleteModal
+          handleDelete={handleDelete}
+          isDeleteModalVisible={isDeleteModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
         />
