@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useAppSelector } from "../../redux/hooks";
-import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
 import Topbar from "../../Components/Shared/Topbar";
-import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DaysSelection from "../../utils/DaysSelection";
-import { installmentData } from "../Admin/fakeData";
-import FieldOfficerRepaymentsTable from "../../ui/Tables/FieldOfficerRepaymentsTable";
-import ReuseButton from "../../ui/Button/ReuseButton";
 import { LoanApply } from "../../Components/svg/leads";
+import { useGetAllRepaymentsQuery } from "../../redux/features/fieldOfficer/fieldOfficerRepaymentApi";
+import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
+import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
+import FieldOfficerRepaymentsTable from "../../ui/Tables/FieldOfficerRepaymentsTable";
+import DaysSelection from "../../utils/DaysSelection";
 
 const FieldOfficerRepayments = () => {
   const [page, setPage] = useState<number>(1);
@@ -20,6 +20,15 @@ const FieldOfficerRepayments = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  // api calling
+  const { data } = useGetAllRepaymentsQuery({
+    page,
+    limit,
+    searchTerm: searchText,
+  });
+
+  const repaymetns = data?.data;
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -56,12 +65,14 @@ const FieldOfficerRepayments = () => {
         </div>
 
         <FieldOfficerRepaymentsTable
-          data={installmentData}
+          data={repaymetns?.result}
           loading={false}
           showViewModal={showViewUserModal}
           limit={limit}
           page={page}
           setPage={setPage}
+          currentRecord={currentRecord}
+          total={repaymetns?.meta?.total}
         />
 
         <ViewAdminRepaymentsModal

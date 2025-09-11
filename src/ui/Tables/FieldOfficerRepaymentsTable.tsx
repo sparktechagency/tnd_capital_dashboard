@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons } from "../../../public/images/AllImages";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import dayjs from "dayjs";
+import ReuseButton from "../Button/ReuseButton";
 
 interface AdminRepaymentsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   setPage?: (page: number) => void; // Function to handle pagination
+  currentRecord: any;
   page?: number;
   total?: number;
   limit?: number;
@@ -18,6 +22,7 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
   loading,
   showViewModal,
   setPage,
+  currentRecord,
   page,
   total,
   limit,
@@ -30,7 +35,11 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
       render: (_text: any, record: any) => (
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <img
-            src={record.image} // Replace with your actual image key
+            src={
+              record?.client?.customFields?.image
+                ? getImageUrl() + record?.client?.customFields?.image
+                : AllImages.profile
+            }
             alt={record.fullName}
             style={{
               width: 45,
@@ -39,50 +48,50 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
               objectFit: "cover",
             }}
           />
-          <span>{record.fullName}</span>
+          <span>{record?.client?.customFields?.name}</span>
         </div>
       ),
     },
     {
-      title: "Total Amount",
-      dataIndex: "installmentAmount", // Data key for phoneNumber
-      key: "installmentAmount",
-      align: "center",
-    },
-    {
       title: "Installment Amount",
-      dataIndex: "installmentAmount", // Data key for phoneNumber
+      dataIndex: "installmentAmount",
       key: "installmentAmount",
       align: "center",
     },
     {
       title: "Due Date",
-      dataIndex: "dueDate", // Data key for email
+      dataIndex: "dueDate",
+      render: (text: string) => (
+        <span className="capitalize">{dayjs(text).format("DD-MM-YYYY")}</span>
+      ),
       key: "dueDate",
       align: "center",
     },
 
     {
       title: "Paid On",
-      dataIndex: "paidOn", // Data key for role
+      dataIndex: "paidOn",
+      render: (text: string) => (
+        <span className="capitalize">{dayjs(text).format("DD-MM-YYYY")}</span>
+      ),
       key: "paidOn",
       align: "center",
     },
 
     {
       title: "Penalty",
-      dataIndex: "penalty", // Data key for role
+      dataIndex: "penalty",
       key: "penalty",
       align: "center",
     },
 
     {
       title: "Status",
-      dataIndex: "status", // Data key for role
+      dataIndex: "status",
       render: (text: string) => (
         <div
           className={`${
-            text === "overdue "
+            text === "overdue"
               ? "text-[#EAB90A]"
               : text === "paid"
               ? "text-[#21B14C]"
@@ -92,21 +101,35 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
           {text}
         </div>
       ),
-      align: "center",
       key: "status",
+      align: "center",
     },
-
     {
       title: "Action",
       key: "action",
       render: (_: unknown, record: any) => (
         <Space size="middle">
+          {!currentRecord?.isConfirm && (
+            <Tooltip placement="right" title="View Details">
+              <ReuseButton variant="secondary" className="!w-fit !px-2 !py-1">
+                confirm
+              </ReuseButton>
+            </Tooltip>
+          )}
           <Tooltip placement="right" title="View Details">
             <button
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
+            </button>
+          </Tooltip>
+          <Tooltip placement="right" title="Edit">
+            <button
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              onClick={() => showViewModal(record)}
+            >
+              <img src={AllIcons.pen} />
             </button>
           </Tooltip>
         </Space>

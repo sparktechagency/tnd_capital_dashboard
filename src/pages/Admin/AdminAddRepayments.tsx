@@ -11,6 +11,7 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import AdminRepaymentsFeaturesModal from "../../ui/Modal/AdminRepayments/AdminRepaymentsFeaturesModal";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../ui/Loading";
 
 const AdminAddRepayments = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -20,7 +21,9 @@ const AdminAddRepayments = () => {
 
   const navigation = useNavigate();
 
-  const { data: repaymentsField } = useGetAllRepaymentsFieldQuery({});
+  const { data: repaymentsField, isLoading } = useGetAllRepaymentsFieldQuery(
+    {}
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = (values: any) => {
@@ -30,6 +33,8 @@ const AdminAddRepayments = () => {
   const handleCancel = () => {
     setIsAddFeaturesModalOpen(false);
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="min-h-screen">
