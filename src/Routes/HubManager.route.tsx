@@ -22,6 +22,7 @@ import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
 import HubManagerOverview from "../pages/HubManager/HubManagerOverview";
 import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
 import HubManagerSpokeMangers from "../pages/HubManager/HubManagerSpokeMangers";
+import Notification from "../pages/Auth/Notification";
 
 export const hubManagerPath = [
   {
@@ -132,5 +133,10 @@ export const hubManagerPath = [
     path: "settings/support",
     element: <PrivacyPolicy />,
     key: "settings",
+  },
+    {
+    path: "notification",
+    element: <Notification />,
+    key: "notification",
   },
 ];

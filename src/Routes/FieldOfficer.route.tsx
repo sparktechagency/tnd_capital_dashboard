@@ -10,6 +10,7 @@ import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
+import Notification from "../pages/Auth/Notification";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
@@ -113,6 +114,11 @@ export const fieldOfficerPath = [
     path: "settings/profile",
     element: <Profile />,
     key: "settings",
+  },
+  {
+    path: "notification",
+    element: <Notification />,
+    key: "notification",
   },
   {
     path: "settings/edit-profile",

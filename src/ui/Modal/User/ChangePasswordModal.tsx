@@ -8,6 +8,7 @@ import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import ReuseButton from "../../Button/ReuseButton";
 import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
+import { useChangePasswordMutation } from "../../../redux/features/auth/authApi";
 
 interface ChangePasswordModalProps {
   isChangePasswordModalVisible: boolean;
@@ -16,7 +17,7 @@ interface ChangePasswordModalProps {
 
 const inputStructure = [
   {
-    name: "currentPassword",
+    name: "oldPassword",
     type: "password",
     inputType: "normal",
     label: "Enter old password",
@@ -52,17 +53,17 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   handleCancel,
 }) => {
   const [form] = Form.useForm();
-  // const [updateSchool] = useUpdateSchoolMutation();
+  const [changePassword] = useChangePasswordMutation();
 
   const handleSubmit = async (values: any) => {
     const res = await tryCatchWrapper(
-      // updateSchool,
+      changePassword,
       {
         body: {
           ...values,
         },
       },
-      "Updating School..."
+      "Changing Password..."
     );
     if (res?.statusCode === 200) {
       form.resetFields();

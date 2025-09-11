@@ -3,6 +3,7 @@ import dotIcon from "../../public/images/Dashboard-icons/dot.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
+import Notification from "../pages/Auth/Notification";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
@@ -70,5 +71,10 @@ export const supervisorPaths = [
     path: "settings/support",
     element: <PrivacyPolicy />,
     key: "settings",
+  },
+  {
+    path: "notification",
+    element: <Notification />,
+    key: "notification",
   },
 ];

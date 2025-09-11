@@ -41,6 +41,7 @@ import AdminRepayments from "../pages/Admin/AdminRepayments";
 import AdminSupervisor from "../pages/Admin/AdminSupervisor";
 import EditRepaymentsInformation from "../pages/Admin/EditRepaymentsInformation";
 import EditSupervisorInformation from "../pages/Admin/EditSupervisorInformation";
+import Notification from "../pages/Auth/Notification";
 import Notifications from "../pages/Common/Notifications";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
@@ -245,5 +246,10 @@ export const adminPaths = [
     path: "settings/support",
     element: <PrivacyPolicy />,
     key: "settings",
+  },
+  {
+    path: "notification",
+    element: <Notification />,
+    key: "notification",
   },
 ];

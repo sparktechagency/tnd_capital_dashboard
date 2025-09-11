@@ -17,6 +17,7 @@ import HRManagers from "../pages/HR/HRManagers";
 import HROverview from "../pages/HR/HROverview";
 import HRAddManager from "../pages/HR/HRAddManager";
 import HREditManager from "../pages/HR/HREditManager";
+import Notification from "../pages/Auth/Notification";
 
 export const HrPaths = [
   {
@@ -83,5 +84,10 @@ export const HrPaths = [
     path: "settings/support",
     element: <PrivacyPolicy />,
     key: "settings",
+  },
+    {
+    path: "notification",
+    element: <Notification />,
+    key: "notification",
   },
 ];

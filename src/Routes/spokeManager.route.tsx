@@ -10,6 +10,7 @@ import Settings from "../pages/Common/settings/Settings";
 import SpokeManagerFieldOfficerInfo from "../pages/SpokeManager/SpokeManagerFieldOfficerInfo";
 import SpokeManagerOverview from "../pages/SpokeManager/SpokeManagerOverview";
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
+import Notification from "../pages/Auth/Notification";
 
 export const spokeManagerPath = [
   {
@@ -48,5 +49,10 @@ export const spokeManagerPath = [
     path: "settings/support",
     element: <PrivacyPolicy />,
     key: "settings",
+  },
+  {
+    path: "notification",
+    element: <Notification />,
+    key: "notification",
   },
 ];

@@ -79,11 +79,39 @@ const authApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: [tagTypes.auth],
+    }),
+
+    getAllNotification: build.query({
+      query: ({
+        page,
+        limit,
+      }) => {
+        return {
+          url: `/notification`,
+          method: "GET",
+          params: {
+            page,
+            limit,
+          },
+        };
+      },
+      providesTags: [tagTypes.auth],
+    }),
+
+    changePassword: build.mutation({
+      query: (req) => {
+        return {
+          url: `${auth_url}/change_password`,
+          method: "POST",
+          body: req.body,
+        };
+      },
+      invalidatesTags: [tagTypes.auth],
     })
   }),
 });
 
-export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation, useGetProfileQuery, useUpdateProfileMutation } =
+export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation, useGetProfileQuery, useUpdateProfileMutation, useGetAllNotificationQuery, useChangePasswordMutation } =
   authApi;
 
 export default authApi;

@@ -1,10 +1,11 @@
 import { Image } from "antd";
 import { IoMenuSharp } from "react-icons/io5";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setCollapsed } from "../../redux/features/auth/authSlice";
 import { Header } from "antd/es/layout/layout";
 import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Define the types for the component props
 interface TopbarProps {
@@ -15,6 +16,8 @@ interface TopbarProps {
 
 const Topbar: React.FC<TopbarProps> = ({ collapsed, children }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { role } = useAppSelector((state) => state.role);
 
   return (
     <Header
@@ -39,7 +42,10 @@ const Topbar: React.FC<TopbarProps> = ({ collapsed, children }) => {
         <div>{children}</div>
 
         <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center justify-center cursor-pointer">
+          <div
+            onClick={() => navigate(`/${role}/notification`)}
+            className="flex items-center justify-center cursor-pointer"
+          >
             <Image
               src={AllIcons.notification}
               width={30}
