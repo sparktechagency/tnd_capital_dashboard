@@ -3,32 +3,17 @@ import { useState } from "react";
 import Area_Chart from "../../Components/Chart/AreaChart";
 import MultiRingChart from "../../Components/Chart/MultiRingChart";
 import Topbar from "../../Components/Shared/Topbar";
+import {
+  useGetFieldOfficerAllFieldOfficerCollectionQuery,
+  useGetFieldOfficerCollectionReportQuery,
+  useGetFieldOfficerLoanApprovalReportQuery,
+} from "../../redux/features/fieldOfficer/fieldOfficerTrackingApi";
 import { useAppSelector } from "../../redux/hooks";
 import ViewFieldOfficerCollectionModal from "../../ui/Modal/AdminModals/FieldOfficerCollectionModal/ViewFieldOfficerCollectionModal";
 import FieldOfficerTable from "../../ui/Tables/FieldOfficerCollectionTable";
-import YearOption from "../../utils/YearOption";
-import { fieldOfficerData } from "../Admin/fakeData";
 import DaysSelection from "../../utils/DaysSelection";
-
-const chartData = [
-  { month: "Jan", totalPresent: 35 },
-  { month: "Feb", totalPresent: 50 },
-  { month: "Mar", totalPresent: 20 },
-  { month: "Apr", totalPresent: 50 },
-  { month: "May", totalPresent: 90 },
-  { month: "Jun", totalPresent: 40 },
-  { month: "Jul", totalPresent: 80 },
-  { month: "Aug", totalPresent: 19 },
-  { month: "Sep", totalPresent: 80 },
-  { month: "Oct", totalPresent: 90 },
-  { month: "Nov", totalPresent: 105 },
-  { month: "Dec", totalPresent: 106 },
-];
-
-const data = [
-  { label: "Rejected", color: "bg-purple-700", percent: 75 },
-  { label: "Pending", color: "bg-green-500", percent: 25 },
-];
+import YearOption from "../../utils/YearOption";
+import Loading from "../../ui/Loading";
 
 const FieldOfficerReportsAndAnalytics = () => {
   const [page, setPage] = useState(1);
@@ -38,6 +23,25 @@ const FieldOfficerReportsAndAnalytics = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const { collapsed } = useAppSelector((state) => state.auth);
+  const [year, setYear] = useState(2025);
+  const [loanYear, setLoanYear] = useState(2025);
+  // api calling
+
+  const { data: fieldOfficerCollectionReport, isLoading } =
+    useGetFieldOfficerCollectionReportQuery({
+      year: year,
+    });
+
+  const { data: fieldOfficerLoanApprovalReport, isLoading: reportLoading } =
+    useGetFieldOfficerLoanApprovalReportQuery({
+      year: year,
+    });
+
+  const { data: fieldOfficerAllFieldOfficerCollection, isFetching } =
+    useGetFieldOfficerAllFieldOfficerCollectionQuery({
+      page: page,
+      limit: limit,
+    });
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -49,6 +53,21 @@ const FieldOfficerReportsAndAnalytics = () => {
     setCurrentRecord(null);
   };
 
+  const data = [
+    {
+      label: fieldOfficerLoanApprovalReport?.data[1]?.status,
+      color: "bg-purple-700",
+      percent: fieldOfficerLoanApprovalReport?.data[1]?.percentage,
+    },
+    {
+      label: fieldOfficerLoanApprovalReport?.data[0]?.status,
+      color: "bg-green-500",
+      percent: fieldOfficerLoanApprovalReport?.data[0]?.percentage,
+    },
+  ];
+
+  if (isLoading || reportLoading) return <Loading />;
+
   return (
     <section>
       <Topbar collapsed={collapsed}></Topbar>
@@ -57,17 +76,23 @@ const FieldOfficerReportsAndAnalytics = () => {
           <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Collection Report</p>
-              <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+              <YearOption currentYear={year} setThisYear={setYear} key={""} />
             </div>
-            <Area_Chart chartData={chartData} />
+            <Area_Chart chartData={fieldOfficerCollectionReport?.data} />
           </div>
           <div className="shadow-lg w-[700px] border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Loan Approval</p>
-              <YearOption currentYear={2025} setThisYear={() => {}} key={""} />
+              <YearOption
+                currentYear={loanYear}
+                setThisYear={setLoanYear}
+                key={""}
+              />
             </div>
             <div className="flex items-center justify-between pr-4">
-              <MultiRingChart />
+              <MultiRingChart
+                loanApprovalReport={fieldOfficerLoanApprovalReport?.data}
+              />
               <div>
                 <div className="space-y-6">
                   {data.map((item, index) => (
@@ -76,7 +101,7 @@ const FieldOfficerReportsAndAnalytics = () => {
                         <span
                           className={`w-3 h-3 rounded-full ${item.color}`}
                         ></span>
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 text-sm capitalize">
                           {item.label}
                         </span>
                       </div>
@@ -98,13 +123,13 @@ const FieldOfficerReportsAndAnalytics = () => {
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">
           <FieldOfficerTable
             isShowOtherAction={false}
-            loading={false}
+            loading={isFetching}
             showViewModal={showViewUserModal}
             limit={limit}
-            data={fieldOfficerData}
+            data={fieldOfficerAllFieldOfficerCollection?.data?.result}
             page={page}
             setPage={setPage}
-            total={0}
+            total={fieldOfficerAllFieldOfficerCollection?.data?.meta?.total}
           />
 
           <ViewFieldOfficerCollectionModal

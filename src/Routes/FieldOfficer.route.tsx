@@ -6,7 +6,7 @@ import leads from "../../public/images/Dashboard-icons/leads.svg";
 import repayments from "../../public/images/Dashboard-icons/repayments.svg";
 import report from "../../public/images/Dashboard-icons/reportAndAnalytics.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
-import tracking from "../../public/images/Dashboard-icons/tracking.svg";
+// import tracking from "../../public/images/Dashboard-icons/tracking.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
@@ -24,7 +24,7 @@ import FieldOfficerNewLeads from "../pages/FieldOfficer/FieldOfficerNewLeads";
 import FieldOfficerOverview from "../pages/FieldOfficer/FieldOfficerOverview";
 import FieldOfficerRepayments from "../pages/FieldOfficer/FieldOfficerRepayments";
 import FieldOfficerReportsAndAnalytics from "../pages/FieldOfficer/FieldOfficerReportsAndAnalytics";
-import FieldOfficerTracking from "../pages/FieldOfficer/FieldOfficerTracking";
+// import FieldOfficerTracking from "../pages/FieldOfficer/FieldOfficerTracking";
 
 export const fieldOfficerPath = [
   {
@@ -88,13 +88,13 @@ export const fieldOfficerPath = [
     element: <FieldOfficerMonthlyRepayments />,
     key: "repayments",
   },
-  {
-    path: "tracking",
-    element: <FieldOfficerTracking />,
-    key: "tracking",
-    name: "Tracking",
-    icon: tracking,
-  },
+  // {
+  //   path: "tracking",
+  //   element: <FieldOfficerTracking />,
+  //   key: "tracking",
+  //   name: "Tracking",
+  //   icon: tracking,
+  // },
   {
     path: "reports-and-analytics",
     element: <FieldOfficerReportsAndAnalytics />,

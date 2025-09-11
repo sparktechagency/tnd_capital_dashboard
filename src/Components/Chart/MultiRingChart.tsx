@@ -5,6 +5,7 @@ export default function MultiRingChart({ loanApprovalReport }: any) {
   let value1 = 30;
   let value2 = 80;
 
+  console.log(loanApprovalReport, "loanApprovalReport");
   loanApprovalReport?.map((data: any) => {
     if (data.status === "approved") {
       value1 = data.percentage;

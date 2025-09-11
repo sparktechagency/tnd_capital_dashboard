@@ -3,6 +3,7 @@ import { Space, Tooltip } from "antd";
 import { GoEye } from "react-icons/go";
 import ReuseTable from "../../utils/ReuseTable";
 import { getImageUrl } from "../../helpers/config/envConfig";
+import { AllImages } from "../../../public/images/AllImages";
 interface AdminFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
@@ -25,7 +26,6 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
   total,
   limit,
 }) => {
-
   console.log(data, "data");
 
   const columns = [
@@ -37,7 +37,11 @@ const FieldOfficerTable: React.FC<AdminFieldOfficerTableProps> = ({
         return (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <img
-              src={getImageUrl() + record?.fieldOfficer?.customFields?.image}
+              src={
+                record?.fieldOfficer?.customFields?.image
+                  ? getImageUrl() + record?.fieldOfficer?.customFields?.image
+                  : AllImages.profile
+              }
               alt={_text}
               style={{
                 width: 45,
