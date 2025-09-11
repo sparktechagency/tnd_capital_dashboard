@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
+import Cookies from "js-cookie";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -9,11 +10,11 @@ interface ProtectedRouteProps {
 function ProtectedRoute({ children, role }: ProtectedRouteProps) {
   // const user = useUserData();
   const user = useAppSelector((state) => state.role);
+  const token = Cookies.get("crm_accessToken");
+  console.log(user, "token");
   // const modifyRole = role === "admin" ? "supperAdmin" : role;
 
-  console.log(user?.role, "protected");
-
-  if (!user || user.role !== role) {
+  if (!token || !user || user.role !== role) {
     return <Navigate to="/sign-in" replace />;
   }
 

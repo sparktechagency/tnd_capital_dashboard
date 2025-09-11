@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { mainTheme } from "../../theme";
 import { Toaster } from "sonner";
 import { SocketProvider } from "../../context/SocketProvider";
+// import InactivityLogout from "../../utils/InactivityLogout";
 
 const Main = () => {
   return (
@@ -17,6 +18,7 @@ const Main = () => {
             <SocketProvider>
               <RouterProvider router={router} />
               <Toaster position="top-center" richColors />
+              {/* <InactivityLogout /> */}
             </SocketProvider>
           </PersistGate>
         </Provider>

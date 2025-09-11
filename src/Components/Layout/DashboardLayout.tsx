@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import getActiveKeys from "../../utils/activeKey";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
+import Cookies from "js-cookie";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,7 @@ const DashboardLayout = () => {
 
   const handleLogout = () => {
     dispatch(changeRole(null));
-    // Cookies.remove("crm_accessToken");
+    Cookies.remove("crm_accessToken");
     window.location.href = "/sign-in";
     window.location.reload();
   };
