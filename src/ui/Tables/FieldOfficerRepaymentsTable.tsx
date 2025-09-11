@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import ReuseTable from "../../utils/ReuseTable";
-import { getImageUrl } from "../../helpers/config/envConfig";
 import dayjs from "dayjs";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import ReuseTable from "../../utils/ReuseTable";
 import ReuseButton from "../Button/ReuseButton";
 
 interface AdminRepaymentsTableProps {
@@ -11,6 +11,7 @@ interface AdminRepaymentsTableProps {
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   setPage?: (page: number) => void; // Function to handle pagination
+  showConfirmModal: (record: any) => void;
   currentRecord: any;
   page?: number;
   total?: number;
@@ -21,12 +22,15 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
   data,
   loading,
   showViewModal,
+  showConfirmModal,
   setPage,
   currentRecord,
   page,
   total,
   limit,
 }) => {
+  console.log(currentRecord, "currentRecord");
+
   const columns = [
     {
       title: "Full Name",
@@ -109,9 +113,13 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
       key: "action",
       render: (_: unknown, record: any) => (
         <Space size="middle">
-          {!currentRecord?.isConfirm && (
+          {!record?.isConfirm && (
             <Tooltip placement="right" title="View Details">
-              <ReuseButton variant="secondary" className="!w-fit !px-2 !py-1">
+              <ReuseButton
+                onClick={() => showConfirmModal(record)}
+                variant="secondary"
+                className="!w-fit !px-2 !py-1"
+              >
                 confirm
               </ReuseButton>
             </Tooltip>
@@ -134,7 +142,7 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
           </Tooltip>
         </Space>
       ),
-      align: "center",
+      align: "end",
     },
   ];
 
