@@ -3,7 +3,7 @@ import { Form, Modal, Upload } from "antd";
 import { useEffect } from "react";
 import { AllIcons } from "../../../../public/images/AllImages";
 import { useGetAllRepaymentsFieldQuery } from "../../../redux/features/admin/adminRepayments/adminRepaymentsApi";
-import { useUpdateFieldOfficerLeadsMutation } from "../../../redux/features/fieldOfficer/fieldOfficerLeadsApi";
+// import { useUpdateFieldOfficerLeadsMutation } from "../../../redux/features/fieldOfficer/fieldOfficerLeadsApi";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import ReuseButton from "../../Button/ReuseButton";
 import ReusableForm from "../../Form/ReuseForm";
@@ -25,7 +25,7 @@ const EditRepaymentsModal = ({
   const { data: repaymentsField, isLoading } = useGetAllRepaymentsFieldQuery(
     {}
   );
-  const [updateFieldOfficerLeads] = useUpdateFieldOfficerLeadsMutation();
+  // const [updateFieldOfficerLeads] = useUpdateFieldOfficerLeadsMutation();
 
   useEffect(() => {
     if (currentRecord) {
@@ -47,7 +47,7 @@ const EditRepaymentsModal = ({
     };
 
     const res = await tryCatchWrapper(
-    //   updateFieldOfficerLeads,
+      //   updateFieldOfficerLeads,
       { body: formettedData, params: currentRecord?._id },
       "Updating Field Officer ..."
     );
