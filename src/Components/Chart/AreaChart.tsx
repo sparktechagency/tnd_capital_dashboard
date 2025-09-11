@@ -68,7 +68,7 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
           </defs>
           <Tooltip
             contentStyle={{
-              backgroundColor: "#fff", // Tooltip background color
+              backgroundColor: "#28314E", // Tooltip background color
               border: "1px solid #ccc", // Tooltip border
               borderRadius: "5px", // Tooltip border radius
             }}
@@ -76,7 +76,7 @@ const Area_Chart: React.FC<ChartData[] | any> = ({ chartData }) => {
             labelStyle={{ color: "#EAEBEB" }} // Tooltip label color
             formatter={(value: number): [string, string] => [
               `${value}`,
-              "Total Present",
+              "Total",
             ]}
             labelFormatter={(label: string) => `Month: ${label}`}
           />

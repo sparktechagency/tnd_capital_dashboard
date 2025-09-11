@@ -5,6 +5,7 @@ import { useGetAllNotificationQuery } from "../../redux/features/auth/authApi";
 import { useAppSelector } from "../../redux/hooks";
 import { useState } from "react";
 import Loading from "../../ui/Loading";
+import { formatDistanceToNow } from "date-fns"; // Import date formatting function
 
 const Notification = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -36,7 +37,7 @@ const Notification = () => {
           {notifications?.result?.map((notification: any, index: number) => (
             <div
               key={index}
-              className={`px-4 py-3 rounded-md flex items-center ${
+              className={`px-4 py-3 rounded-md flex items-center space-x-4 ${
                 notification.type === "success"
                   ? "bg-green-100 text-green-800"
                   : notification.type === "info"
@@ -46,6 +47,7 @@ const Notification = () => {
                   : "bg-green-100 text-green-800"
               }`}
             >
+              {/* Icon */}
               <div
                 className={`w-3 h-3 rounded-full mr-3 ${
                   notification.type === "success"
@@ -57,7 +59,19 @@ const Notification = () => {
                     : "bg-green-600"
                 }`}
               ></div>
-              <span>{notification.message}</span>
+
+              {/* Notification Message */}
+              <div className="flex-1">
+                <span>{notification.message}</span>
+              </div>
+
+              {/* Creation Time */}
+              <div className="text-sm text-gray-500">
+                {notification.createdAt &&
+                  formatDistanceToNow(new Date(notification.createdAt), {
+                    addSuffix: true,
+                  })}
+              </div>
             </div>
           ))}
         </div>
