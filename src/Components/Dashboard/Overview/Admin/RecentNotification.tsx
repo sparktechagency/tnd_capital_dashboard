@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import { AllIcons } from "../../../../../public/images/AllImages";
 import useUserData from "../../../../hooks/useUserData";
-import { useGetNotificationQuery } from "../../../../redux/features/school/schoolApi";
-import dayjs from "dayjs";
+// import { useGetNotificationQuery } from "../../../../redux/features/school/schoolApi";
 
 export interface INotification {
   _id: string;
@@ -21,7 +19,7 @@ export interface INotification {
 const RecentNotification = () => {
   const user = useUserData();
 
-  const { data: activities } = useGetNotificationQuery({});
+  // const { data: activities } = useGetNotificationQuery({});
 
   return (
     <div className="w-full max-h-[300px] xl:max-h-[660px] overflow-y-auto  rounded-xl relative border-2 border-[#e1e1e1]">
@@ -35,7 +33,7 @@ const RecentNotification = () => {
       </div>
 
       <div className="flex flex-col  p-5">
-        {activities?.data?.result?.map((activity: INotification, i: number) => (
+        {/* {activities?.data?.result?.map((activity: INotification, i: number) => (
           <div
             key={i}
             className="flex items-center gap-2 border-b border-[#e1e1e1] py-3"
@@ -54,7 +52,7 @@ const RecentNotification = () => {
               </p>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Loading from "../../ui/Loading";
 
 const AdminApplication = () => {
   const [page, setPage] = useState<number>(1);

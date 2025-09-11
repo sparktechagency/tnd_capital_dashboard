@@ -7,7 +7,6 @@ import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewSpokeManagerFieldOfficer from "../../ui/Modal/SpokeManagerFieldOfficer/ViewSpokeManagerFieldOfficer";
 import SpokeManagerFieldOfficerTable from "../../ui/Tables/SpokeManagerFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
-import Loading from "../../ui/Loading";
 
 const SpokeManagerFieldOfficerInfo = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -34,7 +33,6 @@ const SpokeManagerFieldOfficerInfo = () => {
     setIsViewModalVisible(false);
     setCurrentRecord(null);
   };
-
 
   return (
     <section className="min-h-screen">

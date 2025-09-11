@@ -7,7 +7,6 @@ import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminOfficerRecord from "../../ui/Modal/OfficerRecord/ViewAdminOfficerRecord";
 import AdminOfficerRecordTable from "../../ui/Tables/AdminOfficerRecordTable";
 import DaysSelection from "../../utils/DaysSelection";
-import Loading from "../../ui/Loading";
 
 const AdminOfficerRecord = () => {
   const [page, setPage] = useState<number>(1);

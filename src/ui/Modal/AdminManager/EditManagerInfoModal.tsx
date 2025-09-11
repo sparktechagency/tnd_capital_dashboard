@@ -7,10 +7,13 @@ import ReuseButton from "../../Button/ReuseButton";
 import { useEffect } from "react";
 import { useUpdateLocationProfileMutation } from "../../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
+import { useNavigate } from "react-router-dom";
 
 const EditManagerInfoModal = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
+
+  const navigation = useNavigate();
 
   const data = JSON.parse(localStorage.getItem("currentRecord") || "{}");
 
