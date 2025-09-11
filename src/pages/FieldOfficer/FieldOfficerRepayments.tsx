@@ -5,6 +5,7 @@ import { LoanApply } from "../../Components/svg/leads";
 import {
   useConfirmRepaymentsMutation,
   useGetAllRepaymentsQuery,
+  useTrackingCountsQuery,
 } from "../../redux/features/fieldOfficer/fieldOfficerRepaymentApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
@@ -14,6 +15,10 @@ import FieldOfficerRepaymentsTable from "../../ui/Tables/FieldOfficerRepaymentsT
 import DaysSelection from "../../utils/DaysSelection";
 import ConfirmationModal from "../../ui/Modal/User/ConfirmationModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import EditRepaymentsModal from "../../ui/Modal/FieldOfficerModals/EditRepaymentsModal";
+import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
+import { AllIcons } from "../../../public/images/AllImages";
+import Loading from "../../ui/Loading";
 
 const FieldOfficerRepayments = () => {
   const [page, setPage] = useState<number>(1);
@@ -25,9 +30,10 @@ const FieldOfficerRepayments = () => {
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   // api calling
-  const { data } = useGetAllRepaymentsQuery({
+  const { data, isFetching } = useGetAllRepaymentsQuery({
     page,
     limit,
     searchTerm: searchText,
@@ -35,15 +41,46 @@ const FieldOfficerRepayments = () => {
   const repaymetns = data?.data;
 
   const [confirmRepayments] = useConfirmRepaymentsMutation();
+  const { data: trackingData, isLoading } = useTrackingCountsQuery({});
+
+  const cards = [
+    {
+      id: 1,
+      background: "#FFFFFF",
+      name: "Todays Collection",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.collection} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: trackingData?.data?.todayCollection,
+    },
+    {
+      id: 2,
+      background: "#FFFFFF",
+      name: "Total Application",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.application} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: trackingData?.data?.overdue,
+    },
+  ];
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
+  const showEditModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
+  };
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsConfirmVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -62,6 +99,8 @@ const FieldOfficerRepayments = () => {
       handleCancel();
     }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div>
@@ -82,6 +121,10 @@ const FieldOfficerRepayments = () => {
       </Topbar>
 
       <div className="mt-14">
+        <div className="lg:w-[950px] mx-auto">
+          <AdminOverviewCard cards={cards} />
+        </div>
+
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Repayment Table</p>
           <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
@@ -89,9 +132,10 @@ const FieldOfficerRepayments = () => {
 
         <FieldOfficerRepaymentsTable
           data={repaymetns?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showConfirmModal={showConfirmModal}
+          showEditModal={showEditModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -110,6 +154,12 @@ const FieldOfficerRepayments = () => {
           isConfirmationModalVisible={isConfirmVisible}
           handleCancel={handleCancel}
           handleAccept={handelConfirm}
+        />
+
+        <EditRepaymentsModal
+          isEditModalVisible={isEditModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
         />
       </div>
     </div>

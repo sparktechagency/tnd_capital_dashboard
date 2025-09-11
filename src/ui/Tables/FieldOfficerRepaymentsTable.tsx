@@ -12,6 +12,7 @@ interface AdminRepaymentsTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   setPage?: (page: number) => void; // Function to handle pagination
   showConfirmModal: (record: any) => void;
+  showEditModal: (record: any) => void;
   currentRecord: any;
   page?: number;
   total?: number;
@@ -23,6 +24,7 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
   loading,
   showViewModal,
   showConfirmModal,
+  showEditModal,
   setPage,
   currentRecord,
   page,
@@ -135,7 +137,7 @@ const FieldOfficerRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
           <Tooltip placement="right" title="Edit">
             <button
               className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showViewModal(record)}
+              onClick={() => showEditModal(record)}
             >
               <img src={AllIcons.pen} />
             </button>

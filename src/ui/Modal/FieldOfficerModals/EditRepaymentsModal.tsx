@@ -1,67 +1,82 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, Upload } from "antd";
-import { useNavigate } from "react-router-dom";
-import { AllIcons } from "../../../public/images/AllImages";
-import Topbar from "../../Components/Shared/Topbar";
-import { useGetAllRepaymentsFieldQuery } from "../../redux/features/admin/adminRepayments/adminRepaymentsApi";
-import { useCreateRepayementMutation } from "../../redux/features/fieldOfficer/fieldOfficerRepaymentApi";
-import { useAppSelector } from "../../redux/hooks";
-import ReuseButton from "../../ui/Button/ReuseButton";
-import ReusableForm from "../../ui/Form/ReuseForm";
-import ReuseInput from "../../ui/Form/ReuseInput";
-import ReuseSelect from "../../ui/Form/ReuseSelect";
-import Loading from "../../ui/Loading";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { Form, Modal, Upload } from "antd";
+import { useEffect } from "react";
+import { AllIcons } from "../../../../public/images/AllImages";
+import { useGetAllRepaymentsFieldQuery } from "../../../redux/features/admin/adminRepayments/adminRepaymentsApi";
+import { useUpdateFieldOfficerLeadsMutation } from "../../../redux/features/fieldOfficer/fieldOfficerLeadsApi";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
+import ReuseButton from "../../Button/ReuseButton";
+import ReusableForm from "../../Form/ReuseForm";
+import ReuseInput from "../../Form/ReuseInput";
+import Loading from "../../Loading";
+import ReuseSelect from "../../Form/ReuseSelect";
 
-const FieldOfficerMonthlyRepayments = () => {
-  const { collapsed } = useAppSelector((state) => state.auth);
+const EditRepaymentsModal = ({
+  isEditModalVisible,
+  handleCancel,
+  currentRecord,
+}: {
+  isEditModalVisible: boolean;
+  handleCancel: () => void;
+  currentRecord: any;
+}) => {
   const [form] = Form.useForm();
-
-  const navigation = useNavigate();
-  const currentMonth = new Date().toLocaleString("default", { month: "long" });
 
   const { data: repaymentsField, isLoading } = useGetAllRepaymentsFieldQuery(
     {}
   );
+  const [updateFieldOfficerLeads] = useUpdateFieldOfficerLeadsMutation();
 
-  const [createRepayement] = useCreateRepayementMutation();
+  useEffect(() => {
+    if (currentRecord) {
+      form.setFieldsValue({
+        clientUid: currentRecord?.client?.uid,
+        loanUid: currentRecord?.loan?.uid,
+        month: currentRecord?.month,
+      });
+    }
+  }, [currentRecord, form]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = async (values: any) => {
-    const formattedData = {
-      ...values,
-      month: currentMonth,
+    console.log("HR information:", values);
+
+    const formettedData = {
+      clientUid: values?.clientUid,
+      loanUid: values?.loanUid,
+      month: values?.month,
     };
 
     const res = await tryCatchWrapper(
-      createRepayement,
-      { body: formattedData },
-      "Creating..."
+    //   updateFieldOfficerLeads,
+      { body: formettedData, params: currentRecord?._id },
+      "Updating Field Officer ..."
     );
 
-    if (res?.statusCode === 201) {
+    if (res?.statusCode === 200) {
       form.resetFields();
-      navigation(-1);
+      handleCancel();
     }
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
 
   return (
-    <div className="min-h-screen">
-      <Topbar collapsed={collapsed}></Topbar>
-
+    <Modal
+      open={isEditModalVisible}
+      onCancel={handleCancel}
+      footer={null}
+      centered
+      width={800}
+    >
       <div className="mt-10 ">
-        <p className="text-xl font-medium ">Monthly Payments </p>
+        <p className="text-xl font-medium ">Edit Leads </p>
 
         <ReusableForm
           form={form}
           handleFinish={onFinish}
-          className="!px-32 !mt-10"
+          className="!px-4 !mt-10"
         >
-          <div className="grid grid-cols-2 gap-x-52">
+          <div className="grid grid-cols-2 gap-x-10">
             {repaymentsField?.data?.map((field: any, index: number) => {
               if (field.inputName === "month") {
                 return null;
@@ -139,30 +154,28 @@ const FieldOfficerMonthlyRepayments = () => {
                 { value: "November", label: "November" },
                 { value: "December", label: "December" },
               ]}
-              defaultValue={currentMonth}
             />
           </div>
-
-          <div className="grid grid-cols-2 gap-x-20 lg:px-40 mt-20">
+          <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
             <ReuseButton
+              onClick={handleCancel}
               variant="outline"
-              onClick={() => navigation(-1)}
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
             >
               Cancel
             </ReuseButton>
             <ReuseButton
               variant="secondary"
-              htmlType="submit"
               className="!py-6 !px-9 !font-bold rounded-lg !w-full"
+              htmlType="submit"
             >
               Submit
             </ReuseButton>
           </div>
         </ReusableForm>
       </div>
-    </div>
+    </Modal>
   );
 };
 
-export default FieldOfficerMonthlyRepayments;
+export default EditRepaymentsModal;
