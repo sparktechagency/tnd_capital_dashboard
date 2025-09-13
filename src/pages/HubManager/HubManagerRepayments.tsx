@@ -20,9 +20,9 @@ import Loading from "../../ui/Loading";
 const HubManagerRepayments = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
-  const limit = 12;
 
+  const limit = 12;
+  const [filtering, setFiltering] = useState<string>("30");
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
@@ -35,6 +35,7 @@ const HubManagerRepayments = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
   const repaymentsData = data?.data;
@@ -100,7 +101,7 @@ const HubManagerRepayments = () => {
     },
   ];
 
-  if ( repaymentCountLoading) {
+  if (repaymentCountLoading) {
     return <Loading />;
   }
 
@@ -123,7 +124,10 @@ const HubManagerRepayments = () => {
 
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Repayment Table</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminRepaymentsTable

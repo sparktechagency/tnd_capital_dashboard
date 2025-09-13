@@ -7,13 +7,14 @@ const hubManagerLeadsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
         getHubManagerAllLeads: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${hub_manager_overview}`,
                 method: "GET",
                 params: {
                     page,
                     limit,
-                    searchTerm
+                    searchTerm,
+                    filtering
                 }
             }),
             providesTags: [tagTypes.hubManagerLeads],
@@ -28,13 +29,14 @@ const hubManagerLeadsApi = baseApi.injectEndpoints({
         }),
 
         getAllClientsForHub: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${hub_manager_overview}/all_clients`,
                 method: "GET",
                 params: {
                     page,
                     limit,
-                    searchTerm
+                    searchTerm,
+                    filtering
                 }
             }),
             providesTags: [tagTypes.hubManagerLeads],

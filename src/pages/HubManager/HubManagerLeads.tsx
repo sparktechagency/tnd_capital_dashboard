@@ -13,7 +13,6 @@ import {
   useGetHubManagerAllLeadsQuery,
 } from "../../redux/features/HubManager/hubManagerLeadsApi";
 import ViewLoadsModal from "../../ui/Modal/AdminLoads/ViewLoadsModal";
-import Loading from "../../ui/Loading";
 
 const HubManagerLeads = () => {
   const [page, setPage] = useState<number>(1);
@@ -23,7 +22,7 @@ const HubManagerLeads = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
+  const [filtering, setFiltering] = useState<string>("30");
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
@@ -32,9 +31,10 @@ const HubManagerLeads = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
-  const allLeads = leads?.data;
+  const allLeads = leads?.data as any;
 
   const [deleteLeads] = useDeleteLeadsMutation();
 
@@ -70,8 +70,6 @@ const HubManagerLeads = () => {
     }
   };
 
-  if (isFetching) return <Loading />;
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -87,12 +85,15 @@ const HubManagerLeads = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Leads</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <LeadsTable
           data={allLeads?.result}
-          loading={false}
+          loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}

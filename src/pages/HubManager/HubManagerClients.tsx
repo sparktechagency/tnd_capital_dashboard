@@ -16,7 +16,7 @@ import tryCatchWrapper from "../../utils/tryCatchWrapper";
 const HubManagerClients = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-
+  const [filtering, setFiltering] = useState<string>("30");
   const limit = 12;
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -27,6 +27,7 @@ const HubManagerClients = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
   const hubClients = data?.data;
   const [hubManagerDeleteClients] = useHubManagerDeleteClientsMutation();
@@ -79,7 +80,10 @@ const HubManagerClients = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Applications</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminClientsTable

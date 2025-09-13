@@ -21,7 +21,7 @@ const HubManagerAllFieldOfficerRequest = () => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isSpokeModalVisible, setIsSpokeModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
+  const [filtering, setFiltering] = useState<string>("30");
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
@@ -30,10 +30,10 @@ const HubManagerAllFieldOfficerRequest = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
   const fieldOfficers = data?.data;
   const [deleteUser] = useDeleteUserMutation();
-
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -73,7 +73,6 @@ const HubManagerAllFieldOfficerRequest = () => {
     }
   };
 
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -89,7 +88,10 @@ const HubManagerAllFieldOfficerRequest = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Request </p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <HubManagerFieldOfficerTable
