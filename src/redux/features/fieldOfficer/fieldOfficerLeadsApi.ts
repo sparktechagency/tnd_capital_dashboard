@@ -16,9 +16,20 @@ const fieldOfficerLeadsApi = baseApi.injectEndpoints({
         }),
 
         allLeads: builder.query({
-            query: () => ({
+            query: ({
+                page,
+                limit,
+                searchTerm,
+                filtering
+            }) => ({
                 url: leads_and_clients,
                 method: "GET",
+                params: {
+                    page,
+                    limit,
+                    searchTerm,
+                    filtering
+                }
             }),
             providesTags: [tagTypes.fieldOfficerLeads],
         }),

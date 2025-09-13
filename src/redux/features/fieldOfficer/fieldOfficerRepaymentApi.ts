@@ -15,13 +15,14 @@ const fieldOfficerRepaymentsApi = baseApi.injectEndpoints({
         }),
 
         getAllRepayments: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${field_officer_repayments_url}`,
                 method: "GET",
                 params: {
                     page,
                     limit,
-                    searchTerm
+                    searchTerm,
+                    filtering
                 }
             }),
             providesTags: [tagTypes.fieldOfficerRepayment],

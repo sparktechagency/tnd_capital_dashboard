@@ -19,9 +19,9 @@ import tryCatchWrapper from "../../utils/tryCatchWrapper";
 const FieldOfficerNewLeads = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
-  const limit = 12;
 
+  const limit = 12;
+  const [filtering, setFiltering] = useState<string>("30");
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -31,6 +31,8 @@ const FieldOfficerNewLeads = () => {
   const { data, isFetching: isLoadingLeads } = useAllLeadsQuery({
     page,
     limit: limit,
+    searchTerm: searchText,
+    filtering,
   });
   const leads = data?.data;
   const [deleteFieldOfficerLeads] = useDeleteFieldOfficerLeadsMutation();
@@ -87,7 +89,10 @@ const FieldOfficerNewLeads = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Leads</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <FieldOfficerLeadsTable

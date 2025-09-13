@@ -27,9 +27,14 @@ const fieldOfficerReportApi = baseApi.injectEndpoints({
         }),
 
         getFieldOfficerAllFieldOfficerCollection: builder.query({
-            query: () => ({
+            query: ({ filtering, page, limit }) => ({
                 url: `/dashboard/all_field_officer_collection`,
                 method: "GET",
+                params: {
+                    page,
+                    limit,
+                    filtering
+                }
             }),
             providesTags: [tagTypes.fieldOfficerRepayment],
         })

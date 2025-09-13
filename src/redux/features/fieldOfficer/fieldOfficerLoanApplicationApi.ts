@@ -16,13 +16,14 @@ const fieldOfficerLoanApplicationApi = baseApi.injectEndpoints({
         }),
 
         getAllLoanApplication: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${loan_application_url}/all_loan_application`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.fieldOfficerLoanApplication],
@@ -38,13 +39,14 @@ const fieldOfficerLoanApplicationApi = baseApi.injectEndpoints({
         }),
 
         getAllClients: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `/leads_and_clients/all_clients`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.fieldOfficerLoanApplication],

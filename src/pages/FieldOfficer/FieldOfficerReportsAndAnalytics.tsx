@@ -26,7 +26,7 @@ const FieldOfficerReportsAndAnalytics = () => {
   const [year, setYear] = useState(2025);
   const [loanYear, setLoanYear] = useState(2025);
   // api calling
-
+  const [filtering, setFiltering] = useState<string>("30");
   const { data: fieldOfficerCollectionReport, isLoading } =
     useGetFieldOfficerCollectionReportQuery({
       year: year,
@@ -41,6 +41,7 @@ const FieldOfficerReportsAndAnalytics = () => {
     useGetFieldOfficerAllFieldOfficerCollectionQuery({
       page: page,
       limit: limit,
+      filtering,
     });
 
   const showViewUserModal = (record: any) => {
@@ -117,7 +118,10 @@ const FieldOfficerReportsAndAnalytics = () => {
         </div>
         <div className="flex items-center justify-between mb-4 mt-10">
           <p className="text-xl font-semibold">All Applications</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <div className="shadow-lg w-full border border-[#ddd] rounded-xl mt-5">

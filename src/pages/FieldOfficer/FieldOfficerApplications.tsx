@@ -16,7 +16,7 @@ const FieldOfficerApplications = () => {
   const [searchText, setSearchText] = useState<string>("");
 
   const limit = 12;
-
+  const [filtering, setFiltering] = useState<string>("30");
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
@@ -27,6 +27,7 @@ const FieldOfficerApplications = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
   const applicationData = data?.data;
@@ -68,7 +69,10 @@ const FieldOfficerApplications = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Applications</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminApplicationTable

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { AllIcons } from "../../../public/images/AllImages";
+import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
 import { LoanApply } from "../../Components/svg/leads";
 import {
@@ -10,20 +12,18 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
+import EditRepaymentsModal from "../../ui/Modal/FieldOfficerModals/EditRepaymentsModal";
+import ConfirmationModal from "../../ui/Modal/User/ConfirmationModal";
 import FieldOfficerRepaymentsTable from "../../ui/Tables/FieldOfficerRepaymentsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import ConfirmationModal from "../../ui/Modal/User/ConfirmationModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import EditRepaymentsModal from "../../ui/Modal/FieldOfficerModals/EditRepaymentsModal";
-import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
-import { AllIcons } from "../../../public/images/AllImages";
-import Loading from "../../ui/Loading";
 
 const FieldOfficerRepayments = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
+
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -31,12 +31,13 @@ const FieldOfficerRepayments = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-
+  const [filtering, setFiltering] = useState<string>("30");
   // api calling
   const { data, isFetching } = useGetAllRepaymentsQuery({
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
   const repaymetns = data?.data;
 
@@ -127,7 +128,10 @@ const FieldOfficerRepayments = () => {
 
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Repayment Table</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <FieldOfficerRepaymentsTable
