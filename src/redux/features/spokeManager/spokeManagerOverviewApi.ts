@@ -30,9 +30,20 @@ const spokeManagerOverviewApi = baseApi.injectEndpoints({
         }),
 
         allFieldOfficerInfo: builder.query({
-            query: () => ({
+            query: ({
+                page,
+                limit,
+                searchTerm,
+                filtering
+            }) => ({
                 url: `/users?role=fieldOfficer`,
                 method: "GET",
+                params: {
+                    page,
+                    limit,
+                    searchTerm,
+                    filtering
+                }
             }),
             providesTags: [tagTypes.spokeManagerOverview],
         })

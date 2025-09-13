@@ -14,7 +14,7 @@ const SpokeManagerFieldOfficerInfo = () => {
   const [searchText, setSearchText] = useState<string>("");
 
   const limit = 12;
-
+  const [filtering, setFiltering] = useState<string>("30");
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
@@ -22,6 +22,7 @@ const SpokeManagerFieldOfficerInfo = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
   const showViewUserModal = (record: any) => {
@@ -49,7 +50,10 @@ const SpokeManagerFieldOfficerInfo = () => {
         <div className="mt-14">
           <div className="flex items-center justify-between mb-4">
             <p className="text-xl font-semibold">All Field Officers</p>
-            <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+            <DaysSelection
+              currentUser={filtering}
+              setCurrentUser={setFiltering}
+            />
           </div>
 
           <SpokeManagerFieldOfficerTable

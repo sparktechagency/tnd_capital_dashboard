@@ -37,7 +37,10 @@ const SpokeManagerOverview = () => {
     });
 
   const { data: fieldOfficerCollection, isFetching: fieldOfficerLoading } =
-    useSpokeManagerFieldOfficerCollectionQuery({});
+    useSpokeManagerFieldOfficerCollectionQuery({
+      page: page,
+      limit: limit,
+    });
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -105,7 +108,7 @@ const SpokeManagerOverview = () => {
             data={fieldOfficerCollection?.data?.result}
             page={page}
             setPage={setPage}
-            total={0}
+            total={fieldOfficerCollection?.data?.meta?.total}
           />
 
           <ViewFieldOfficerCollectionModal
