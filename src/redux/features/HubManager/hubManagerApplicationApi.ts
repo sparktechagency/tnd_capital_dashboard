@@ -6,7 +6,7 @@ const loan_application_url = "/loan_application";
 const hubManagerApplicationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllHubManagerLoanApplication: builder.query({
-            query: ({ page, limit, searchTerm, supervisorApproval, hubManagerApproval }) => ({
+            query: ({ page, limit, searchTerm, supervisorApproval, hubManagerApproval, filtering }) => ({
                 url: `${loan_application_url}/all_loan_application`,
                 method: "GET",
                 params: {
@@ -14,7 +14,8 @@ const hubManagerApplicationApi = baseApi.injectEndpoints({
                     limit,
                     searchTerm,
                     supervisorApproval,
-                    hubManagerApproval
+                    hubManagerApproval,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.adminLoanApplication],

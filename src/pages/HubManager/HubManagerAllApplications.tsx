@@ -21,7 +21,7 @@ const HubManagerAllApplications = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
+  const [filtering, setFiltering] = useState<string>("30");
   const { collapsed } = useAppSelector((state) => state.auth);
 
   const { data, isFetching } = useGetAllHubManagerLoanApplicationQuery({
@@ -29,6 +29,7 @@ const HubManagerAllApplications = () => {
     limit,
     searchTerm: searchText,
     supervisorApproval: "approved",
+    filtering,
   });
 
   const application = data?.data;
@@ -83,7 +84,10 @@ const HubManagerAllApplications = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Applications</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminApplicationTable
