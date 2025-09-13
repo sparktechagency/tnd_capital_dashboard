@@ -19,9 +19,9 @@ import tryCatchWrapper from "../../utils/tryCatchWrapper";
 const HROfficers = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
-  console.log(searchText);
-  const limit = 12;
 
+  const limit = 12;
+  const [filtering, setFiltering] = useState<string>("30");
   const [isViewModalVisible, setIsViewModalVisible] = useState<boolean>(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] =
     useState<boolean>(false);
@@ -38,6 +38,7 @@ const HROfficers = () => {
     limit,
     searchTerm: searchText,
     role: "fieldOfficer",
+    filtering,
   });
 
   const fieldOfficerData = data?.data;
@@ -103,7 +104,10 @@ const HROfficers = () => {
       <div className="mt-14 min-h-screen">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Field Officers</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <HROfficersTable
