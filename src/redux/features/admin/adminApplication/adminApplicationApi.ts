@@ -6,13 +6,14 @@ const loan_application_url = "/loan_application";
 const adminApplicationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllLoanApplication: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${loan_application_url}/all_loan_application`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.adminLoanApplication],

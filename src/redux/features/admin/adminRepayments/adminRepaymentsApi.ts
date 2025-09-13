@@ -7,13 +7,14 @@ const repayments_field_url = "/repayments_field";
 const adminRepayments = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllRepayments: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${admin_repayments_url}`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.adminRepayments],

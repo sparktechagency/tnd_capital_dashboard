@@ -1,7 +1,6 @@
 import { baseApi } from "../../../api/baseApi";
 import { tagTypes } from "../../../tagTypes";
 
-
 const overviewApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCollectionChart: builder.query({
@@ -29,9 +28,15 @@ const overviewApi = baseApi.injectEndpoints({
     }),
 
     getRecentOfficerCollection: builder.query({
-      query: () => ({
+      query: ({ page, limit, searchTerm, filtering }) => ({
         url: `/dashboard/all_field_officer_collection?limit=5`,
         method: "GET",
+        params: {
+          page,
+          limit,
+          searchTerm,
+          filtering,
+        },
       }),
       providesTags: [tagTypes.adminOverview],
     }),

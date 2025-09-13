@@ -32,13 +32,14 @@ const AdminSupervisor = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
-
+  const [filtering, setFiltering] = useState<string>("30");
   // api calling
   const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
     role: "supervisor",
+    filtering,
   });
 
   const supervisor = data?.data;
@@ -140,7 +141,10 @@ const AdminSupervisor = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Supervisory </p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminSupervisorTable

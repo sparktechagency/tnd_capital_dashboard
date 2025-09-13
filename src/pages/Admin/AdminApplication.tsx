@@ -18,6 +18,7 @@ const AdminApplication = () => {
   const [searchText, setSearchText] = useState<string>("");
 
   const limit = 12;
+  const [feltering, setFeltering] = useState<string>("30");
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -32,6 +33,7 @@ const AdminApplication = () => {
       page,
       limit,
       searchTerm: searchText,
+      filtering: feltering,
     });
   const application = loanApplicationData?.data?.result;
 
@@ -85,7 +87,10 @@ const AdminApplication = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Applications</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={feltering}
+            setCurrentUser={setFeltering}
+          />
         </div>
 
         <AdminApplicationTable

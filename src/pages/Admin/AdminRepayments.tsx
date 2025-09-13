@@ -24,6 +24,7 @@ const AdminRepayments = () => {
   const [searchText, setSearchText] = useState<string>("");
 
   const limit = 12;
+  const [filtering, setFiltering] = useState<string>("30");
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -58,6 +59,7 @@ const AdminRepayments = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
   const repaymentsData = repayments?.data;
@@ -133,7 +135,10 @@ const AdminRepayments = () => {
 
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Repayment Table</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminRepaymentsTable

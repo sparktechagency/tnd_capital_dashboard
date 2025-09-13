@@ -20,6 +20,7 @@ import {
 const AdminLeads = () => {
   const [page, setPage] = useState<number>(1);
   const [searchText, setSearchText] = useState<string>("");
+  const [feltering, setFeltering] = useState<string>("30");
 
   const limit = 12;
 
@@ -33,6 +34,7 @@ const AdminLeads = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering: feltering,
   });
   const leadsData = allLeads?.data;
 
@@ -95,7 +97,10 @@ const AdminLeads = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Leads</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={feltering}
+            setCurrentUser={setFeltering}
+          />
         </div>
 
         <LeadsTable

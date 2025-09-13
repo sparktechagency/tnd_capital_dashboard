@@ -16,7 +16,7 @@ const AdminOfficerRecord = () => {
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
-
+  const [filtering, setFiltering] = useState<string>("30");
   const { collapsed } = useAppSelector((state) => state.auth);
 
   // api calling
@@ -24,6 +24,7 @@ const AdminOfficerRecord = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
   const officerCollection = data?.data;
@@ -37,7 +38,6 @@ const AdminOfficerRecord = () => {
     setIsViewModalVisible(false);
     setCurrentRecord(null);
   };
-
 
   return (
     <div>
@@ -54,7 +54,10 @@ const AdminOfficerRecord = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Field Officer Record</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminOfficerRecordTable

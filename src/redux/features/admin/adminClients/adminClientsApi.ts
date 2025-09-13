@@ -6,13 +6,14 @@ const leads_and_clients_url = "/leads_and_clients";
 const adminClients = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllClients: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${leads_and_clients_url}/all_clients`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.adminLeads],

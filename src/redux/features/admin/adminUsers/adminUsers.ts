@@ -18,14 +18,15 @@ const adminUsersApi = baseApi.injectEndpoints({
         }),
 
         getUsers: builder.query({
-            query: ({ page, limit, searchTerm, role }) => ({
+            query: ({ page, limit, searchTerm, role, filtering }) => ({
                 url: `${admin_users}`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
-                    role
+                    role,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.user],
@@ -60,13 +61,14 @@ const adminUsersApi = baseApi.injectEndpoints({
         }),
 
         getAllManagers: builder.query({
-            query: ({ page, limit, searchTerm, }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `${admin_users}/all_managers`,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering
                 },
             }),
             providesTags: [tagTypes.user],

@@ -30,13 +30,14 @@ const AdminFieldOfficers = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
-
+const [filtering, setFiltering] = useState<string>("30");
   // api calls
   const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
     role: "fieldOfficer",
+    filtering
   });
 
   const fieldOfficerData = data?.data;
@@ -139,7 +140,7 @@ const AdminFieldOfficers = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Field Officers</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection currentUser={filtering} setCurrentUser={setFiltering} />
         </div>
 
         <AdminFieldOfficerTable

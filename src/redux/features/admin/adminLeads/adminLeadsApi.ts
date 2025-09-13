@@ -7,13 +7,14 @@ const leads_and_clients_field_url = "/leads_and_clients_field";
 const adminLeadsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllLeads: builder.query({
-            query: ({ page, limit, searchTerm }) => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: leads_and_clients_url,
                 method: "GET",
                 params: {
                     page,
                     limit,
                     searchTerm,
+                    filtering,
                 },
             }),
             providesTags: [tagTypes.adminLeads],

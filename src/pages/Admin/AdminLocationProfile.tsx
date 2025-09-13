@@ -6,11 +6,10 @@ import { useGetLocationProfileQuery } from "../../redux/features/admin/adminLoca
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import ViewAdminLocationProfileModal from "../../ui/Modal/AdminLocationProfile/ViewAdminLocationProfileModal";
-import AdminLocationProfileTable from "../../ui/Tables/AdminLocationProfileTable";
-import DaysSelection from "../../utils/DaysSelection";
 import Loading from "../../ui/Loading";
 import EditLocationProfileModal from "../../ui/Modal/AdminLocationProfile/EditLocationProfileModal";
+import ViewAdminLocationProfileModal from "../../ui/Modal/AdminLocationProfile/ViewAdminLocationProfileModal";
+import AdminLocationProfileTable from "../../ui/Tables/AdminLocationProfileTable";
 
 const AdminLocationProfile = () => {
   const [page, setPage] = useState<number>(1);
@@ -75,7 +74,6 @@ const AdminLocationProfile = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">Location Profile</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
         </div>
         <AdminLocationProfileTable
           loading={false}

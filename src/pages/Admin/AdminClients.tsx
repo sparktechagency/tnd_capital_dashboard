@@ -21,6 +21,7 @@ const AdminClients = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
+  const [filtering, setFiltering] = useState<string>("30");
 
   const { collapsed } = useAppSelector((state) => state.auth);
 
@@ -30,6 +31,7 @@ const AdminClients = () => {
     page,
     limit,
     searchTerm: searchText,
+    filtering,
   });
 
   const clients = adminClients?.data;
@@ -83,7 +85,10 @@ const AdminClients = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Clients</p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminClientsTable

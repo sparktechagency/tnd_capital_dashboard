@@ -32,13 +32,14 @@ const AdminHr = () => {
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
-
+  const [filtering, setFiltering] = useState<string>("30");
   // api calls
   const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
     role: "hr",
+    filtering,
   });
 
   const hrData = data?.data;
@@ -119,8 +120,6 @@ const AdminHr = () => {
     }
   };
 
-
-
   return (
     <div>
       <Topbar collapsed={collapsed}>
@@ -142,7 +141,10 @@ const AdminHr = () => {
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All HR </p>
-          <DaysSelection currentUser="Days" setCurrentUser={() => {}} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminHRTable
