@@ -1,26 +1,32 @@
 type TRole =
-  | "admin"
-  | "supperAdmin"
-  | "school"
-  | "teacher"
-  | "parents"
-  | "student";
+  | 'admin'
+  | 'supervisor'
+  | 'hr'
+  | 'hubManager'
+  | 'spokeManager'
+  | 'fieldOfficer';
+type TStatus = 'active' | 'blocked' | 'deactivated';
 
-type TStatus = "active" | "blocked";
-
-interface IUser {
+type IUser = {
+  _id: string;
   uid: string;
-  studentId?: string;
-  parentsId?: string;
-  schoolId: string;
-  teacherId: string;
-  phoneNumber: string;
   name: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
   image: string;
+  address: string;
+  nid: string;
+  hubId: string;
+  spokeId: string;
+  hubUid: string;
+  spokeUid: string;
+  cv: string;
+  isDeleted: boolean;
+  isAssignSpoke: boolean;
   role: TRole;
   status: TStatus;
-  isDeleted: boolean;
-  relation: "father" | "mother";
-}
+  customFields: Map<string, unknown>;
+};
 
 export type { TRole, TStatus, IUser };

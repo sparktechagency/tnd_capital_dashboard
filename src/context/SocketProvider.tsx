@@ -32,11 +32,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       reconnectionDelay: 1000,
     });
 
-    socketInstance.on(
-      "connect",
-      () => console.log("Connected to socket server")
-      // toast.success("Connected to socket server")
-    );
+    socketInstance.on("connect", () => {
+      console.log("Connected to socket server");
+      toast.success("Connected to socket server");
+    });
     socketInstance.on(
       "disconnect",
       () => console.log("Disconnected from socket server")
