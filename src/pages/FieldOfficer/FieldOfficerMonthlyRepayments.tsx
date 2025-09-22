@@ -31,6 +31,7 @@ const FieldOfficerMonthlyRepayments = () => {
     const formattedData = {
       ...values,
       month: currentMonth,
+      installmentAmount: Number(values.installmentAmount),
     };
 
     const res = await tryCatchWrapper(
