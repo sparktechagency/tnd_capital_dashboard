@@ -9,7 +9,8 @@ interface AdminClientsTableProps {
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal: (record: any) => void;
-  setPage?: (page: number) => void; // Function to handle pagination
+  setPage?: (page: number) => void;
+  deleteIconShow?: boolean; // Function to handle pagination
   page?: number;
   total?: number;
   limit?: number;
@@ -21,6 +22,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
   loading,
   showViewModal,
   showDeleteModal,
+  deleteIconShow = true,
   setPage,
   page,
   total,
@@ -39,7 +41,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
                 record?.client?.customFields?.image
                   ? getImageUrl() + record?.client?.customFields?.image
                   : AllImages.profile
-              } 
+              }
               alt={record.fullName}
               style={{
                 width: 45,
@@ -113,14 +115,16 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="Delete Clients">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
-            </button>
-          </Tooltip>
+          {deleteIconShow && (
+            <Tooltip placement="right" title="Delete Clients">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                onClick={() => showDeleteModal(record)}
+              >
+                <img src={AllIcons.deleteIcon} />
+              </button>
+            </Tooltip>
+          )}
         </Space>
       ),
       align: "center",

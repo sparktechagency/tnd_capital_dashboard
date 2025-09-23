@@ -30,9 +30,15 @@ const hubManagerFieldOfficerApi = baseApi.injectEndpoints({
         }),
 
         getAllFieldOfficers: builder.query({
-            query: () => ({
+            query: ({ page, limit, searchTerm, filtering }) => ({
                 url: `/hub_manager/field_officer_request?isAssignSpoke=true`,
                 method: "GET",
+                params: {
+                    page,
+                    limit,
+                    searchTerm,
+                    filtering
+                }
             }),
             providesTags: [tagTypes.hubManagerFieldOfficer],
         }),

@@ -94,7 +94,11 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
     {
       title: "Status",
       dataIndex:
-        newPathname === "supervisor" ? "supervisorApproval" : "loanStatus", // Data key for role
+        newPathname === "supervisor"
+          ? "supervisorApproval"
+          : newPathname === "hubManager"
+          ? "hubManagerApproval"
+          : "loanStatus", // Data key for role
       render: (text: string) => (
         <div
           className={`${
@@ -139,9 +143,10 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
 
           {approveShow && (
             <>
-              {newPathname === "supervisor" ? (
+              {newPathname === "supervisor" || newPathname === "hubManager" ? (
                 <>
-                  {record.supervisorApproval === "pending" ? (
+                  {record.supervisorApproval === "pending" ||
+                  record.hubManagerApproval === "pending" ? (
                     <>
                       {/* Approve Button */}
                       <Tooltip placement="right" title="Approve Application">
@@ -163,10 +168,11 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                         </button>
                       </Tooltip>
                     </>
-                  ) : record.supervisorApproval === "rejected" ? (
+                  ) : record.supervisorApproval === "rejected" ||
+                    record.hubManagerApproval === "rejected" ? (
                     <>
                       {/* Only Reject Button */}
-                                            <Tooltip placement="right" title="Approve Application">
+                      <Tooltip placement="right" title="Approve Application">
                         <button
                           className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
                           onClick={() => showApprovedModal?.(record)}

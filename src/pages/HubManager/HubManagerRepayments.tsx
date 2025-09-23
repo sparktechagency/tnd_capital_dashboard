@@ -106,7 +106,7 @@ const HubManagerRepayments = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
         <div className="flex items-center  gap-x-10 py-5">
           <ReuseSearchInput
@@ -135,6 +135,7 @@ const HubManagerRepayments = () => {
           loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          deleteIconShow={false}
           limit={limit}
           page={page}
           setPage={setPage}

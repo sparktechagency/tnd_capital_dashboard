@@ -92,6 +92,7 @@ const HubManagerClients = () => {
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
           limit={limit}
+          deleteIconShow={false}
           page={page}
           setPage={setPage}
           total={hubClients?.meta?.total}
