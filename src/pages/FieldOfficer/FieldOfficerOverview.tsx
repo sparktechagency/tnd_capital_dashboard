@@ -4,8 +4,6 @@ import { AllIcons } from "../../../public/images/AllImages";
 import Bar_Chart from "../../Components/Chart/BarChart";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
-import { Calculator } from "../../Components/svg/leads";
-
 import {
   useAllLeadsQuery,
   useDeleteFieldOfficerLeadsMutation,
@@ -15,15 +13,13 @@ import {
   useGetFieldOfficerOverviewQuery,
 } from "../../redux/features/fieldOfficer/fieldOfficerOverviewApi";
 import { useAppSelector } from "../../redux/hooks";
-import ReuseButton from "../../ui/Button/ReuseButton";
 import Loading from "../../ui/Loading";
 import ViewLeadsModal from "../../ui/Modal/AdminModals/ViewLeadsModal";
 import DeleteModal from "../../ui/Modal/DeleteModal";
-import LoanCalculation from "../../ui/Modal/LoanCalculation/LoanCalculation";
+import EditLeadsModal from "../../ui/Modal/FieldOfficerModals/EditLeadsModal";
 import FieldOfficerLeadsTable from "../../ui/Tables/FieldOfficerLeadsTable";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import YearOption from "../../utils/YearOption";
-import EditLeadsModal from "../../ui/Modal/FieldOfficerModals/EditLeadsModal";
 
 const FieldOfficerOverview = () => {
   const [page, setPage] = useState(1);
@@ -31,8 +27,7 @@ const FieldOfficerOverview = () => {
   const limit = 8;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isLoanCalculatorModalVisible, setIsLoanCalculatorModalVisible] =
-    useState(false);
+
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
@@ -75,16 +70,10 @@ const FieldOfficerOverview = () => {
     setIsEditModalVisible(true);
   };
 
-  const showLoanCalculatorModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsLoanCalculatorModalVisible(true);
-  };
-
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsDeleteModalVisible(false);
     setIsEditModalVisible(false);
-    setIsLoanCalculatorModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -152,16 +141,7 @@ const FieldOfficerOverview = () => {
 
   return (
     <section>
-      <Topbar collapsed={collapsed}>
-        <div className="flex justify-end  gap-x-10 py-5">
-          <ReuseButton
-            children="Lone Collector"
-            icon={Calculator()}
-            onClick={showLoanCalculatorModal}
-            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
-          />
-        </div>
-      </Topbar>
+      <Topbar collapsed={collapsed}></Topbar>
       <div className="mt-10">
         <div className="mt-6">
           <AdminOverviewCard cards={cards} className="" />
@@ -205,11 +185,6 @@ const FieldOfficerOverview = () => {
             isEditModalVisible={isEditModalVisible}
             handleCancel={handleCancel}
             currentRecord={currentRecord}
-          />
-
-          <LoanCalculation
-            handleCancel={handleCancel}
-            isLoanCalculatorModalVisible={isLoanCalculatorModalVisible}
           />
         </div>
       </div>

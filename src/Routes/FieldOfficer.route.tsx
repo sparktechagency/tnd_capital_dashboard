@@ -6,6 +6,7 @@ import leads from "../../public/images/Dashboard-icons/leads.svg";
 import repayments from "../../public/images/Dashboard-icons/repayments.svg";
 import report from "../../public/images/Dashboard-icons/reportAndAnalytics.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
+import calculator from "../../public/images/icons/calculator.svg";
 // import tracking from "../../public/images/Dashboard-icons/tracking.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
@@ -25,6 +26,7 @@ import FieldOfficerNewLeads from "../pages/FieldOfficer/FieldOfficerNewLeads";
 import FieldOfficerOverview from "../pages/FieldOfficer/FieldOfficerOverview";
 import FieldOfficerRepayments from "../pages/FieldOfficer/FieldOfficerRepayments";
 import FieldOfficerReportsAndAnalytics from "../pages/FieldOfficer/FieldOfficerReportsAndAnalytics";
+import LoanCalculation from "../ui/Modal/LoanCalculation/LoanCalculation";
 // import FieldOfficerTracking from "../pages/FieldOfficer/FieldOfficerTracking";
 
 export const fieldOfficerPath = [
@@ -34,6 +36,13 @@ export const fieldOfficerPath = [
     key: "overview",
     name: "Dashboard",
     icon: dashboardLogo,
+  },
+  {
+    path: "calculator",
+    element: <LoanCalculation />,
+    key: "calculator",
+    name: "Calculator",
+    icon: calculator,
   },
   {
     path: "new-leads",

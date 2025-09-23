@@ -11,6 +11,8 @@ import React, {
 import { Table, Input, Form, Modal, FormInstance } from "antd";
 import type { InputRef } from "antd";
 import type { ColumnType } from "antd/es/table";
+import Topbar from "../../../Components/Shared/Topbar";
+import { useAppSelector } from "../../../redux/hooks";
 
 interface LoanRecord {
   key: string;
@@ -125,10 +127,8 @@ const calculateLoan = (principal: number, months: number) => {
   };
 };
 
-const LoanCalculation: FC<LoanCalculationProps> = ({
-  isLoanCalculatorModalVisible,
-  handleCancel,
-}) => {
+const LoanCalculation = () => {
+  const { collapsed } = useAppSelector((state) => state.auth);
   // Initial table rows with formula calculation
   const [dataSource, setDataSource] = useState<LoanRecord[]>(() => {
     const initialMonths = [6, 8, 10, 12, 18, 24];
@@ -220,14 +220,9 @@ const LoanCalculation: FC<LoanCalculationProps> = ({
   });
 
   return (
-    <Modal
-      open={isLoanCalculatorModalVisible}
-      onCancel={handleCancel}
-      centered
-      width={1200}
-      footer={false}
-    >
+    <section className="min-h-screen">
       <div style={{ padding: "20px" }}>
+        <Topbar collapsed={collapsed}></Topbar>
         <h2 className="text-xl font-medium mb-5">Loan Calculator</h2>
         <Table
           components={{
@@ -242,7 +237,7 @@ const LoanCalculation: FC<LoanCalculationProps> = ({
           columns={mergedColumns}
         />
       </div>
-    </Modal>
+    </section>
   );
 };
 
