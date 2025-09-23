@@ -4,12 +4,16 @@ import { Space, Tooltip } from "antd";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import ReuseTable from "../../utils/ReuseTable";
 import { getImageUrl } from "../../helpers/config/envConfig";
+import { useLocation } from "react-router-dom";
+import { FcApproval } from "react-icons/fc";
 
 interface AdminApplicationTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal?: (record: any) => void;
+  showRejectedModal?: (record: any) => void;
+  showApprovedModal?: (record: any) => void;
   deleteModalShow?: boolean;
   showEditUserModal?: (record: any) => void;
   editModalShow?: boolean;
@@ -18,20 +22,25 @@ interface AdminApplicationTableProps {
   total?: number;
   limit?: number;
   isShowOtherAction?: boolean;
+  approveShow?: boolean;
 }
 const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
   data,
   loading,
   showViewModal,
-  showDeleteModal,
   showEditUserModal,
-  deleteModalShow = true,
   editModalShow = false,
+  approveShow = false,
+  showApprovedModal,
+  showRejectedModal,
   setPage,
   page,
   total,
   limit,
 }) => {
+  const { pathname } = useLocation();
+  const newPathname = pathname.split("/")[1];
+
   const columns = [
     {
       title: "Full Name",
@@ -84,7 +93,8 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
 
     {
       title: "Status",
-      dataIndex: "loanStatus", // Data key for role
+      dataIndex:
+        newPathname === "supervisor" ? "supervisorApproval" : "loanStatus", // Data key for role
       render: (text: string) => (
         <div
           className={`${
@@ -116,17 +126,6 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
             </button>
           </Tooltip>
 
-          {deleteModalShow && (
-            <Tooltip placement="right" title="Delete Application">
-              <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-                onClick={() => showDeleteModal?.(record)}
-              >
-                <img src={AllIcons.deleteIcon} />
-              </button>
-            </Tooltip>
-          )}
-
           {editModalShow && (
             <Tooltip placement="right" title="Edit">
               <button
@@ -137,9 +136,77 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
               </button>
             </Tooltip>
           )}
+
+          {approveShow && (
+            <>
+              {newPathname === "supervisor" ? (
+                <>
+                  {record.supervisorApproval === "pending" ? (
+                    <>
+                      {/* Approve Button */}
+                      <Tooltip placement="right" title="Approve Application">
+                        <button
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          onClick={() => showApprovedModal?.(record)}
+                        >
+                          <FcApproval className="text-2xl" />
+                        </button>
+                      </Tooltip>
+
+                      {/* Reject Button */}
+                      <Tooltip placement="right" title="Reject Application">
+                        <button
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          onClick={() => showRejectedModal?.(record)}
+                        >
+                          <img className="size-5" src={AllIcons.reject} />
+                        </button>
+                      </Tooltip>
+                    </>
+                  ) : record.supervisorApproval === "rejected" ? (
+                    <>
+                      {/* Only Reject Button */}
+                                            <Tooltip placement="right" title="Approve Application">
+                        <button
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          onClick={() => showApprovedModal?.(record)}
+                        >
+                          <FcApproval className="text-2xl" />
+                        </button>
+                      </Tooltip>
+                    </>
+                  ) : (
+                    <>
+                      {/* Default: Only Reject Button */}
+                      <Tooltip placement="right" title="Reject Application">
+                        <button
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          onClick={() => showRejectedModal?.(record)}
+                        >
+                          <img className="size-5" src={AllIcons.reject} />
+                        </button>
+                      </Tooltip>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  {/* If not supervisor, default Reject */}
+                  <Tooltip placement="right" title="Reject Application">
+                    <button
+                      className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                      onClick={() => showRejectedModal?.(record)}
+                    >
+                      <img className="size-5" src={AllIcons.reject} />
+                    </button>
+                  </Tooltip>
+                </>
+              )}
+            </>
+          )}
         </Space>
       ),
-      align: "center",
+      align: "end",
     },
   ];
 

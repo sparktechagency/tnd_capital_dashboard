@@ -37,7 +37,7 @@ export const supervisorPaths = [
       {
         key: "applications",
         path: "applications/all-application-requests",
-        name: "All Applications",
+        name: "Application Requests",
         element: <HubManagerApplicationRequest />,
         icon: dotIcon,
       },

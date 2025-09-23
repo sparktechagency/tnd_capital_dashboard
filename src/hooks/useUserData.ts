@@ -8,8 +8,9 @@ const useUserData = () => {
   const token = Cookies.get("crm_accessToken");
 
   const user = useMemo(() => {
-    if (!token) return null;
+    if (!token) return null;  
 
+    
     const decoded = decodedToken(token) as IUser | null;
     return decoded;
   }, [token]);

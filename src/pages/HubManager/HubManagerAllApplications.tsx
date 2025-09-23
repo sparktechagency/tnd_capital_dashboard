@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Topbar from "../../Components/Shared/Topbar";
 import {
-  useDeleteHubManagerLoanApplicationMutation,
+  useApplicationActionMutation,
   useGetAllHubManagerLoanApplicationQuery,
 } from "../../redux/features/HubManager/hubManagerApplicationApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
+import ApproveModal from "../../ui/Modal/ApproveModal";
+import RejectModal from "../../ui/Modal/RejectModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const HubManagerAllApplications = () => {
@@ -19,23 +21,26 @@ const HubManagerAllApplications = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isApproveModalVisible, setIsApproveModalVisible] = useState(false);
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [filtering, setFiltering] = useState<string>("30");
   const { collapsed } = useAppSelector((state) => state.auth);
+
+  const { pathname } = useLocation();
+  const newPathname = pathname.split("/")[1];
 
   const { data, isFetching } = useGetAllHubManagerLoanApplicationQuery({
     page,
     limit,
     searchTerm: searchText,
-    supervisorApproval: "approved",
+    supervisorApproval: newPathname !== "supervisor" ? "approved" : undefined,
     filtering,
   });
 
   const application = data?.data;
 
-  // delete api
-  const [deleteLoanApplication] = useDeleteHubManagerLoanApplicationMutation();
+  const [applicationAction] = useApplicationActionMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -44,25 +49,41 @@ const HubManagerAllApplications = () => {
 
   const showDeleteModal = (record: any) => {
     setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
+    setIsApproveModalVisible(false);
+    setIsRejectModalVisible(false);
     setCurrentRecord(null);
   };
 
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
+  const showApprovedModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsApproveModalVisible(true);
+  };
+
+  const showRejectedModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsRejectModalVisible(true);
+  };
+
+  const handleAccept = async () => {
+    const res = await tryCatchWrapper(
+      applicationAction,
+      { body: { action: "approved", loanId: currentRecord?._id } },
+      "Accepting..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
   };
 
   const handleDelete = async () => {
     const res = await tryCatchWrapper(
-      deleteLoanApplication,
-      { params: currentRecord?._id },
-      "Deleting..."
+      applicationAction,
+      { body: { action: "rejected", loanId: currentRecord?._id } },
+      "Rejecting ..."
     );
     if (res.statusCode === 200) {
       handleCancel();
@@ -70,7 +91,7 @@ const HubManagerAllApplications = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Topbar collapsed={collapsed}>
         <div className="flex items-center  gap-x-10 py-5">
           <ReuseSearchInput
@@ -95,6 +116,10 @@ const HubManagerAllApplications = () => {
           loading={isFetching}
           showViewModal={showViewUserModal}
           showDeleteModal={showDeleteModal}
+          showApprovedModal={showApprovedModal}
+          showRejectedModal={showRejectedModal}
+          editModalShow={false}
+          approveShow={true}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -107,11 +132,18 @@ const HubManagerAllApplications = () => {
           currentRecord={currentRecord}
         />
 
-        <DeleteModal
+        <ApproveModal
+          isApproveModalVisible={isApproveModalVisible}
+          handleCancel={handleCancel}
           currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
+          handleApprove={handleAccept}
+        />
+
+        <RejectModal
+          isRejectModalVisible={isRejectModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          handleReject={handleDelete}
         />
       </div>
     </div>

@@ -29,6 +29,8 @@ export const tagTypes = {
   fieldOfficerLeads: "fieldOfficerLeads",
   fieldOfficerLoanApplication: "fieldOfficerLoanApplication",
   fieldOfficerRepayment: "fieldOfficerRepayment",
+  //
+  supervisorOverview: "supervisorOverview",
 };
 
 export const tagTypesList = [
@@ -57,4 +59,5 @@ export const tagTypesList = [
   tagTypes.fieldOfficerLeads,
   tagTypes.fieldOfficerLoanApplication,
   tagTypes.fieldOfficerRepayment,
+  tagTypes.supervisorOverview,
 ];

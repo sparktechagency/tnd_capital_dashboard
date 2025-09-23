@@ -107,7 +107,8 @@ const authApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: [tagTypes.auth],
-    })
+    }),
+
   }),
 });
 

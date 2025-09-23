@@ -5,7 +5,7 @@ import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useGetAllHubManagerLoanApplicationQuery } from "../../redux/features/HubManager/hubManagerApplicationApi";
 import { getImageUrl } from "../../helpers/config/envConfig";
 import Loading from "../../ui/Loading";
@@ -16,11 +16,16 @@ const HubManagerApplicationRequest = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [page, setPage] = useState<number>(1);
 
+  const { pathname } = useLocation();
+  const newPath = pathname.split("/")[1];
+
+  console.log(newPath, "newPath =======>");
+
   const { data, isLoading } = useGetAllHubManagerLoanApplicationQuery({
     page,
     limit: 12,
     searchTerm: searchText,
-    supervisorApproval: "approved",
+    supervisorApproval: newPath === "supervisor" ? "pending" : "approved",
     hubManagerApproval: "pending",
   });
 
@@ -41,14 +46,14 @@ const HubManagerApplicationRequest = () => {
 
       <div className="mt-10 shadow border border-gray-100 rounded-xl p-5">
         <p className="text-xl font-medium">Apply Request</p>
-        <div className="grid grid-cols-4 gap-5 mt-5">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-5 mt-5">
           {application?.result.map((item: any, index: number) => (
             <Link
               onClick={() =>
                 localStorage.setItem("clientId", JSON.stringify(item))
               }
               key={index}
-              to={`/hubManager/applications/all-application-requests-details/${item._id}`}
+              to={`/${newPath}/applications/all-application-requests-details/${item._id}`}
               className="flex items-center justify-between gap-x-3 border border-gray-100 p-5 rounded-xl shadow"
             >
               <div className="flex items-center gap-x-3">
