@@ -36,6 +36,14 @@ const hubManagerOverviewApi = baseApi.injectEndpoints({
             }),
             providesTags: [tagTypes.hubManagerOverview],
         }),
+
+        seeSpokeManagerAnalytics: builder.query({
+            query: (id) => ({
+                url: `${hub_manager_overview}/spoke_analytics/${id}`,
+                method: "GET",
+            }),
+            providesTags: [tagTypes.hubManagerOverview],
+        }),
     }),
 });
 
@@ -44,4 +52,5 @@ export const {
     useGetHubManagerCollectionReportQuery,
     useGetHubManagerApprovalReportQuery,
     useGetHubManageFieldOfficerCollectionQuery,
+    useSeeSpokeManagerAnalyticsQuery,
 } = hubManagerOverviewApi;

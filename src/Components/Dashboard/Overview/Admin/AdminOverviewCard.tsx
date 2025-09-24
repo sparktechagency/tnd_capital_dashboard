@@ -20,7 +20,6 @@ const AdminOverviewCard = ({
         className
       )}
     >
-      {/* Company  */}
       {cards.map((item) => (
         <div
           key={item.id}

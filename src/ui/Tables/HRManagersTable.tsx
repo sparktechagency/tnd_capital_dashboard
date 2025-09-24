@@ -14,6 +14,7 @@ interface AdminHRManagersTableProps {
   showEditUserModal: (record: any) => void;
   showBlockModal?: (record: any) => void;
   showUnblockModal?: (record: any) => void;
+  showAnalyticsModal?: (record: any) => void;
   deleteModalShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -27,6 +28,7 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
   showViewModal,
   showDeleteModal,
   showEditUserModal,
+  showAnalyticsModal,
   deleteModalShow = true,
   showUnblockModal,
   showBlockModal,
@@ -146,6 +148,15 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
               </button>
             </Tooltip>
           )}
+
+          <Tooltip placement="left" title="See Analytics">
+            <button
+              onClick={() => showAnalyticsModal?.(record)}
+              className="!p-0 !bg-transparent !border-none cursor-pointer"
+            >
+              <img src={AllIcons.analytics} />
+            </button>
+          </Tooltip>
 
           <Tooltip placement="right">
             <button

@@ -2,6 +2,7 @@ import { Modal } from "antd";
 import ModalItemStyle from "../../../utils/ModalItemStyle";
 import { AllIcons, AllImages } from "../../../../public/images/AllImages";
 import { getImageUrl } from "../../../helpers/config/envConfig";
+import dayjs from "dayjs";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const ViewHROfficers = ({
@@ -60,8 +61,8 @@ const ViewHROfficers = ({
               value={currentRecord?.customFields?.homeAddress}
             />
             <ModalItemStyle
-              title={"Set Location:"}
-              value={currentRecord?.customFields?.setLocation}
+              title={"Hiring Date:"}
+              value={dayjs(currentRecord?.createdAt).format("DD MMM, YYYY")}
             />
 
             <div>

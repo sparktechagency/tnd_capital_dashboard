@@ -36,6 +36,7 @@ import upload from "./icons/Upload.svg";
 import manager from "./Dashboard-icons/manager.svg";
 import roundedPlus from "./Dashboard-icons/rounded_plus.svg";
 import reject from "./icons/reject.svg";
+import analytics from "./icons/analytics.svg"
 
 export const AllImages = {
   logo,
@@ -75,4 +76,5 @@ export const AllIcons = {
   manager,
   roundedPlus,
   reject,
+  analytics,
 };

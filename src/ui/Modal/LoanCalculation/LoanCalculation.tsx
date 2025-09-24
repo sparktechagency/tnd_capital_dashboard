@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import type { InputRef } from "antd";
+import { Form, FormInstance, Input, Table } from "antd";
+import type { ColumnType } from "antd/es/table";
 import React, {
-  useState,
+  FC,
+  ReactNode,
   useContext,
   useEffect,
   useRef,
-  FC,
-  ReactNode,
+  useState,
 } from "react";
-import { Table, Input, Form, Modal, FormInstance } from "antd";
-import type { InputRef } from "antd";
-import type { ColumnType } from "antd/es/table";
 import Topbar from "../../../Components/Shared/Topbar";
 import { useAppSelector } from "../../../redux/hooks";
 
@@ -31,11 +31,6 @@ type EditableTableProps = {
   record: LoanRecord;
   handleSave: (record: LoanRecord) => void;
 };
-
-interface LoanCalculationProps {
-  isLoanCalculatorModalVisible: boolean;
-  handleCancel: () => void;
-}
 
 interface EditableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
   index: number;
