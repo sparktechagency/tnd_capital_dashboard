@@ -66,7 +66,7 @@ const SpokeManagerOverview = () => {
     },
 
     {
-      id: 3,
+      id: 2,
       background: "#FFFFFF",
       name: "Overdue",
       icon: (
@@ -75,6 +75,28 @@ const SpokeManagerOverview = () => {
         </div>
       ),
       count: spokeManagerCount?.data?.overdue,
+    },
+    {
+      id: 3,
+      background: "#FFFFFF",
+      name: "Total Leads",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.clients} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: spokeManagerCount?.data?.allLeads,
+    },
+    {
+      id: 4,
+      background: "#FFFFFF",
+      name: "Todays Clients",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.clients} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: spokeManagerCount?.data?.allCleints,
     },
   ];
 
