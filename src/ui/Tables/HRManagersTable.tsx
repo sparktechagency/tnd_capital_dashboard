@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import { getImageUrl } from "../../helpers/config/envConfig";
 import ReuseTable from "../../utils/ReuseTable";
+import { MdBlock } from "react-icons/md";
 
 interface AdminHRManagersTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -11,6 +12,8 @@ interface AdminHRManagersTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showDeleteModal?: (record: any) => void;
   showEditUserModal: (record: any) => void;
+  showBlockModal?: (record: any) => void;
+  showUnblockModal?: (record: any) => void;
   deleteModalShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -25,6 +28,8 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
   showDeleteModal,
   showEditUserModal,
   deleteModalShow = true,
+  showUnblockModal,
+  showBlockModal,
   setPage,
   page,
   total,
@@ -118,6 +123,26 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
                 onClick={() => showDeleteModal?.(record)}
               >
                 <img src={AllIcons.deleteIcon} />
+              </button>
+            </Tooltip>
+          )}
+
+          {record?.status === "blocked" ? (
+            <Tooltip placement="left" title="Unblock">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
+                onClick={() => showUnblockModal?.(record)}
+              >
+                <img src={AllIcons.unblock} className="" />
+              </button>
+            </Tooltip>
+          ) : (
+            <Tooltip placement="left" title="Block">
+              <button
+                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                onClick={() => showBlockModal?.(record)}
+              >
+                <MdBlock style={{ fontSize: "20px" }} />
               </button>
             </Tooltip>
           )}

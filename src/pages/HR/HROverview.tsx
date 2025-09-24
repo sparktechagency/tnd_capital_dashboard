@@ -52,6 +52,17 @@ const HROverview = () => {
       ),
       count: data?.data?.totalManagers,
     },
+    {
+      id: 4,
+      background: "#FFFFFF",
+      name: "Total Supervisors",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.manager} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: data?.data?.allSupervsor,
+    },
   ];
 
   if (isLoading) return <Loading />;

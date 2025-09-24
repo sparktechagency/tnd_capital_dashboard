@@ -4,13 +4,15 @@ import dayjs from "dayjs";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import { getImageUrl } from "../../helpers/config/envConfig";
 import ReuseTable from "../../utils/ReuseTable";
+import { MdBlock } from "react-icons/md";
 
 interface AdminHROfficersTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
+  showUnblockModal: (record: any) => void;
   showEditUserModal: (record: any) => void;
+  showBlockModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -21,8 +23,9 @@ const HROfficersTable: React.FC<AdminHROfficersTableProps> = ({
   data,
   loading,
   showViewModal,
-  showDeleteModal,
+  showUnblockModal,
   showEditUserModal,
+  showBlockModal,
   setPage,
   page,
   total,
@@ -101,14 +104,26 @@ const HROfficersTable: React.FC<AdminHROfficersTableProps> = ({
             </button>
           </Tooltip>
 
-          <Tooltip placement="right" title="View Details">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
-            </button>
-          </Tooltip>
+          {record?.status === "blocked" ? (
+            <Tooltip placement="left" title="Unblock">
+              <button
+                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
+                onClick={() => showUnblockModal(record)}
+              >
+                <img src={AllIcons.unblock} className="" />
+              </button>
+            </Tooltip>
+          ) : (
+            <Tooltip placement="left" title="Block">
+              <button
+                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                onClick={() => showBlockModal(record)}
+              >
+                <MdBlock style={{ fontSize: "20px" }} />
+              </button>
+            </Tooltip>
+          )}
+          
           <Tooltip placement="right">
             <button
               onClick={() => showEditUserModal(record)}

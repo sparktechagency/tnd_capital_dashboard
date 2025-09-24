@@ -3,15 +3,16 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
 import {
-  useDeleteUserMutation,
   useGetAllManagersQuery,
+  useUserActionMutation,
 } from "../../redux/features/admin/adminUsers/adminUsers";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DeleteModal from "../../ui/Modal/DeleteModal";
+import BlockModal from "../../ui/Modal/BlockModal";
 import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
 import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 import HRManagersTable from "../../ui/Tables/HRManagersTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
@@ -23,7 +24,9 @@ const HRManagers = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+
+  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
+  const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [filtering, setFiltering] = useState<string>("30");
@@ -37,7 +40,7 @@ const HRManagers = () => {
     filtering,
   });
   const mangersData = data?.data;
-  const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUserActionMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
@@ -48,28 +51,49 @@ const HRManagers = () => {
     setIsEditModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
+  const showBlockModal = (record: any) => {
     setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
+    setIsBlockModalVisible(true);
+  };
+
+  const showUnblockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsUnblockModalVisible(true);
   };
 
   const handleCancel = () => {
-    setIsDeleteModalVisible(false);
+    setIsBlockModalVisible(false);
+    setIsUnblockModalVisible(false);
     setIsViewModalVisible(false);
     setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
+  const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      deleteUser,
-      { params: currentRecord?._id },
-      "Deleting..."
+      updateUser,
+      {
+        body: {
+          action: "blocked",
+        },
+        params: data?._id,
+      },
+      "Blocking..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+  const handleUnblock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      updateUser,
+      {
+        body: {
+          action: "active",
+        },
+        params: data?._id,
+      },
+      "Unblocking..."
     );
     if (res.statusCode === 200) {
       handleCancel();
@@ -107,8 +131,10 @@ const HRManagers = () => {
           data={mangersData?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           showEditUserModal={showEditUserModal}
+          showBlockModal={showBlockModal}
+          showUnblockModal={showUnblockModal}
+          deleteModalShow={false}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -121,17 +147,24 @@ const HRManagers = () => {
           currentRecord={currentRecord}
         />
 
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
-        />
-
         <EditHrOfficerModal
           isEditModalVisible={isEditModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+        />
+
+        <BlockModal
+          isBlockModalVisible={isBlockModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          handleBlock={handleBlock}
+        />
+
+        <UnblockModal
+          isUnblockModalVisible={isUnblockModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          handleUnblock={handleUnblock}
         />
       </div>
     </div>
