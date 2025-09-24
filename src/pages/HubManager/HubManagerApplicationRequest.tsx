@@ -19,8 +19,6 @@ const HubManagerApplicationRequest = () => {
   const { pathname } = useLocation();
   const newPath = pathname.split("/")[1];
 
-  console.log(newPath, "newPath =======>");
-
   const { data, isLoading } = useGetAllHubManagerLoanApplicationQuery({
     page,
     limit: 12,

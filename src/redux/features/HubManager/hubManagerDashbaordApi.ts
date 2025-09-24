@@ -38,7 +38,7 @@ const hubManagerOverviewApi = baseApi.injectEndpoints({
         }),
 
         seeSpokeManagerAnalytics: builder.query({
-            query: (id) => ({
+            query: ({id}) => ({
                 url: `${hub_manager_overview}/spoke_analytics/${id}`,
                 method: "GET",
             }),

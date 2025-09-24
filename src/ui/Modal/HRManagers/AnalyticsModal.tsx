@@ -15,7 +15,7 @@ const AnalyticsModal = ({
   currentRecord: any;
 }) => {
   const { data: spokeManagerCount, isLoading } =
-    useSeeSpokeManagerAnalyticsQuery(currentRecord?._id);
+    useSeeSpokeManagerAnalyticsQuery({ id: currentRecord?._id });
 
   const cards = [
     {
