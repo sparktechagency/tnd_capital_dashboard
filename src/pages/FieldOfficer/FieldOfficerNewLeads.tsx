@@ -2,18 +2,17 @@
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
-import {
-  useAllLeadsQuery,
-  useDeleteFieldOfficerLeadsMutation,
-} from "../../redux/features/fieldOfficer/fieldOfficerLeadsApi";
+import { useAllLeadsQuery } from "../../redux/features/fieldOfficer/fieldOfficerLeadsApi";
+import { useUpdateLeadActionMutation } from "../../redux/features/HubManager/hubManagerLeadsApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewLeadsModal from "../../ui/Modal/AdminModals/ViewLeadsModal";
+import BlockModal from "../../ui/Modal/BlockModal";
+import EditLeadsModal from "../../ui/Modal/FieldOfficerModals/EditLeadsModal";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 import FieldOfficerLeadsTable from "../../ui/Tables/FieldOfficerLeadsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import EditLeadsModal from "../../ui/Modal/FieldOfficerModals/EditLeadsModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const FieldOfficerNewLeads = () => {
@@ -25,7 +24,9 @@ const FieldOfficerNewLeads = () => {
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
+  const [isUnBlockModalVisible, setIsUnBlockModalVisible] = useState(false);
+
   const { collapsed } = useAppSelector((state) => state.auth);
 
   const { data, isFetching: isLoadingLeads } = useAllLeadsQuery({
@@ -35,34 +36,63 @@ const FieldOfficerNewLeads = () => {
     filtering,
   });
   const leads = data?.data;
-  const [deleteFieldOfficerLeads] = useDeleteFieldOfficerLeadsMutation();
+  const [updateLeadAction] = useUpdateLeadActionMutation();
 
-  const showEditModal = (record: any) => {
-    setIsEditModalVisible(true);
-    setCurrentRecord(record);
-  };
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
+  //
+  //
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
+  const showBlockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsBlockModalVisible(true);
+  };
+  const showUnblockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsUnBlockModalVisible(true);
+  };
+
+  const showEditModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
+  };
+
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsEditModalVisible(false);
-    setIsDeleteModalVisible(false);
+    setIsBlockModalVisible(false);
+    setIsUnBlockModalVisible(false);
     setCurrentRecord(null);
   };
 
-  const handleDelete = async () => {
+  const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      deleteFieldOfficerLeads,
-      { params: currentRecord?._id },
-      "Deleting..."
+      updateLeadAction,
+      {
+        body: {
+          action: "blocked",
+        },
+        params: data?._id,
+      },
+      "Blocking..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+  const handleUnblock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      updateLeadAction,
+      {
+        body: {
+          action: "active",
+        },
+        params: data?._id,
+      },
+      "Unblocking..."
     );
     if (res.statusCode === 200) {
       handleCancel();
@@ -100,7 +130,8 @@ const FieldOfficerNewLeads = () => {
           loading={isLoadingLeads}
           showViewModal={showViewUserModal}
           showEditModal={showEditModal}
-          showDeleteModal={showDeleteModal}
+          showBlockModal={showBlockModal}
+          showUnblockModal={showUnblockModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -119,11 +150,17 @@ const FieldOfficerNewLeads = () => {
           currentRecord={currentRecord}
         />
 
-        <DeleteModal
-          handleDelete={handleDelete}
-          isDeleteModalVisible={isDeleteModalVisible}
+        <BlockModal
+          isBlockModalVisible={isBlockModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
+          handleBlock={handleBlock}
+        />
+        <UnblockModal
+          isUnblockModalVisible={isUnBlockModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          handleUnblock={handleUnblock}
         />
       </div>
     </div>

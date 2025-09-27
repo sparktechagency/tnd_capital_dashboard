@@ -18,12 +18,9 @@ import Topbar from "../../Shared/Topbar";
 import { getImageUrl } from "../../../helpers/config/envConfig";
 
 const EditProfile = () => {
-  // const serverUrl = getImageUrl();
   const [form] = Form.useForm();
   const [updateProfile] = useUpdateProfileMutation();
   const { data, isFetching } = useGetProfileQuery({});
-  // const profileData = data?.data;
-  // const profileImage = serverUrl + profileData?.image;
   const { collapsed } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
@@ -35,19 +32,6 @@ const EditProfile = () => {
       });
     }
   }, [data, form]);
-
-  // const handleImageUpload = (info: any) => {
-  //   if (info.file.status === "removed") {
-  //     setImageUrl(profileImage); // Reset to null or fallback image
-  //   } else {
-  //     const file = info.file.originFileObj || info.file; // Handle the file object safely
-  //     if (file) {
-  //       setImageUrl(URL.createObjectURL(file)); // Set the preview URL of the selected image
-  //     } else {
-  //       console.error("No file selected or file object missing");
-  //     }
-  //   }
-  // };
 
   const [imageUrl, setImageUrl] = useState<any>(null);
   console.log(imageUrl, "image url");
@@ -160,6 +144,7 @@ const EditProfile = () => {
                   label="Name"
                   placeholder="John Doe"
                   name="name"
+                  readOnly
                   labelClassName="!font-normal !text-xl"
                   inputClassName="!bg-[#F5F5F5] !text-[#535763] !border-none h-11"
                 />

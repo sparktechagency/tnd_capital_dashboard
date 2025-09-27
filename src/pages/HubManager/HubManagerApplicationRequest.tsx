@@ -78,7 +78,7 @@ const HubManagerApplicationRequest = () => {
                     >
                       See Details
                     </ReuseButton>
-                    <ReuseButton className="!text-sm !px-6">Delete</ReuseButton>
+                    <ReuseButton className="!text-sm !px-6">Reject</ReuseButton>
                   </div>
                 </div>
               </div>

@@ -91,7 +91,7 @@ const HubManagerApplicationRequestDetails = () => {
                   onClick={() => handleDelete()}
                   className="!text-sm "
                 >
-                  Delete
+                  Reject
                 </ReuseButton>
               </div>
             </div>

@@ -218,7 +218,7 @@ const LoanCalculation = () => {
     <section className="min-h-screen">
       <div style={{ padding: "20px" }}>
         <Topbar collapsed={collapsed}></Topbar>
-        <h2 className="text-xl font-medium mb-5">Loan Calculator</h2>
+        <h2 className="text-xl font-medium mb-5">Calculator</h2>
         <Table
           components={{
             body: {

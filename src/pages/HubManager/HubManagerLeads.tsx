@@ -3,16 +3,17 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import LeadsTable from "../../ui/Tables/LoadsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 import {
-  useDeleteLeadsMutation,
   useGetHubManagerAllLeadsQuery,
+  useUpdateLeadActionMutation,
 } from "../../redux/features/HubManager/hubManagerLeadsApi";
 import ViewLoadsModal from "../../ui/Modal/AdminLoads/ViewLoadsModal";
+import BlockModal from "../../ui/Modal/BlockModal";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 
 const HubManagerLeads = () => {
   const [page, setPage] = useState<number>(1);
@@ -20,7 +21,9 @@ const HubManagerLeads = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
+  const [isUnBlockModalVisible, setIsUnBlockModalVisible] = useState(false);
+
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [filtering, setFiltering] = useState<string>("30");
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -36,34 +39,53 @@ const HubManagerLeads = () => {
 
   const allLeads = leads?.data as any;
 
-  const [deleteLeads] = useDeleteLeadsMutation();
+  const [updateLeadAction] = useUpdateLeadActionMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
-
-  const showDeleteModal = (record: any) => {
+  const showBlockModal = (record: any) => {
     setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
+    setIsBlockModalVisible(true);
+  };
+  const showUnblockModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsUnBlockModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
+    setIsBlockModalVisible(false);
+    setIsUnBlockModalVisible(false);
     setCurrentRecord(null);
   };
 
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
+  const handleBlock = async (data: any) => {
     const res = await tryCatchWrapper(
-      deleteLeads,
-      { params: currentRecord?._id },
-      "Deleting..."
+      updateLeadAction,
+      {
+        body: {
+          action: "blocked",
+        },
+        params: data?._id,
+      },
+      "Blocking..."
+    );
+    if (res.statusCode === 200) {
+      handleCancel();
+    }
+  };
+  const handleUnblock = async (data: any) => {
+    const res = await tryCatchWrapper(
+      updateLeadAction,
+      {
+        body: {
+          action: "active",
+        },
+        params: data?._id,
+      },
+      "Unblocking..."
     );
     if (res.statusCode === 200) {
       handleCancel();
@@ -95,7 +117,8 @@ const HubManagerLeads = () => {
           data={allLeads?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
+          showBlockModal={showBlockModal}
+          showUnblockModal={showUnblockModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -108,11 +131,18 @@ const HubManagerLeads = () => {
           currentRecord={currentRecord}
         />
 
-        <DeleteModal
+        <BlockModal
+          isBlockModalVisible={isBlockModalVisible}
+          handleCancel={handleCancel}
           currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
+          handleBlock={handleBlock}
+        />
+
+        <UnblockModal
+          isUnblockModalVisible={isUnBlockModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          handleUnblock={handleUnblock}
         />
       </div>
     </div>

@@ -149,14 +149,16 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
             </Tooltip>
           )}
 
-          <Tooltip placement="left" title="See Analytics">
-            <button
-              onClick={() => showAnalyticsModal?.(record)}
-              className="!p-0 !bg-transparent !border-none cursor-pointer"
-            >
-              <img src={AllIcons.analytics} />
-            </button>
-          </Tooltip>
+          {showAnalyticsModal && (
+            <Tooltip placement="left" title="See Analytics">
+              <button
+                onClick={() => showAnalyticsModal?.(record)}
+                className="!p-0 !bg-transparent !border-none cursor-pointer"
+              >
+                <img src={AllIcons.analytics} />
+              </button>
+            </Tooltip>
+          )}
 
           <Tooltip placement="right">
             <button

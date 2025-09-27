@@ -48,7 +48,16 @@ const hubManagerLeadsApi = baseApi.injectEndpoints({
                 method: "DELETE",
             }),
             invalidatesTags: [tagTypes.hubManagerLeads],
-        })
+        }),
+
+        updateLeadAction: builder.mutation({
+            query: (req) => ({
+                url: `${hub_manager_overview}/actions/${req?.params}`,
+                method: "PATCH",
+                body: req.body,
+            }),
+            invalidatesTags: [tagTypes.hubManagerLeads, tagTypes.fieldOfficerLeads],
+        }),
     }),
 });
 
@@ -56,5 +65,6 @@ export const {
     useGetHubManagerAllLeadsQuery,
     useDeleteLeadsMutation,
     useGetAllClientsForHubQuery,
-    useHubManagerDeleteClientsMutation
+    useHubManagerDeleteClientsMutation,
+    useUpdateLeadActionMutation,
 } = hubManagerLeadsApi;

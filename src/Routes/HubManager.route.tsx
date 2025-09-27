@@ -56,7 +56,7 @@ export const hubManagerPath = [
       {
         key: "applications",
         path: "applications/all-application-requests",
-        name: "All Applications",
+        name: "Applications Requests",
         element: <HubManagerApplicationRequest />,
         icon: dotIcon,
       },
