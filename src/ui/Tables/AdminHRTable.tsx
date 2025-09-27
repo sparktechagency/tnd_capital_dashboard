@@ -12,6 +12,7 @@ interface AdminAdminHRTableProps {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showBlockModal: (record: any) => void;
   showUnblockModal: (record: any) => void;
+  showEditHrModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
@@ -24,6 +25,7 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
   showViewModal,
   showBlockModal,
   showUnblockModal,
+  showEditHrModal,
   setPage,
   page,
   total,
@@ -118,6 +120,15 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
                 </button>
               </Tooltip>
             )}
+
+            <Tooltip placement="left" title="Edit HR">
+              <button
+                onClick={() => showEditHrModal(record)}
+                className="!p-0 !bg-transparent !border-none cursor-pointer"
+              >
+                <img src={AllIcons.pen} />
+              </button>
+            </Tooltip>
           </Space>
         );
       },

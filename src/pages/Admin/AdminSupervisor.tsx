@@ -15,6 +15,7 @@ import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminSupervisorTable from "../../ui/Tables/AdminSupervisorTable";
 import DaysSelection from "../../utils/DaysSelection";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 
 const AdminSupervisor = () => {
   const [page, setPage] = useState<number>(1);
@@ -27,6 +28,9 @@ const AdminSupervisor = () => {
 
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
+
+  const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+
   const { collapsed } = useAppSelector((state) => state.auth);
   const [filtering, setFiltering] = useState<string>("30");
   // api calling
@@ -47,10 +51,16 @@ const AdminSupervisor = () => {
     setIsViewModalVisible(true);
   };
 
+  const showEditHrModal = (record: any) => {
+    setCurrentRecord(record);
+    setIsEditModalVisible(true);
+  };
+
   const handleCancel = () => {
     setIsViewModalVisible(false);
     setIsBlockModalVisible(false);
     setIsUnblockModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -127,6 +137,7 @@ const AdminSupervisor = () => {
           showViewModal={showViewUserModal}
           showBlockModal={showBlockModal}
           showUnblockModal={showUnblockModal}
+          showEditHrModal={showEditHrModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -151,6 +162,13 @@ const AdminSupervisor = () => {
           isUnblockModalVisible={isUnblockModalVisible}
           handleCancel={handleCancel}
           handleUnblock={handleUnblock}
+        />
+
+        <EditHrOfficerModal
+          isEditModalVisible={isEditModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
+          skipHubId={true}
         />
       </div>
     </div>

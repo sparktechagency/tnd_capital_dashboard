@@ -62,6 +62,7 @@ const AdminAddHrInformation = () => {
 
     if (res?.statusCode === 200) {
       form.resetFields();
+      navigation(-1);
     }
   };
 

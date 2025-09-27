@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import ReuseTable from "../../utils/ReuseTable";
-import { MdBlock } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { getImageUrl } from "../../helpers/config/envConfig";
 import dayjs from "dayjs";
+import { MdBlock } from "react-icons/md";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import ReuseTable from "../../utils/ReuseTable";
 
 interface AdminSupervisorTable {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -13,18 +12,21 @@ interface AdminSupervisorTable {
   showViewModal: (record: any) => void; // Function to handle viewing a user
   showBlockModal: (record: any) => void;
   showUnblockModal: (record: any) => void;
+  showEditHrModal?: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
   total?: number;
   limit?: number;
   isShowOtherAction?: boolean;
 }
+
 const AdminSupervisorTable: React.FC<AdminSupervisorTable> = ({
   data,
   loading,
   showViewModal,
   showBlockModal,
   showUnblockModal,
+  showEditHrModal,
   setPage,
   page,
   total,
@@ -100,11 +102,12 @@ const AdminSupervisorTable: React.FC<AdminSupervisorTable> = ({
           </Tooltip>
 
           <Tooltip placement="left" title="Edit Supervisor">
-            <Link to={`/admin/supervisory/edit-supervisor/${record.key}`}>
-              <button className="!p-0 !bg-transparent !border-none cursor-pointer">
-                <img src={AllIcons.pen} />
-              </button>
-            </Link>
+            <button
+              onClick={() => showEditHrModal?.(record)}
+              className="!p-0 !bg-transparent !border-none cursor-pointer"
+            >
+              <img src={AllIcons.pen} />
+            </button>
           </Tooltip>
 
           {record?.status === "blocked" ? (

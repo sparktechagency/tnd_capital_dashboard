@@ -3,7 +3,6 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { Manger } from "../../Components/svg/leads";
 import {
-  useDeleteUserMutation,
   useGetAllManagersQuery,
   useUserActionMutation,
 } from "../../redux/features/admin/adminUsers/adminUsers";
@@ -12,7 +11,7 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminManagerModal from "../../ui/Modal/AdminManager/ViewAdminManagerModal";
 import BlockModal from "../../ui/Modal/BlockModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
+import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
 import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminHRTable from "../../ui/Tables/AdminHRTable";
 import DaysSelection from "../../utils/DaysSelection";
@@ -25,11 +24,12 @@ const AdminManger = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+
   const { collapsed } = useAppSelector((state) => state.auth);
   const [filtering, setFiltering] = useState<string>("30");
   // api calling
@@ -42,23 +42,22 @@ const AdminManger = () => {
 
   const allManager = data?.data;
   const [updateUser] = useUserActionMutation();
-  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
+  const showEditUserModal = (record: any) => {
     setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
+    setIsEditModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
     setIsBlockModalVisible(false);
     setIsUnblockModalVisible(false);
+    setIsEditModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -69,22 +68,6 @@ const AdminManger = () => {
   const showUnblockModal = (record: any) => {
     setCurrentRecord(record);
     setIsUnblockModalVisible(true);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      deleteUser,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
   };
 
   const handleBlock = async (data: any) => {
@@ -149,8 +132,8 @@ const AdminManger = () => {
           data={allManager?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           showBlockModal={showBlockModal}
+          showEditHrModal={showEditUserModal}
           showUnblockModal={showUnblockModal}
           limit={limit}
           page={page}
@@ -162,13 +145,6 @@ const AdminManger = () => {
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        />
-
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
         />
 
         <BlockModal
@@ -183,6 +159,12 @@ const AdminManger = () => {
           isUnblockModalVisible={isUnblockModalVisible}
           handleCancel={handleCancel}
           handleUnblock={handleUnblock}
+        />
+
+        <EditHrOfficerModal
+          isEditModalVisible={isEditModalVisible}
+          handleCancel={handleCancel}
+          currentRecord={currentRecord}
         />
       </div>
     </div>

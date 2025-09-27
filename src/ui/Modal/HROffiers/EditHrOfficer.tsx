@@ -16,10 +16,12 @@ const EditHrOfficerModal = ({
   isEditModalVisible,
   handleCancel,
   currentRecord,
+  skipHubId,
 }: {
   isEditModalVisible: boolean;
   handleCancel: () => void;
   currentRecord: any;
+  skipHubId?: boolean;
 }) => {
   const [form] = Form.useForm();
   const [updateUser] = useUpdateUserMutation();
@@ -88,6 +90,9 @@ const EditHrOfficerModal = ({
       >
         <div className="grid grid-cols-2 gap-x-6">
           {userField?.data?.map((field: any, index: number) => {
+            if (skipHubId && field.inputName === "hubUid") {
+              return null;
+            }
             return (
               <>
                 {field?.inputType === "file" ? (
@@ -134,7 +139,10 @@ const EditHrOfficerModal = ({
                     Typolevel={4}
                     inputType={field.inputType}
                     placeholder={field.placeholder}
-                    readOnly={field?.inputName === "email" || field?.inputName === "hubUid"}
+                    readOnly={
+                      field?.inputName === "email" ||
+                      field?.inputName === "hubUid"
+                    }
                     labelClassName="!font-normal !text-sm"
                     rules={field.rules}
                     inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
