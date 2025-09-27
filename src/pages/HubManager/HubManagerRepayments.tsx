@@ -3,19 +3,14 @@ import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOverviewCard";
 import Topbar from "../../Components/Shared/Topbar";
+import { useRepaymentCountQuery } from "../../redux/features/admin/adminRepayments/adminRepaymentsApi";
 import { useGetAllHubManagerRepaymentsQuery } from "../../redux/features/HubManager/hubManagerRepaymentsApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminRepaymentsTable from "../../ui/Tables/AdminRepaymentsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import {
-  useDeleteRepaymentsMutation,
-  useRepaymentCountQuery,
-} from "../../redux/features/admin/adminRepayments/adminRepaymentsApi";
-import Loading from "../../ui/Loading";
 
 const HubManagerRepayments = () => {
   const [page, setPage] = useState<number>(1);
@@ -24,7 +19,6 @@ const HubManagerRepayments = () => {
   const limit = 12;
   const [filtering, setFiltering] = useState<string>("30");
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -42,38 +36,15 @@ const HubManagerRepayments = () => {
 
   const { data: repaymentCount, isLoading: repaymentCountLoading } =
     useRepaymentCountQuery({});
-  const [deleteRepayments] = useDeleteRepaymentsMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
-
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
     setCurrentRecord(null);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      deleteRepayments,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
   };
 
   const cards = [
@@ -134,7 +105,6 @@ const HubManagerRepayments = () => {
           data={repaymentsData?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           deleteIconShow={false}
           limit={limit}
           page={page}
@@ -146,13 +116,6 @@ const HubManagerRepayments = () => {
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        />
-
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
         />
       </div>
     </div>
