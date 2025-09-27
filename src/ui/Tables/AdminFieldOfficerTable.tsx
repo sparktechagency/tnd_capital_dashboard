@@ -10,7 +10,7 @@ interface AdminAdminFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
+
   showSpokeModal?: (record: any | undefined) => void | undefined;
   showBlockModal?: (record: any) => void;
   showUnblockModal?: (record: any) => void;
@@ -25,7 +25,7 @@ const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
   data,
   loading,
   showViewModal,
-  showDeleteModal,
+
   showSpokeModal,
   showBlockModal,
   showUnblockModal,
@@ -105,15 +105,6 @@ const AdminFieldOfficerTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
-            </button>
-          </Tooltip>
-
-          <Tooltip placement="right" title="View Details">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showDeleteModal(record)}
-            >
-              <img src={AllIcons.deleteIcon} />
             </button>
           </Tooltip>
 

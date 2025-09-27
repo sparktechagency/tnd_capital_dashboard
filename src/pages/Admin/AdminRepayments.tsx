@@ -5,19 +5,16 @@ import AdminOverviewCard from "../../Components/Dashboard/Overview/Admin/AdminOv
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
 import {
-  useDeleteRepaymentsMutation,
   useGetAllRepaymentsQuery,
   useRepaymentCountQuery,
 } from "../../redux/features/admin/adminRepayments/adminRepaymentsApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import Loading from "../../ui/Loading";
 import ViewAdminRepaymentsModal from "../../ui/Modal/AdminRepayments/ViewAdminRepaymentsModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import AdminRepaymentsTable from "../../ui/Tables/AdminRepaymentsTable";
 import DaysSelection from "../../utils/DaysSelection";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import Loading from "../../ui/Loading";
 
 const AdminRepayments = () => {
   const [page, setPage] = useState<number>(1);
@@ -27,7 +24,6 @@ const AdminRepayments = () => {
   const [filtering, setFiltering] = useState<string>("30");
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -37,19 +33,8 @@ const AdminRepayments = () => {
     setIsViewModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
-
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
     setCurrentRecord(null);
   };
 
@@ -64,22 +49,9 @@ const AdminRepayments = () => {
 
   const repaymentsData = repayments?.data;
 
-  // delete
-  const [deleteRepayments] = useDeleteRepaymentsMutation();
   // count
   const { data: repaymentsCount, isLoading: countLoading } =
     useRepaymentCountQuery({});
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      deleteRepayments,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
-  };
 
   const cards = [
     {
@@ -145,7 +117,6 @@ const AdminRepayments = () => {
           data={repaymentsData?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -156,13 +127,6 @@ const AdminRepayments = () => {
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        />
-
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
         />
       </div>
     </div>

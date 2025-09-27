@@ -3,7 +3,6 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { FieldOfficer } from "../../Components/svg/leads";
 import {
-  useDeleteUserMutation,
   useGetUsersQuery,
   useUserActionMutation,
 } from "../../redux/features/admin/adminUsers/adminUsers";
@@ -12,7 +11,6 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminFieldOfficerModal from "../../ui/Modal/AdminFieldOfficer/ViewAdminFieldOfficerModal";
 import BlockModal from "../../ui/Modal/BlockModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminFieldOfficerTable from "../../ui/Tables/AdminFieldOfficerTable";
 import DaysSelection from "../../utils/DaysSelection";
@@ -25,39 +23,31 @@ const AdminFieldOfficers = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
   const [isUnblockModalVisible, setIsUnblockModalVisible] = useState(false);
   const { collapsed } = useAppSelector((state) => state.auth);
-const [filtering, setFiltering] = useState<string>("30");
+  const [filtering, setFiltering] = useState<string>("30");
   // api calls
   const { data, isFetching } = useGetUsersQuery({
     page,
     limit,
     searchTerm: searchText,
     role: "fieldOfficer",
-    filtering
+    filtering,
   });
 
   const fieldOfficerData = data?.data;
 
   const [userAction] = useUserActionMutation();
-  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
-
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
     setIsBlockModalVisible(false);
     setIsUnblockModalVisible(false);
     setCurrentRecord(null);
@@ -70,22 +60,6 @@ const [filtering, setFiltering] = useState<string>("30");
   const showUnblockModal = (record: any) => {
     setCurrentRecord(record);
     setIsUnblockModalVisible(true);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      deleteUser,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
   };
 
   const handleBlock = async (data: any) => {
@@ -140,14 +114,16 @@ const [filtering, setFiltering] = useState<string>("30");
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xl font-semibold">All Field Officers</p>
-          <DaysSelection currentUser={filtering} setCurrentUser={setFiltering} />
+          <DaysSelection
+            currentUser={filtering}
+            setCurrentUser={setFiltering}
+          />
         </div>
 
         <AdminFieldOfficerTable
           data={fieldOfficerData?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           showBlockModal={showBlockModal}
           showUnblockModal={showUnblockModal}
           limit={limit}
@@ -162,12 +138,6 @@ const [filtering, setFiltering] = useState<string>("30");
           currentRecord={currentRecord}
         />
 
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
-        />
         <BlockModal
           currentRecord={currentRecord}
           isBlockModalVisible={isBlockModalVisible}

@@ -3,12 +3,15 @@ import { Space, Tooltip } from "antd";
 import ReuseTable from "../../utils/ReuseTable";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import { getImageUrl } from "../../helpers/config/envConfig";
+import { MdBlock } from "react-icons/md";
 
 interface AdminClientsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
+  showDeleteModal?: (record: any) => void;
+  showBlockModal?: (record: any) => void;
+  showUnblockModal?: (record: any) => void;
   setPage?: (page: number) => void;
   deleteIconShow?: boolean; // Function to handle pagination
   page?: number;
@@ -21,8 +24,8 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
   data,
   loading,
   showViewModal,
-  showDeleteModal,
-  deleteIconShow = true,
+  showBlockModal,
+  showUnblockModal,
   setPage,
   page,
   total,
@@ -104,29 +107,40 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
     {
       title: "Action",
       key: "action",
-      render: (_: unknown, record: any) => (
-        <Space size="middle">
-          <Tooltip placement="right" title="View Details">
-            <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-              onClick={() => showViewModal(record)}
-            >
-              <img src={AllIcons.eye} />
-            </button>
-          </Tooltip>
-
-          {deleteIconShow && (
-            <Tooltip placement="right" title="Delete Clients">
+      render: (_: unknown, record: any) => {
+        return (
+          <Space size="middle">
+            <Tooltip placement="right" title="View Details">
               <button
                 className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-                onClick={() => showDeleteModal(record)}
+                onClick={() => showViewModal(record)}
               >
-                <img src={AllIcons.deleteIcon} />
+                <img src={AllIcons.eye} />
               </button>
             </Tooltip>
-          )}
-        </Space>
-      ),
+
+            {record?.client?.status === "blocked" ? (
+              <Tooltip placement="left" title="Unblock">
+                <button
+                  className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
+                  onClick={() => showUnblockModal?.(record)}
+                >
+                  <img src={AllIcons.unblock} className="" />
+                </button>
+              </Tooltip>
+            ) : (
+              <Tooltip placement="left" title="Block">
+                <button
+                  className="!p-0 !bg-transparent !border-none cursor-pointer"
+                  onClick={() => showBlockModal?.(record)}
+                >
+                  <MdBlock style={{ fontSize: "20px" }} />
+                </button>
+              </Tooltip>
+            )}
+          </Space>
+        );
+      },
       align: "center",
     },
   ];

@@ -3,7 +3,6 @@ import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
 import { HR } from "../../Components/svg/leads";
 import {
-  useDeleteUserMutation,
   useGetUsersQuery,
   useUserActionMutation,
 } from "../../redux/features/admin/adminUsers/adminUsers";
@@ -12,7 +11,6 @@ import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminHRModal from "../../ui/Modal/AdminHR/ViewAdminHRModal";
 import BlockModal from "../../ui/Modal/BlockModal";
-import DeleteModal from "../../ui/Modal/DeleteModal";
 import UnblockModal from "../../ui/Modal/UnblockModal";
 import AdminHRTable from "../../ui/Tables/AdminHRTable";
 import DaysSelection from "../../utils/DaysSelection";
@@ -25,8 +23,6 @@ const AdminHr = () => {
   const limit = 12;
 
   const [isViewModalVisible, setIsViewModalVisible] = useState<boolean>(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] =
-    useState<boolean>(false);
   const [currentRecord, setCurrentRecord] = useState<any | null>(null);
 
   const [isBlockModalVisible, setIsBlockModalVisible] = useState(false);
@@ -45,20 +41,14 @@ const AdminHr = () => {
   const hrData = data?.data;
 
   const [updateUser] = useUserActionMutation();
-  const [deleteUser] = useDeleteUserMutation();
 
   const showViewUserModal = (record: any) => {
     setCurrentRecord(record);
     setIsViewModalVisible(true);
   };
 
-  const showDeleteModal = (record: any) => {
-    setCurrentRecord(record);
-    setIsDeleteModalVisible(true);
-  };
   const handleCancel = () => {
     setIsViewModalVisible(false);
-    setIsDeleteModalVisible(false);
     setIsBlockModalVisible(false);
     setIsUnblockModalVisible(false);
     setCurrentRecord(null);
@@ -71,22 +61,6 @@ const AdminHr = () => {
   const showUnblockModal = (record: any) => {
     setCurrentRecord(record);
     setIsUnblockModalVisible(true);
-  };
-
-  const handleDeleteCancel = () => {
-    setIsDeleteModalVisible(false);
-    setCurrentRecord(null);
-  };
-
-  const handleDelete = async () => {
-    const res = await tryCatchWrapper(
-      deleteUser,
-      { params: currentRecord?._id },
-      "Deleting..."
-    );
-    if (res.statusCode === 200) {
-      handleCancel();
-    }
   };
 
   const handleBlock = async (data: any) => {
@@ -151,7 +125,6 @@ const AdminHr = () => {
           data={hrData?.result}
           loading={isFetching}
           showViewModal={showViewUserModal}
-          showDeleteModal={showDeleteModal}
           showBlockModal={showBlockModal}
           showUnblockModal={showUnblockModal}
           limit={limit}
@@ -164,13 +137,6 @@ const AdminHr = () => {
           isViewModalVisible={isViewModalVisible}
           handleCancel={handleCancel}
           currentRecord={currentRecord}
-        />
-
-        <DeleteModal
-          currentRecord={currentRecord}
-          isDeleteModalVisible={isDeleteModalVisible}
-          handleCancel={handleDeleteCancel}
-          handleDelete={handleDelete}
         />
 
         <BlockModal

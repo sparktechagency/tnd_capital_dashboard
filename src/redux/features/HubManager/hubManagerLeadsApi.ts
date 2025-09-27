@@ -56,7 +56,7 @@ const hubManagerLeadsApi = baseApi.injectEndpoints({
                 method: "PATCH",
                 body: req.body,
             }),
-            invalidatesTags: [tagTypes.hubManagerLeads, tagTypes.fieldOfficerLeads],
+            invalidatesTags: [tagTypes.hubManagerLeads, tagTypes.fieldOfficerLeads, tagTypes.adminLeads],
         }),
     }),
 });

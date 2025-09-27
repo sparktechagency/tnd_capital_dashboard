@@ -10,7 +10,6 @@ interface AdminRepaymentsTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
   deleteIconShow?: boolean;
   setPage?: (page: number) => void; // Function to handle pagination
   page?: number;
@@ -22,8 +21,6 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
   data,
   loading,
   showViewModal,
-  showDeleteModal,
-  deleteIconShow = true,
   setPage,
   page,
   total,
@@ -120,17 +117,6 @@ const AdminRepaymentsTable: React.FC<AdminRepaymentsTableProps> = ({
               <img src={AllIcons.eye} />
             </button>
           </Tooltip>
-
-          {deleteIconShow && (
-            <Tooltip placement="right" title="Delete Repayments">
-              <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-                onClick={() => showDeleteModal(record)}
-              >
-                <img src={AllIcons.deleteIcon} />
-              </button>
-            </Tooltip>
-          )}
         </Space>
       ),
       align: "center",

@@ -10,7 +10,6 @@ interface AdminAdminHRTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
   loading: boolean;
   showViewModal: (record: any) => void; // Function to handle viewing a user
-  showDeleteModal: (record: any) => void;
   showBlockModal: (record: any) => void;
   showUnblockModal: (record: any) => void;
   setPage?: (page: number) => void; // Function to handle pagination
@@ -23,7 +22,6 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
   data,
   loading,
   showViewModal,
-  showDeleteModal,
   showBlockModal,
   showUnblockModal,
   setPage,
@@ -98,15 +96,6 @@ const AdminHRTable: React.FC<AdminAdminHRTableProps> = ({
                 onClick={() => showViewModal(record)}
               >
                 <img src={AllIcons.eye} />
-              </button>
-            </Tooltip>
-
-            <Tooltip placement="right" title="Delete HR">
-              <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
-                onClick={() => showDeleteModal(record)}
-              >
-                <img src={AllIcons.deleteIcon} />
               </button>
             </Tooltip>
 
