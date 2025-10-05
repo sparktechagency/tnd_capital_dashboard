@@ -90,7 +90,7 @@ const SpokeManagerOverview = () => {
     {
       id: 4,
       background: "#FFFFFF",
-      name: "Todays Clients",
+      name: "Total Clients",
       icon: (
         <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
           <img src={AllIcons.clients} className="size-7" alt="icon" />

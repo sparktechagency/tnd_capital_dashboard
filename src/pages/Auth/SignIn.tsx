@@ -14,11 +14,11 @@ import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const inputStructure = [
   {
-    name: "email",
-    inputType: "email",
-    placeholder: "Email",
+    name: "uid",
+    inputType: "text",
+    placeholder: "ID",
     labelClassName: "!font-bold",
-    rules: [{ required: true, message: "Email is required" }],
+    rules: [{ required: true, message: "Uid is required" }],
   },
   {
     name: "password",
