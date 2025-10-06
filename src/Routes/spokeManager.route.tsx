@@ -1,22 +1,22 @@
 //* ------------------ICONS------------------
+import clients from "../../public/images/Dashboard-icons/clients.svg";
 import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
-import settings from "../../public/images/Dashboard-icons/setting.svg";
 import fieldOfficer from "../../public/images/Dashboard-icons/fieled_officer.svg";
 import leads from "../../public/images/Dashboard-icons/leads.svg";
-import clients from "../../public/images/Dashboard-icons/clients.svg";
 import repayments from "../../public/images/Dashboard-icons/repayments.svg";
+import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
+import EditProfile from "../Components/Dashboard/Profile/EditProfile";
+import Notification from "../pages/Auth/Notification";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
+import HubManagerClients from "../pages/HubManager/HubManagerClients";
+import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
+import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
 import SpokeManagerFieldOfficerInfo from "../pages/SpokeManager/SpokeManagerFieldOfficerInfo";
 import SpokeManagerOverview from "../pages/SpokeManager/SpokeManagerOverview";
-import EditProfile from "../Components/Dashboard/Profile/EditProfile";
-import Notification from "../pages/Auth/Notification";
-import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
-import HubManagerClients from "../pages/HubManager/HubManagerClients";
-import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
 
 export const spokeManagerPath = [
   {
@@ -77,6 +77,7 @@ export const spokeManagerPath = [
     element: <PrivacyPolicy />,
     key: "settings",
   },
+
   {
     path: "notification",
     element: <Notification />,

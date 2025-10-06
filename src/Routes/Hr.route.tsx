@@ -1,8 +1,8 @@
 //* ------------------ICONS------------------
 import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
 import fieldOfficer from "../../public/images/Dashboard-icons/fieled_officer.svg";
-import settings from "../../public/images/Dashboard-icons/setting.svg";
 import managerIcon from "../../public/images/Dashboard-icons/manager.svg";
+import settings from "../../public/images/Dashboard-icons/setting.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
@@ -13,11 +13,11 @@ import HRAddOfficer from "../pages/HR/HRAddOfficer";
 import HREditOfficer from "../pages/HR/HREditOfficer";
 import HROfficers from "../pages/HR/HROfficers";
 
-import HRManagers from "../pages/HR/HRManagers";
-import HROverview from "../pages/HR/HROverview";
+import Notification from "../pages/Auth/Notification";
 import HRAddManager from "../pages/HR/HRAddManager";
 import HREditManager from "../pages/HR/HREditManager";
-import Notification from "../pages/Auth/Notification";
+import HRManagers from "../pages/HR/HRManagers";
+import HROverview from "../pages/HR/HROverview";
 
 export const HrPaths = [
   {
@@ -85,7 +85,7 @@ export const HrPaths = [
     element: <PrivacyPolicy />,
     key: "settings",
   },
-    {
+  {
     path: "notification",
     element: <Notification />,
     key: "notification",

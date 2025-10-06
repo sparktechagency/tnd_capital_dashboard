@@ -104,6 +104,9 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-location")) {
     return ["location"];
   }
+  if (normalizedPath.includes("/two-factor-authentication")) {
+    return ["settings"];
+  }
 
   return [normalizedPath.split("/").pop() || ""]; // Default fallback, ensuring a non-null value is returned
 };

@@ -34,7 +34,8 @@ const DashboardLayout = () => {
   const handleLogout = () => {
     dispatch(changeRole(null));
     Cookies.remove("crm_accessToken");
-    window.location.href = "/sign-in";
+    Cookies.remove("twoFactorToken");
+    window.location.href = "/";
     window.location.reload();
   };
 

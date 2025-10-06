@@ -11,10 +11,15 @@ function ProtectedRoute({ children, role }: ProtectedRouteProps) {
   // const user = useUserData();
   const user = useAppSelector((state) => state.role);
   const token = Cookies.get("crm_accessToken");
-  console.log(user, "token");
-  // const modifyRole = role === "admin" ? "supperAdmin" : role;
+  const twoFactorToken = Cookies.get("twoFactorToken");
 
-  if (!token || !user || user.role !== role) {
+  console.log(twoFactorToken, "twoFactorToken");
+
+  // const modifyRole = role === "admin" ? "supperAdmin" : role;
+  if (!twoFactorToken) {
+    return <Navigate to="/two-fa" replace />;
+  }
+  if (twoFactorToken && (!token || !user || user.role !== role)) {
     return <Navigate to="/sign-in" replace />;
   }
 

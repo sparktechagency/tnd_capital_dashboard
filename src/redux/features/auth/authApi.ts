@@ -109,10 +109,32 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.auth],
     }),
 
+    twoFaRegistration: build.mutation({
+      query: (req) => {
+        return {
+          url: `${auth_url}/two_factor_register`,
+          method: "POST",
+          body: req.body,
+        };
+      },
+      invalidatesTags: [tagTypes.auth],
+    }),
+    
+    twoFaLogin : build.mutation({
+      query: (req) => {
+        return {
+          url: `${auth_url}/two_factor_login`,
+          method: "POST",
+          body: req.body,
+        };
+      },
+      invalidatesTags: [tagTypes.auth],
+    }),
+
   }),
 });
 
-export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation, useGetProfileQuery, useUpdateProfileMutation, useGetAllNotificationQuery, useChangePasswordMutation } =
+export const { useLoginMutation, useOtpVerifyMutation, useResendOTPMutation, useForgotPasswordMutation, useUpdatePasswordMutation, useGetProfileQuery, useUpdateProfileMutation, useGetAllNotificationQuery, useChangePasswordMutation , useTwoFaRegistrationMutation, useTwoFaLoginMutation} =
   authApi;
 
 export default authApi;

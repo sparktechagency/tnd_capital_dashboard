@@ -1,14 +1,15 @@
 //* ------------------ICONS------------------
+import application from "../../public/images/Dashboard-icons/application.svg";
+import clients from "../../public/images/Dashboard-icons/clients.svg";
 import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
 import dotIcon from "../../public/images/Dashboard-icons/dot.svg";
 import fieldOfficer from "../../public/images/Dashboard-icons/fieled_officer.svg";
 import leadsIcon from "../../public/images/Dashboard-icons/leads.svg";
 import settings from "../../public/images/Dashboard-icons/setting.svg";
-import application from "../../public/images/Dashboard-icons/application.svg";
-import clients from "../../public/images/Dashboard-icons/clients.svg";
 
 //* ------------------IMPORT COMPONENTS------------------
 import EditProfile from "../Components/Dashboard/Profile/EditProfile";
+import Notification from "../pages/Auth/Notification";
 import PrivacyPolicy from "../pages/Common/settings/PrivacyPolicy";
 import Profile from "../pages/Common/settings/Profile";
 import Settings from "../pages/Common/settings/Settings";
@@ -22,7 +23,6 @@ import HubManagerLeads from "../pages/HubManager/HubManagerLeads";
 import HubManagerOverview from "../pages/HubManager/HubManagerOverview";
 import HubManagerRepayments from "../pages/HubManager/HubManagerRepayments";
 import HubManagerSpokeMangers from "../pages/HubManager/HubManagerSpokeMangers";
-import Notification from "../pages/Auth/Notification";
 
 export const hubManagerPath = [
   {
@@ -134,7 +134,8 @@ export const hubManagerPath = [
     element: <PrivacyPolicy />,
     key: "settings",
   },
-    {
+
+  {
     path: "notification",
     element: <Notification />,
     key: "notification",
