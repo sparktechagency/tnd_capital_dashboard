@@ -16,7 +16,8 @@ const AdminOverviewCard = ({
   return (
     <div
       className={cn(
-        "flex flex-col lg:flex-row  gap-1 lg:gap-x-10 mb-5",
+        // "flex flex-col lg:flex-row gap-1 lg:gap-x-10 mb-5",
+        "grid grid-cols-4 gap-6 mb-5", 
         className
       )}
     >

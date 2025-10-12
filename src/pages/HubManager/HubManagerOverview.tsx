@@ -64,6 +64,40 @@ const HubManagerOverview = () => {
       count: counts?.data?.totalApplication,
     },
     {
+      id: 20,
+      background: "#FFFFFF",
+      name: "Pending Application",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.application} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.pendingApplication,
+    },
+    {
+      id: 10,
+      background: "#FFFFFF",
+      name: "Approved Application",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.application} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.approvedApplication,
+    },
+    {
+      id: 11,
+      background: "#FFFFFF",
+      name: "Rejected Application",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.application} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.rejectedApplication,
+    },
+
+    {
       id: 3,
       background: "#FFFFFF",
       name: "Overdue",
@@ -75,7 +109,7 @@ const HubManagerOverview = () => {
       count: counts?.data?.totalOverdue,
     },
     {
-      id: 3,
+      id: 18,
       background: "#FFFFFF",
       name: "Total Clients",
       icon: (
@@ -84,6 +118,17 @@ const HubManagerOverview = () => {
         </div>
       ),
       count: counts?.data?.totalClients,
+    },
+    {
+      id: 34,
+      background: "#FFFFFF",
+      name: "Total Leads",
+      icon: (
+        <div className="size-[64px] flex items-center justify-center rounded-full bg-[#DDE0FF]">
+          <img src={AllIcons.clients} className="size-7" alt="icon" />
+        </div>
+      ),
+      count: counts?.data?.totalLeads,
     },
   ];
 
