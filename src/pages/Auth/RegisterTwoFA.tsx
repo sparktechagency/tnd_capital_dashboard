@@ -50,7 +50,7 @@ const RegisterTwoFa = () => {
   return (
     <div className="!bg-blue-800">
       <Container>
-        <div className="min-h-screen flex flex-col justify-center items-center w-[440px] mx-auto px-10">
+        <div className="min-h-screen flex flex-col justify-center items-center lg:w-[440px] mx-auto lg:px-10 px-5">
           <div className="w-full sm:w-[70%] lg:w-full mx-auto">
             <ReusableForm
               form={form}
