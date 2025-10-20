@@ -53,7 +53,7 @@ const ReuseButton = ({
     <Link to={url}>
       <Button
         className={cn(
-          "!py-5 !px-8 !text-lg w-full !h-12 text-center !ring-0 rounded-md",
+          "!py-5 !px-8 lg:!text-lg w-full !h-12 text-center !ring-0 rounded-md text-base",
           variantStyles[variant],
           className
         )}

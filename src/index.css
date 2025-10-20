@@ -4,49 +4,49 @@
 @import "tailwindcss";
 
 @layer components {
-  .text-gradient-color {
-    @apply bg-gradient-to-b from-[#30599D] to-[#273D62] inline-block text-transparent bg-clip-text;
-  }
+    .text-gradient-color {
+        @apply bg-gradient-to-b from-[#30599D] to-[#273D62] inline-block text-transparent bg-clip-text;
+    }
 
-  .bg-gradient-color {
-    @apply bg-gradient-to-tl from-[#17223A] to-[#30599D];
-  }
+    .bg-gradient-color {
+        @apply bg-gradient-to-tl from-[#17223A] to-[#30599D];
+    }
 }
 
 .wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
 }
 
 @theme default {
-  --color-primary-color: #ffffff;
-  --color-background-color: #efefef;
-  --color-secondary-color: #28314e;
-  --color-base-color: #262621;
-  --color-anchor-color: #28314e;
-  --color-highlight-color: #fadacd;
-  --color-lighter-color: #797979;
-  --color-input-color: #0a0a0a;
-  --color-error-color: #e53935;
-  --color-success-color: #11c186;
-  --color-warning-color: #facc15;
+    --color-primary-color: #ffffff;
+    --color-background-color: #efefef;
+    --color-secondary-color: #28314e;
+    --color-base-color: #262621;
+    --color-anchor-color: #28314e;
+    --color-highlight-color: #fadacd;
+    --color-lighter-color: #797979;
+    --color-input-color: #0a0a0a;
+    --color-error-color: #e53935;
+    --color-success-color: #11c186;
+    --color-warning-color: #facc15;
 }
 
 html,
 body {
-  background-color: #ffffff;
-  color: #0a0a0a;
-  scroll-behavior: smooth;
+    background-color: #ffffff;
+    color: #0a0a0a;
+    scroll-behavior: smooth;
 }
 
 th {
-  border: 1px solid #28314e !important;
-  font-weight: bold;
-  text-wrap: nowrap;
+    border: 1px solid #28314e !important;
+    font-weight: bold;
+    text-wrap: nowrap;
 }
 
 /* .font-special {
@@ -54,58 +54,58 @@ th {
 } */
 
 ::-webkit-scrollbar {
-  width: 7px;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ffff;
-  margin-left: 2px;
-  margin-right: 2px;
-  border-radius: 50px;
+    background: #ffff;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 50px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .swiper-pagination-bullet {
-  width: 15px !important;
-  height: 15px !important;
-  background-color: #28314e !important;
+    width: 15px !important;
+    height: 15px !important;
+    background-color: #28314e !important;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .ant-menu-item .ant-menu-title-content {
-  /* font-weight: 600 !important; */
-  color: #0C2752 !important;
+    /* font-weight: 600 !important; */
+    color: #0C2752 !important;
 
 }
 
 .ant-menu-item {
-  border: 1px solid rgba(0, 0, 0, 0.18) !important;
-  padding: 20px 10px !important;
-  margin: 8px 0px !important;
+    border: 1px solid rgba(0, 0, 0, 0.18) !important;
+    padding: 20px 10px !important;
+    margin: 8px 0px !important;
 }
 
 .ant-menu-submenu-title {
-  border: 1px solid rgba(0, 0, 0, 0.18) !important;
-  padding: 20px 10px !important;
-  margin: 10px 0px !important;
+    border: 1px solid rgba(0, 0, 0, 0.18) !important;
+    padding: 20px 10px !important;
+    margin: 10px 0px !important;
 }
 
 .ant-menu-submenu .ant-menu-item {
-  border: 0px solid rgba(0, 0, 0, 0.18) !important;
+    border: 0px solid rgba(0, 0, 0, 0.18) !important;
 
 }
 
 .ant-menu-sub .ant-menu-title-content {
-  /* font-weight: 600 !important; */
-  color: #0C275255 !important;
+    /* font-weight: 600 !important; */
+    color: #0C275255 !important;
 }
 
 /* .ant-menu-submenu-open .ant-menu-submenu-title {
@@ -116,32 +116,32 @@ input[type="number"]::-webkit-outer-spin-button {
 
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-inline.ant-menu-root .ant-menu-item,
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
-  /* font-weight: 600; */
+    /* font-weight: 600; */
 }
 
 
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
 :where(.css-dev-only-do-not-override-8ilgf0).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
-  background-color: #28314e !important;
-  color: #fff !important;
-  /* font-weight: 500; */
+    background-color: #28314e !important;
+    color: #fff !important;
+    /* font-weight: 500; */
 }
 
 .ant-menu-submenu-title .sub {
-  /* font-weight: 600 !important; */
+    /* font-weight: 600 !important; */
 }
 
 .ant-menu-item .active {
-  color: #fff !important;
+    color: #fff !important;
 }
 
 .ant-menu-sub .ant-menu-item .active {
-  color: #000 !important;
+    color: #000 !important;
 }
 
 
 .ant-menu-submenu-selected .ant-menu-item-selected {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
 
 /* .ant-menu-submenu-selected .ant-menu-item-selected a {
@@ -149,39 +149,51 @@ input[type="number"]::-webkit-outer-spin-button {
 } */
 
 .ant-menu-submenu-selected .ant-menu-item-selected .ant-menu-item-icon {
-  color: #f9dd4000 !important;
+    color: #f9dd4000 !important;
 }
 
 /** Table:  Sorter Icon Color Change  */
 .ant-table-filter-trigger {
-  color: #fdf4f3 !important;
+    color: #fdf4f3 !important;
 }
 
 .ant-table-filter-column .active {
-  color: #0a0a0a !important;
+    color: #0a0a0a !important;
 }
 
 .ant-table-column-sorter-up.active {
-  color: #f9dd40 !important;
+    color: #f9dd40 !important;
 }
 
 .ant-table-column-sorter-down.active {
-  color: #f9dd40 !important;
+    color: #f9dd40 !important;
 }
 
 .ant-collapse-header {
-  display: flex !important;
-  align-items: center !important;
-  background-color: #28314e !important;
-  color: #fdf4f3 !important;
-  margin-bottom: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    background-color: #28314e !important;
+    color: #fdf4f3 !important;
+    margin-bottom: 20px !important;
 }
 
 .ant-select .ant-select-selector {
-  border: none !important;
+    border: none !important;
 }
 
 
 .ant-menu-submenu-selected .ant-menu-submenu-title {
-  background-color: #0C2752 !important;
+    background-color: #0C2752 !important;
+}
+
+
+/* Apply only on tablet screens */
+@media (min-width: 768px) and (max-width: 1024px) {
+    td.ant-table-cell {
+        font-size: 12px !important;
+    }
+
+    .ant-table-thead {
+        font-size: 12px !important;
+    }
 }

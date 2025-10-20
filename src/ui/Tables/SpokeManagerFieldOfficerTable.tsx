@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
-import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import ReuseTable from "../../utils/ReuseTable";
-import { getImageUrl } from "../../helpers/config/envConfig";
 import dayjs from "dayjs";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import ReuseTable from "../../utils/ReuseTable";
 
 interface SpokeManagerFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -86,7 +86,7 @@ const SpokeManagerFieldOfficerTable: React.FC<
         <Space size="middle">
           <Tooltip placement="right" title="View Details">
             <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import ReuseTable from "../../utils/ReuseTable";
 import { getImageUrl } from "../../helpers/config/envConfig";
+import ReuseTable from "../../utils/ReuseTable";
 
 interface AdminAdminFieldOfficerTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -104,7 +104,7 @@ const HubManagerFieldOfficerTable: React.FC<
         <Space size="middle">
           <Tooltip placement="right" title="View Details">
             <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
@@ -114,7 +114,7 @@ const HubManagerFieldOfficerTable: React.FC<
           {deleteIconShow && (
             <Tooltip placement="right" title="View Details">
               <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showDeleteModal(record)}
               >
                 <img src={AllIcons.deleteIcon} />
@@ -125,7 +125,7 @@ const HubManagerFieldOfficerTable: React.FC<
           {isPlusButtonShow && (
             <Tooltip placement="right" title="View Details">
               <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showSpokeModal?.(record)}
               >
                 <img src={AllIcons.roundedPlus} />
@@ -135,7 +135,7 @@ const HubManagerFieldOfficerTable: React.FC<
           {isPenIconShow && (
             <Tooltip placement="right" title="View Details">
               <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showEditUserModal?.(record)}
               >
                 <img src={AllIcons.pen} />

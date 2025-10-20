@@ -26,8 +26,6 @@ const DashboardLayout = () => {
   const userRole = useAppSelector((state) => state.role);
   const { collapsed } = useAppSelector((state) => state.auth);
 
-  console.log(userRole);
-
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const rootSubmenuKeys = ["applications"];
 
@@ -53,8 +51,6 @@ const DashboardLayout = () => {
   const defaultUrl = userRole?.role === "admin" ? "/admin" : "/";
   const normalizedPath = location.pathname.replace(defaultUrl, "");
 
-  // const [collapsed, setCollapsed] = useState(false);
-  // const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -78,10 +74,6 @@ const DashboardLayout = () => {
 
   const activeKeys = getActiveKeys(normalizedPath);
   let menuItems: any = [];
-  // =
-  // userRole?.role === "admin"
-  //   ? sidebarItemsGenerator(adminPaths, "admin")
-  //   : sidebarItemsGenerator(schoolAdminPaths, userRole?.role as string);
 
   console.log(userRole?.role, "role");
   if (userRole?.role === "admin") {

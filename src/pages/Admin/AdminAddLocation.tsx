@@ -106,9 +106,9 @@ const AdminAddLocation = () => {
         <ReusableForm
           form={form}
           handleFinish={onFinish}
-          className="!px-32 !mt-10"
+          className="lg:!px-32 !mt-10"
         >
-          <div className="grid grid-cols-2 gap-x-52">
+          <div className="grid grid-cols-2 lg:gap-x-52 gap-x-10">
             {inputStructure.map((input, index) => (
               <ReuseInput
                 key={index}
@@ -124,7 +124,7 @@ const AdminAddLocation = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
+          <div className="grid grid-cols-2 gap-x-20 lg:px-28 mt-20">
             <ReuseButton
               variant="outline"
               onClick={() => navigation(-1)}

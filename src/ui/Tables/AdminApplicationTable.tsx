@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 // import { MdBlock } from "react-icons/md";
-import { AllIcons, AllImages } from "../../../public/images/AllImages";
-import ReuseTable from "../../utils/ReuseTable";
-import { getImageUrl } from "../../helpers/config/envConfig";
-import { useLocation } from "react-router-dom";
 import { FcApproval } from "react-icons/fc";
+import { useLocation } from "react-router-dom";
+import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import ReuseTable from "../../utils/ReuseTable";
 
 interface AdminApplicationTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -47,8 +47,6 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
       dataIndex: "fullName",
       key: "fullName",
       render: (_text: any, record: any) => {
-        console.log(record, "record");
-
         return (
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <img
@@ -123,7 +121,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
         <Space size="middle">
           <Tooltip placement="right" title="View Details">
             <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
@@ -133,7 +131,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
           {editModalShow && (
             <Tooltip placement="right" title="Edit">
               <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showEditUserModal?.(record)}
               >
                 <img src={AllIcons.pen} />
@@ -151,7 +149,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                       {/* Approve Button */}
                       <Tooltip placement="right" title="Approve Application">
                         <button
-                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                           onClick={() => showApprovedModal?.(record)}
                         >
                           <FcApproval className="text-2xl" />
@@ -161,7 +159,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                       {/* Reject Button */}
                       <Tooltip placement="right" title="Reject Application">
                         <button
-                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                           onClick={() => showRejectedModal?.(record)}
                         >
                           <img className="size-5" src={AllIcons.reject} />
@@ -174,7 +172,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                       {/* Only Reject Button */}
                       <Tooltip placement="right" title="Approve Application">
                         <button
-                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                           onClick={() => showApprovedModal?.(record)}
                         >
                           <FcApproval className="text-2xl" />
@@ -186,7 +184,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                       {/* Default: Only Reject Button */}
                       <Tooltip placement="right" title="Reject Application">
                         <button
-                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                          className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                           onClick={() => showRejectedModal?.(record)}
                         >
                           <img className="size-5" src={AllIcons.reject} />
@@ -200,7 +198,7 @@ const AdminApplicationTable: React.FC<AdminApplicationTableProps> = ({
                   {/* If not supervisor, default Reject */}
                   <Tooltip placement="right" title="Reject Application">
                     <button
-                      className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                      className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
                       onClick={() => showRejectedModal?.(record)}
                     >
                       <img className="size-5" src={AllIcons.reject} />

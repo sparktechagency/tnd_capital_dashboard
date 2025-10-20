@@ -141,7 +141,7 @@ const AdminOverview = () => {
         <div className="mt-6">
           <AdminOverviewCard cards={cards} className="" />
         </div>
-        <div className="flex items-center justify-between gap-x-8">
+        <div className="flex items-center justify-between lg:flex-row flex-col gap-x-8">
           <div className="shadow-lg w-full border border-[#ddd] rounded-xl p-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Collection Report</p>
@@ -153,7 +153,7 @@ const AdminOverview = () => {
             </div>
             <Area_Chart chartData={collectionChart?.data} />
           </div>
-          <div className="shadow-lg w-[700px] border border-[#ddd] rounded-xl p-4">
+          <div className="shadow-lg lg:w-[700px] w-full border border-[#ddd] rounded-xl p-4 lg:mt-0 mt-4">
             <div className="flex items-center justify-between py-4">
               <p className="text-xl font-medium">Loan Approval</p>
               <YearOption

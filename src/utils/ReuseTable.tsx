@@ -36,6 +36,7 @@ const ReuseTable: React.FC<ReuseTableProps<any>> = ({
       columns={columns}
       dataSource={data}
       onChange={onChange}
+      className="text-base md:text-sm lg:text-base"
       pagination={
         total > 0
           ? {

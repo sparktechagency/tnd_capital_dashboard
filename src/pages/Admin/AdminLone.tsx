@@ -75,7 +75,7 @@ const AdminLone = () => {
       </Topbar>
 
       <div className="mt-10 ">
-        <div className="grid grid-cols-3 gap-x-10 gap-y-5 ">
+        <div className="grid lg:grid-cols-3 grid-cols-2 gap-x-10 gap-y-5 ">
           {loans?.data?.map((data: any, index: number) => {
             return (
               <div

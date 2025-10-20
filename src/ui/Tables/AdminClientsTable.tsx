@@ -112,7 +112,7 @@ const AdminClientsTable: React.FC<AdminClientsTableProps> = ({
           <Space size="middle">
             <Tooltip placement="right" title="View Details">
               <button
-                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer lg:w-full w-[30px]"
                 onClick={() => showViewModal(record)}
               >
                 <img src={AllIcons.eye} />

@@ -95,7 +95,7 @@ const AdminLeads = () => {
   return (
     <div>
       <Topbar collapsed={collapsed}>
-        <div className="flex items-center  gap-x-10 py-5">
+        <div className="flex items-center lg:gap-x-10 gap-x-4 py-5">
           <ReuseSearchInput
             placeholder="Search"
             setSearch={setSearchText}
@@ -105,7 +105,7 @@ const AdminLeads = () => {
             children="Lead Information "
             url="/admin/leads/lead-information"
             icon={LeadsIcon()}
-            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
+            className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12 lg:text-base !text-base"
           />
         </div>
       </Topbar>

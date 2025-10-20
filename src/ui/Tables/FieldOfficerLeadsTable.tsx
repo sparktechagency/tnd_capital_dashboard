@@ -86,7 +86,7 @@ const FieldOfficerLeadsTable: React.FC<AdminFieldOfficerLeadsTableProps> = ({
         <Space size="middle">
           <Tooltip placement="right" title="View Details">
             <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
@@ -96,7 +96,7 @@ const FieldOfficerLeadsTable: React.FC<AdminFieldOfficerLeadsTableProps> = ({
           {record?.status === "blocked" ? (
             <Tooltip placement="left" title="Unblock">
               <button
-                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showUnblockModal?.(record)}
               >
                 <img src={AllIcons.unblock} className="" />
@@ -105,7 +105,7 @@ const FieldOfficerLeadsTable: React.FC<AdminFieldOfficerLeadsTableProps> = ({
           ) : (
             <Tooltip placement="left" title="Block">
               <button
-                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                className="!p-0 !bg-transparent !border-none cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showBlockModal?.(record)}
               >
                 <MdBlock style={{ fontSize: "20px" }} />
@@ -117,7 +117,7 @@ const FieldOfficerLeadsTable: React.FC<AdminFieldOfficerLeadsTableProps> = ({
             // <Link to={`edit-new-leads/${record.key}`}>
             <Tooltip placement="left" title="Edit">
               <button
-                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                className="!p-0 !bg-transparent !border-none cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showEditModal(record)}
               >
                 <img src={AllIcons.pen} />

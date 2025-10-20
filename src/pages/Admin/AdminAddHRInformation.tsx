@@ -103,9 +103,9 @@ const AdminAddHrInformation = () => {
         <ReusableForm
           form={form}
           handleFinish={onFinish}
-          className="!px-32 !mt-10"
+          className="px:!px-32 !mt-10"
         >
-          <div className="grid grid-cols-2 gap-x-52">
+          <div className="grid grid-cols-2 lg:gap-x-52 gap-x-10">
             {userField?.data?.map((field: any, index: number) => {
               // Check if the field is 'hubUid' and the current path is 'hr'
               if (field.inputName === "hubUid" && currentPath === "hr") {
@@ -139,7 +139,7 @@ const AdminAddHrInformation = () => {
                           }}
                           className=""
                         >
-                          <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                          <div className="md:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
                             <p className="text-3xl mb-2">
                               <img src={AllIcons.upload} alt="" />
                             </p>

@@ -60,9 +60,9 @@ const AdminOfficerInformation = () => {
         <ReusableForm
           form={form}
           handleFinish={onFinish}
-          className="!px-32 !mt-10"
+          className="lg:!px-32 !mt-10"
         >
-          <div className="grid grid-cols-2 gap-x-52">
+          <div className="grid grid-cols-2 lg:gap-x-52 gap-x-10">
             {userField?.data?.map((field: any, index: number) => {
               return (
                 <>
@@ -90,7 +90,7 @@ const AdminOfficerInformation = () => {
                         }}
                         className=""
                       >
-                        <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                        <div className="md:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
                           <p className="text-3xl mb-2">
                             <img src={AllIcons.upload} alt="" />
                           </p>
@@ -118,7 +118,7 @@ const AdminOfficerInformation = () => {
             })}
           </div>
 
-          <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
+          <div className="grid grid-cols-2 gap-x-20 lg:px-28 mt-20">
             <ReuseButton
               variant="outline"
               onClick={() => navigation(-1)}

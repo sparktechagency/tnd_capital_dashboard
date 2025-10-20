@@ -78,7 +78,7 @@ const EditSupervisorInformation = () => {
         <ReusableForm
           form={form}
           handleFinish={onFinish}
-          className="!px-32 !mt-10"
+          className="px:!px-32 !mt-10"
         >
           <div className="grid grid-cols-2 gap-x-10 gap-y-5">
             {userField?.data?.map((input: any, index: number) => {
@@ -137,7 +137,7 @@ const EditSupervisorInformation = () => {
             })}
           </div>
 
-          <div className="grid grid-cols-2 gap-x-20 px-28 mt-20">
+          <div className="grid grid-cols-2 gap-x-20 lg:px-28 mt-20">
             <ReuseButton
               variant="outline"
               onClick={() => navigation(-1)}

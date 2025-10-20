@@ -84,7 +84,7 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
         <Space size="middle">
           <Tooltip placement="right" title="View Details">
             <button
-              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer"
+              className="!p-0 !bg-transparent !border-none !text-secondary-color cursor-pointer  lg:w-full w-[30px]"
               onClick={() => showViewModal(record)}
             >
               <img src={AllIcons.eye} />
@@ -94,7 +94,7 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
           {record?.status === "blocked" ? (
             <Tooltip placement="left" title="Unblock">
               <button
-                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer"
+                className="!p-0 !bg-transparent !border-none !text-base-color cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showUnblockModal?.(record)}
               >
                 <img src={AllIcons.unblock} className="" />
@@ -103,7 +103,7 @@ const LeadsTable: React.FC<AdminLeadsTableProps> = ({
           ) : (
             <Tooltip placement="left" title="Block">
               <button
-                className="!p-0 !bg-transparent !border-none cursor-pointer"
+                className="!p-0 !bg-transparent !border-none cursor-pointer  lg:w-full w-[30px]"
                 onClick={() => showBlockModal?.(record)}
               >
                 <MdBlock style={{ fontSize: "20px" }} />
