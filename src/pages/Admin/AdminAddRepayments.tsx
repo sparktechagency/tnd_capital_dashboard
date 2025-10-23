@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
 import { EditIcon, PlusIcon } from "../../Components/svg/leads";
@@ -9,9 +10,9 @@ import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
-import AdminRepaymentsFeaturesModal from "../../ui/Modal/AdminRepayments/AdminRepaymentsFeaturesModal";
-import { useNavigate } from "react-router-dom";
 import Loading from "../../ui/Loading";
+import AdminRepaymentsFeaturesModal from "../../ui/Modal/AdminRepayments/AdminRepaymentsFeaturesModal";
+import { applyValidationToFields } from "../../utils/fieldValidation";
 
 const AdminAddRepayments = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -68,59 +69,63 @@ const AdminAddRepayments = () => {
           className="lg:!px-32 !mt-10"
         >
           <div className="grid grid-cols-2 lg:gap-x-52 gap-x-10">
-            {repaymentsField?.data?.map((field: any, index: number) => {
-              return (
-                <>
-                  {field?.inputType === "file" ? (
-                    <Form.Item
-                      name={field.inputName}
-                      className="mb-8 w-full"
-                      key={index}
-                    >
-                      <label
-                        htmlFor={field.inputName}
-                        className="block text-sm font-medium mb-3"
+            {applyValidationToFields(repaymentsField?.data || []).map(
+              (field: any, index: number) => {
+                return (
+                  <>
+                    {field?.inputType === "file" ? (
+                      <Form.Item
+                        name={field.inputName}
+                        className="mb-8 w-full"
+                        key={index}
                       >
-                        {field.label}
-                      </label>
-                      <Upload
-                        maxCount={1}
-                        listType="text"
-                        accept="file/*"
-                        multiple={false}
-                        customRequest={(options) => {
-                          setTimeout(() => {
-                            options.onSuccess?.("ok");
-                          }, 1000);
-                        }}
-                        className=""
-                      >
-                        <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
-                          <p className="text-3xl mb-2">
-                            <img src={AllIcons.upload} alt="" />
-                          </p>
-                          <p className="text-black font-medium">
-                            {field.placeholder}
-                          </p>
-                        </div>
-                      </Upload>
-                    </Form.Item>
-                  ) : (
-                    <ReuseInput
-                      key={index}
-                      name={field.inputName}
-                      label={field.label}
-                      Typolevel={4}
-                      inputType={field.inputType}
-                      placeholder={field.placeholder}
-                      labelClassName="!font-normal !text-sm"
-                      rules={field.rules}
-                      inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
-                    />
-                  )}
-                </>
-              );
-            })}
+                        <label
+                          htmlFor={field.inputName}
+                          className="block text-sm font-medium mb-3"
+                        >
+                          {field.label}
+                        </label>
+                        <Upload
+                          maxCount={1}
+                          listType="text"
+                          accept="file/*"
+                          multiple={false}
+                          customRequest={(options) => {
+                            setTimeout(() => {
+                              options.onSuccess?.("ok");
+                            }, 1000);
+                          }}
+                          className=""
+                        >
+                          <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                            <p className="text-3xl mb-2">
+                              <img src={AllIcons.upload} alt="" />
+                            </p>
+                            <p className="text-black font-medium">
+                              {field.placeholder}
+                            </p>
+                          </div>
+                        </Upload>
+                      </Form.Item>
+                    ) : (
+                      <ReuseInput
+                        key={index}
+                        name={field.inputName}
+                        label={field.label}
+                        Typolevel={4}
+                        inputType={field.inputType}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        labelClassName="!font-normal !text-sm"
+                        rules={field.rules}
+                        onKeyPress={field.onKeyPress}
+                        inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
+                      />
+                    )}
+                  </>
+                );
+              }
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-x-20 lg:px-28 mt-20">

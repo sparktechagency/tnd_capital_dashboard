@@ -7,9 +7,9 @@ import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
 import ViewAdminApplicationModal from "../../ui/Modal/AdminApplication/ViewAdminApplicationModal";
+import EditLoanApplication from "../../ui/Modal/FieldOfficerModals/EditLoanApplication";
 import AdminApplicationTable from "../../ui/Tables/AdminApplicationTable";
 import DaysSelection from "../../utils/DaysSelection";
-import EditLoanApplication from "../../ui/Modal/FieldOfficerModals/EditLoanApplication";
 
 const FieldOfficerApplications = () => {
   const [page, setPage] = useState<number>(1);
@@ -58,7 +58,7 @@ const FieldOfficerApplications = () => {
             setPage={setPage}
           />
           <ReuseButton
-            children="Loan Apply "
+            children="Submit Request"
             url="loan-apply"
             icon={LoanApply()}
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"

@@ -113,8 +113,8 @@ const FieldOfficerRepayments = () => {
             setPage={setPage}
           />
           <ReuseButton
-            children="Re-Payment"
-            url="monthly-re-payment"
+            children="Repayment"
+            url="monthly-repayment"
             icon={LoanApply()}
             className="!border-[#D1D1D1] !rounded-lg !font-semibold !w-full !h-12"
           />

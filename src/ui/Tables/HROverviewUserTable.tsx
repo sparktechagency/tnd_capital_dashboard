@@ -80,11 +80,17 @@ const HROverviewUserTable: React.FC<AdminAdminFieldOfficerTableProps> = ({
       key: "role",
       align: "center",
       filters: [
-        { text: "Spoke Manager", value: "spokeManager" },
-        { text: "Hub Manager", value: "hubManager" },
+        { text: "Branch Manager", value: "spokeManager" },
+        { text: "General Manager", value: "hubManager" },
       ],
       onFilter: (value: string, record: any) => record.role === value,
-      render: (text: string) => <span className="capitalize">{text}</span>,
+      render: (text: string) => {
+        const roleLabels: { [key: string]: string } = {
+          hubManager: "General Manager",
+          spokeManager: "Branch Manager",
+        };
+        return <span>{roleLabels[text] || text}</span>;
+      },
     },
   ];
 

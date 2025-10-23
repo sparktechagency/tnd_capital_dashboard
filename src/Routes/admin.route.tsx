@@ -5,7 +5,7 @@ import dashboardLogo from "../../public/images/Dashboard-icons/dashboard.svg";
 import fieldOfficerLogo from "../../public/images/Dashboard-icons/fieled_officer.svg";
 import hrLogo from "../../public/images/Dashboard-icons/hr.svg";
 import leadsLogo from "../../public/images/Dashboard-icons/leads.svg";
-import loneLogo from "../../public/images/Dashboard-icons/loan.svg";
+import loanLogo from "../../public/images/Dashboard-icons/loan.svg";
 import location from "../../public/images/Dashboard-icons/location.svg";
 import managerLogo from "../../public/images/Dashboard-icons/manager.svg";
 import officerRecord from "../../public/images/Dashboard-icons/officer_Records.svg";
@@ -31,7 +31,7 @@ import AdminHr from "../pages/Admin/AdminHr";
 import AdminLeadInformation from "../pages/Admin/AdminLeadInformation";
 import AdminLeads from "../pages/Admin/AdminLeads";
 import AdminLocationProfile from "../pages/Admin/AdminLocationProfile";
-import AdminLone from "../pages/Admin/AdminLone";
+import AdminLoan from "../pages/Admin/AdminLone";
 import AdminManagerInformation from "../pages/Admin/AdminManagerInformation";
 import AdminManagers from "../pages/Admin/AdminManagers";
 import AdminOfficerInformation from "../pages/Admin/AdminOfficerInformation";
@@ -88,11 +88,11 @@ export const adminPaths = [
     icon: applicationLogo,
   },
   {
-    path: "lone",
-    element: <AdminLone />,
-    key: "lone",
-    name: "Lone",
-    icon: loneLogo,
+    path: "loan",
+    element: <AdminLoan />,
+    key: "loan",
+    name: "Loan",
+    icon: loanLogo,
   },
   {
     path: "clients",

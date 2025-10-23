@@ -2,9 +2,9 @@ import { Form, Upload } from "antd";
 import upload from "../../../public//images/icons/Upload.svg";
 import Topbar from "../../Components/Shared/Topbar";
 import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
-import ReuseButton from "../../ui/Button/ReuseButton";
 
 const FieldOfficerEditNewLeads = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -17,15 +17,31 @@ const FieldOfficerEditNewLeads = () => {
       placeholder: "Full Name",
       label: "Full Name",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
+      rules: [
+        { required: true, message: "Full Name is required" },
+        { min: 2, message: "Name must be at least 2 characters" },
+        { max: 100, message: "Name must not exceed 100 characters" },
+        {
+          pattern: /^[a-zA-Z\s]+$/,
+          message: "Name can only contain letters and spaces",
+        },
+      ],
     },
     {
       name: "phoneNumber",
       inputType: "text",
       label: "Phone Number",
-      placeholder: "Phone Number",
+      placeholder: "Phone Number (e.g., +96512345678)",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
+      rules: [
+        { required: true, message: "Phone Number is required" },
+        {
+          pattern: /^\+?[1-9]\d{7,14}$/,
+          message: "Please enter a valid phone number (8-15 digits)",
+        },
+        { min: 8, message: "Phone number must be at least 8 digits" },
+        { max: 16, message: "Phone number must not exceed 16 characters" },
+      ],
     },
     {
       name: "email",
@@ -33,15 +49,26 @@ const FieldOfficerEditNewLeads = () => {
       label: "Email",
       placeholder: "Email",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: [
+        { required: true, message: "Email is required" },
+        { type: "email", message: "Please enter a valid email address" },
+        {
+          pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          message: "Invalid email format",
+        },
+      ],
     },
     {
-      name: "Home Address",
+      name: "homeAddress",
       inputType: "text",
       label: "Home Address",
       placeholder: "Home Address",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: [
+        { required: true, message: "Home Address is required" },
+        { min: 10, message: "Address must be at least 10 characters" },
+        { max: 200, message: "Address must not exceed 200 characters" },
+      ],
     },
   ];
 
@@ -55,7 +82,7 @@ const FieldOfficerEditNewLeads = () => {
       <Topbar collapsed={collapsed}></Topbar>
 
       <div className="mt-10 ">
-        <p className="text-xl font-medium ">Lead Apply </p>
+        <p className="text-xl font-medium ">Lead Input</p>
 
         <ReusableForm
           form={form}

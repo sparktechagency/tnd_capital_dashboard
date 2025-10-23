@@ -86,7 +86,7 @@ const getActiveKeys = (normalizedPath: string): string[] => {
   if (normalizedPath.includes("/edit-loan-apply")) {
     return ["applications"];
   }
-  if (normalizedPath.includes("/monthly-re-payment")) {
+  if (normalizedPath.includes("/monthly-repayment")) {
     return ["repayments"];
   }
   if (normalizedPath.includes("/add-supervisor")) {

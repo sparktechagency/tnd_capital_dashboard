@@ -87,7 +87,7 @@ export const hubManagerPath = [
     path: "spokeManager",
     element: <HubManagerSpokeMangers />,
     key: "spokeManager",
-    name: "Spoke Managers",
+    name: "Branch Managers",
     icon: settings,
   },
   {

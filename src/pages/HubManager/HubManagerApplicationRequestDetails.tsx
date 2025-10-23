@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import dayjs from "dayjs";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
+import { getImageUrl } from "../../helpers/config/envConfig";
+import { useApplicationActionMutation } from "../../redux/features/HubManager/hubManagerApplicationApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ConfirmationModal from "../../ui/Modal/User/ConfirmationModal";
-import { getImageUrl } from "../../helpers/config/envConfig";
-import dayjs from "dayjs";
-import { useApplicationActionMutation } from "../../redux/features/HubManager/hubManagerApplicationApi";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { useNavigate } from "react-router-dom";
 
 const HubManagerApplicationRequestDetails = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -118,17 +118,17 @@ const HubManagerApplicationRequestDetails = () => {
             </p>
 
             <p>
-              <span className="font-medium">Type of Financing Requested:</span>{" "}
+              <span className="font-medium">Type of Request:</span>{" "}
               {pareseData?.typeofFinancingRequested}
             </p>
             <p>
-              <span className="font-medium">Purpose of Financing:</span>
+              <span className="font-medium">Purpose of Request:</span>
 
               {pareseData?.purposeOfFinancing}
             </p>
 
             <p>
-              <span className="font-medium">Loan Amount Requested:</span>{" "}
+              <span className="font-medium">Amount Requested:</span>{" "}
               {pareseData?.loanAmountRequested}
             </p>
             <p>

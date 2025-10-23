@@ -1,16 +1,17 @@
 import { Form, Upload } from "antd";
+import dayjs from "dayjs";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
+import { useCreateLoanApplicationMutation } from "../../redux/features/fieldOfficer/fieldOfficerLoanApplicationApi";
 import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
-import { AllIcons } from "../../../public/images/AllImages";
-import ReuseButton from "../../ui/Button/ReuseButton";
 import ReuseSelect from "../../ui/Form/ReuseSelect";
-import { useState } from "react";
-import { getInput } from "./utils";
-import { useCreateLoanApplicationMutation } from "../../redux/features/fieldOfficer/fieldOfficerLoanApplicationApi";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import { useNavigate } from "react-router-dom";
+import { getInput } from "./utils";
 
 const FieldOfficerLoanApply = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -20,6 +21,23 @@ const FieldOfficerLoanApply = () => {
   const navigation = useNavigate();
 
   const inputStructure = getInput(applicantStatus);
+
+  // Handle form value changes to auto-fill endDate
+  const handleValuesChange = (changedValues: any, allValues: any) => {
+    // Check if startDate or term changed
+    if (changedValues.startDate || changedValues.term) {
+      const { startDate, term } = allValues;
+      if (startDate && term) {
+        // Extract the number of months from term (e.g., "6 Months" -> 6)
+        const months = parseInt(term.split(" ")[0]);
+        if (!isNaN(months)) {
+          // Calculate end date
+          const endDate = dayjs(startDate).add(months, "month");
+          form.setFieldsValue({ endDate: endDate });
+        }
+      }
+    }
+  };
 
   // api calling
   const [createLoanApplication] = useCreateLoanApplicationMutation();
@@ -63,12 +81,13 @@ const FieldOfficerLoanApply = () => {
     <div className="min-h-screen">
       <Topbar collapsed={collapsed}></Topbar>
       <div className="mt-10">
-        <p className="text-xl font-medium">Lone Apply</p>
+        <p className="text-xl font-medium">Submit Request</p>
 
         <div>
           <ReusableForm
             form={form}
             handleFinish={onFinish}
+            onValuesChange={handleValuesChange}
             className="lg:!px-32 !mt-10"
           >
             <div className="grid grid-cols-2 lg:gap-x-52 gap-x-10">
@@ -163,7 +182,7 @@ const FieldOfficerLoanApply = () => {
                 htmlType="submit"
                 className="!py-6 !px-9 !font-bold rounded-lg !w-full"
               >
-                Submit Application
+                Submit
               </ReuseButton>
             </div>
           </ReusableForm>

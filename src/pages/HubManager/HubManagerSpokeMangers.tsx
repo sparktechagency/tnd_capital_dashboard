@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import Topbar from "../../Components/Shared/Topbar";
+import { useUserActionMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 import { useGetAllSpokeMangerQuery } from "../../redux/features/HubManager/hubManageSpokeManagerApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseSearchInput from "../../ui/Form/ReuseSearchInput";
+import BlockModal from "../../ui/Modal/BlockModal";
+import AnalyticsModal from "../../ui/Modal/HRManagers/AnalyticsModal";
 import ViewHRManager from "../../ui/Modal/HRManagers/ViewHRManagers";
 import EditHrOfficerModal from "../../ui/Modal/HROffiers/EditHrOfficer";
+import UnblockModal from "../../ui/Modal/UnblockModal";
 import HRManagersTable from "../../ui/Tables/HRManagersTable";
 import DaysSelection from "../../utils/DaysSelection";
-import { useUserActionMutation } from "../../redux/features/admin/adminUsers/adminUsers";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
-import BlockModal from "../../ui/Modal/BlockModal";
-import UnblockModal from "../../ui/Modal/UnblockModal";
-import AnalyticsModal from "../../ui/Modal/HRManagers/AnalyticsModal";
 
 const HubManagerSpokeMangers = () => {
   const [page, setPage] = useState<number>(1);
@@ -119,7 +119,7 @@ const HubManagerSpokeMangers = () => {
 
       <div className="mt-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xl font-semibold">Spoke Managers</p>
+          <p className="text-xl font-semibold">Branch Managers</p>
           <DaysSelection
             currentUser={filtering}
             setCurrentUser={setFiltering}

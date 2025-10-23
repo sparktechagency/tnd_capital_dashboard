@@ -5,6 +5,7 @@ import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
 import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
+import { validationRules } from "../../utils/formValidations";
 
 const AdminEditSupervisor = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -17,15 +18,15 @@ const AdminEditSupervisor = () => {
       placeholder: "Full Name",
       label: "Full Name",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
+      rules: validationRules.fullName,
     },
     {
       name: "phoneNumber",
       inputType: "text",
       label: "Phone Number",
-      placeholder: "Phone Number",
+      placeholder: "Phone Number (e.g., +96512345678)",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Name is required" }],
+      rules: validationRules.phoneNumber,
     },
     {
       name: "email",
@@ -33,15 +34,15 @@ const AdminEditSupervisor = () => {
       label: "Email",
       placeholder: "Email",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: validationRules.email,
     },
     {
-      name: "Home Address",
+      name: "homeAddress",
       inputType: "text",
       label: "Home Address",
       placeholder: "Home Address",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: validationRules.address,
     },
     {
       name: "nid",
@@ -49,7 +50,7 @@ const AdminEditSupervisor = () => {
       label: "NID",
       placeholder: "NID Number",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: validationRules.nid,
     },
     {
       name: "hubId",
@@ -57,7 +58,7 @@ const AdminEditSupervisor = () => {
       label: "Hub ID",
       placeholder: "Hub ID Number",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: validationRules.text("Hub ID", 3, 50),
     },
   ];
 

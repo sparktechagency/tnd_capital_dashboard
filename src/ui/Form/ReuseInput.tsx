@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Form, Input, Typography } from "antd";
-import React from "react";
 import type { Rule } from "antd/es/form";
+import React from "react";
 import { cn } from "../../lib/utils";
 import ReuseDatePicker from "./ReuseDatePicker";
 
@@ -110,6 +110,19 @@ const ReuseInput = ({
             placeholder={placeholder}
             type={type}
             disabled={disabled}
+            onKeyPress={(e) => {
+              // Prevent non-numeric input for number fields
+              if (
+                type === "number" &&
+                !/[0-9+\-\s()]/.test(e.key) &&
+                e.key !== "Backspace" &&
+                e.key !== "Delete" &&
+                e.key !== "Tab" &&
+                e.key !== "Enter"
+              ) {
+                e.preventDefault();
+              }
+            }}
           />
         )}
       </Form.Item>

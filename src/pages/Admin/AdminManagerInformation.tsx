@@ -76,8 +76,8 @@ const AdminManagerInformation = () => {
               label="Add Manager Type"
               onChange={(value) => setRole(value)}
               options={[
-                { value: "hubManager", label: "Hub Manager" },
-                { value: "spokeManager", label: "Spoke Manager" },
+                { value: "hubManager", label: "General Manager" },
+                { value: "spokeManager", label: "Branch Manager" },
               ]}
             />
 
@@ -100,64 +100,71 @@ const AdminManagerInformation = () => {
             )}
           </div>
           <div className="grid grid-cols-2 ;g:gap-x-52 gap-x-10">
-            {userField?.data?.map((field: any, index: number) => {
-              // Check if the field is 'hubUid' and the current path is 'hr'
-              if (field.inputName === "hubUid" && currentPath === "managers") {
-                return null; // Skip rendering the 'hubUid' field
-              }
+            {applyValidationToFields(userField?.data || []).map(
+              (field: any, index: number) => {
+                // Check if the field is 'hubUid' and the current path is 'hr'
+                if (
+                  field.inputName === "hubUid" &&
+                  currentPath === "managers"
+                ) {
+                  return null; // Skip rendering the 'hubUid' field
+                }
 
-              return (
-                <>
-                  {field?.inputType === "file" ? (
-                    <Form.Item
-                      name={field.inputName}
-                      className="mb-8 w-full"
-                      key={index}
-                    >
-                      <label
-                        htmlFor={field.inputName}
-                        className="block text-sm font-medium mb-3"
+                return (
+                  <>
+                    {field?.inputType === "file" ? (
+                      <Form.Item
+                        name={field.inputName}
+                        className="mb-8 w-full"
+                        key={index}
                       >
-                        {field.label}
-                      </label>
-                      <Upload
-                        maxCount={1}
-                        listType="text"
-                        accept="file/*"
-                        multiple={false}
-                        customRequest={(options) => {
-                          setTimeout(() => {
-                            options.onSuccess?.("ok");
-                          }, 1000);
-                        }}
-                        className=""
-                      >
-                        <div className="md:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
-                          <p className="text-3xl mb-2">
-                            <img src={AllIcons.upload} alt="" />
-                          </p>
-                          <p className="text-black font-medium">
-                            {field.placeholder}
-                          </p>
-                        </div>
-                      </Upload>
-                    </Form.Item>
-                  ) : (
-                    <ReuseInput
-                      key={index}
-                      name={field.inputName}
-                      label={field.label}
-                      Typolevel={4}
-                      inputType={field.inputType}
-                      placeholder={field.placeholder}
-                      labelClassName="!font-normal !text-sm"
-                      rules={field.rules}
-                      inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
-                    />
-                  )}
-                </>
-              );
-            })}
+                        <label
+                          htmlFor={field.inputName}
+                          className="block text-sm font-medium mb-3"
+                        >
+                          {field.label}
+                        </label>
+                        <Upload
+                          maxCount={1}
+                          listType="text"
+                          accept="file/*"
+                          multiple={false}
+                          customRequest={(options) => {
+                            setTimeout(() => {
+                              options.onSuccess?.("ok");
+                            }, 1000);
+                          }}
+                          className=""
+                        >
+                          <div className="md:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                            <p className="text-3xl mb-2">
+                              <img src={AllIcons.upload} alt="" />
+                            </p>
+                            <p className="text-black font-medium">
+                              {field.placeholder}
+                            </p>
+                          </div>
+                        </Upload>
+                      </Form.Item>
+                    ) : (
+                      <ReuseInput
+                        key={index}
+                        name={field.inputName}
+                        label={field.label}
+                        Typolevel={4}
+                        inputType={field.inputType}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        labelClassName="!font-normal !text-sm"
+                        rules={field.rules}
+                        onKeyPress={field.onKeyPress}
+                        inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
+                      />
+                    )}
+                  </>
+                );
+              }
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-x-20 lg:px-28 mt-20">

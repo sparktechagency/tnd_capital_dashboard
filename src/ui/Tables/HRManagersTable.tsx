@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Space, Tooltip } from "antd";
 import dayjs from "dayjs";
+import { MdBlock } from "react-icons/md";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
 import { getImageUrl } from "../../helpers/config/envConfig";
 import ReuseTable from "../../utils/ReuseTable";
-import { MdBlock } from "react-icons/md";
 
 interface AdminHRManagersTableProps {
   data: any[]; // Replace `unknown` with the actual type of your data array
@@ -97,11 +97,17 @@ const HRManagersTable: React.FC<AdminHRManagersTableProps> = ({
       key: "role",
       align: "center",
       filters: [
-        { text: "Spoke Manager", value: "spokeManager" },
-        { text: "Hub Manager", value: "hubManager" },
+        { text: "Branch Manager", value: "spokeManager" },
+        { text: "General Manager", value: "hubManager" },
       ],
       onFilter: (value: string, record: any) => record.role === value,
-      render: (text: string) => <span className="capitalize">{text}</span>,
+      render: (text: string) => {
+        const roleLabels: { [key: string]: string } = {
+          hubManager: "General Manager",
+          spokeManager: "Branch Manager",
+        };
+        return <span>{roleLabels[text] || text}</span>;
+      },
     },
 
     {

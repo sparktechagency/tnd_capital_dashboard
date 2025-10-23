@@ -4,20 +4,20 @@ import { useState } from "react";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
 import { PlusIcon } from "../../Components/svg/leads";
+import {
+  useDeleteLoansMutation,
+  useGetAllLoansQuery,
+} from "../../redux/features/admin/adminLoan/adminLoanApi";
 import { useAppSelector } from "../../redux/hooks";
 import ReuseButton from "../../ui/Button/ReuseButton";
+import Loading from "../../ui/Loading";
 import AddAdminLoan from "../../ui/Modal/AdminLoan/AddAdminLoan";
 import EditAdminLoan from "../../ui/Modal/AdminLoan/EditAdminLoan";
 import DeleteModal from "../../ui/Modal/DeleteModal";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 import { loanData } from "./fakeData";
-import {
-  useDeleteLoansMutation,
-  useGetAllLoansQuery,
-} from "../../redux/features/admin/adminLoan/adminLoanApi";
-import Loading from "../../ui/Loading";
 
-const AdminLone = () => {
+const AdminLoan = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
 
   const [isAddFeaturesModalOpen, setIsAddFeaturesModalOpen] =
@@ -162,4 +162,4 @@ const AdminLone = () => {
   );
 };
 
-export default AdminLone;
+export default AdminLoan;

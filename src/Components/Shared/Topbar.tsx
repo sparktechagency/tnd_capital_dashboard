@@ -4,10 +4,10 @@ import { ReactNode } from "react";
 import { IoMenuSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { AllIcons, AllImages } from "../../../public/images/AllImages";
+import { getImageUrl } from "../../helpers/config/envConfig";
 import { useGetProfileQuery } from "../../redux/features/auth/authApi";
 import { setCollapsed } from "../../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getImageUrl } from "../../helpers/config/envConfig";
 
 // Define the types for the component props
 interface TopbarProps {
@@ -20,10 +20,8 @@ const Topbar: React.FC<TopbarProps> = ({ collapsed, children }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { role } = useAppSelector((state) => state.role);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data } = useGetProfileQuery({});
 
-  console.log(data?.data, "profiledata");
+  const { data } = useGetProfileQuery({});
 
   return (
     <Header
@@ -77,7 +75,17 @@ const Topbar: React.FC<TopbarProps> = ({ collapsed, children }) => {
                 {data?.data?.customFields?.name || "N/A"}
               </p>
               <p className="text-base-color text-xs capitalize">
-                {data?.data?.role || "N/A"}
+                {data?.data?.role === "hubManager"
+                  ? "General Manager"
+                  : data?.data?.role === "spokeManager"
+                  ? "Branch Manager"
+                  : data?.data?.role === "fieldOfficer"
+                  ? "Field Officer"
+                  : data?.data?.role === "hr"
+                  ? "HR"
+                  : data?.data?.role === "supervisor"
+                  ? "Supervisor"
+                  : "N/A"}
               </p>
             </div>
           </div>

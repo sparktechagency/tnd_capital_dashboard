@@ -11,6 +11,7 @@ import ReusableForm from "../../ui/Form/ReuseForm";
 import ReuseInput from "../../ui/Form/ReuseInput";
 import ReuseSelect from "../../ui/Form/ReuseSelect";
 import Loading from "../../ui/Loading";
+import { applyValidationToFields } from "../../utils/fieldValidation";
 import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const FieldOfficerMonthlyRepayments = () => {
@@ -63,63 +64,67 @@ const FieldOfficerMonthlyRepayments = () => {
           className="!px-32 !mt-10"
         >
           <div className="grid grid-cols-2 gap-x-52">
-            {repaymentsField?.data?.map((field: any, index: number) => {
-              if (field.inputName === "month") {
-                return null;
-              }
+            {applyValidationToFields(repaymentsField?.data || []).map(
+              (field: any, index: number) => {
+                if (field.inputName === "month") {
+                  return null;
+                }
 
-              return (
-                <>
-                  {field?.inputType === "file" ? (
-                    <Form.Item
-                      name={field.inputName}
-                      className="mb-8 w-full"
-                      key={index}
-                    >
-                      <label
-                        htmlFor={field.inputName}
-                        className="block text-sm font-medium mb-3"
+                return (
+                  <>
+                    {field?.inputType === "file" ? (
+                      <Form.Item
+                        name={field.inputName}
+                        className="mb-8 w-full"
+                        key={index}
                       >
-                        {field.label}
-                      </label>
-                      <Upload
-                        maxCount={1}
-                        listType="text"
-                        accept="file/*"
-                        multiple={false}
-                        customRequest={(options) => {
-                          setTimeout(() => {
-                            options.onSuccess?.("ok");
-                          }, 1000);
-                        }}
-                        className=""
-                      >
-                        <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
-                          <p className="text-3xl mb-2">
-                            <img src={AllIcons.upload} alt="" />
-                          </p>
-                          <p className="text-black font-medium">
-                            {field.placeholder}
-                          </p>
-                        </div>
-                      </Upload>
-                    </Form.Item>
-                  ) : (
-                    <ReuseInput
-                      key={index}
-                      name={field.inputName}
-                      label={field.label}
-                      Typolevel={4}
-                      inputType={field.inputType}
-                      placeholder={field.placeholder}
-                      labelClassName="!font-normal !text-sm"
-                      rules={field.rules}
-                      inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
-                    />
-                  )}
-                </>
-              );
-            })}
+                        <label
+                          htmlFor={field.inputName}
+                          className="block text-sm font-medium mb-3"
+                        >
+                          {field.label}
+                        </label>
+                        <Upload
+                          maxCount={1}
+                          listType="text"
+                          accept="file/*"
+                          multiple={false}
+                          customRequest={(options) => {
+                            setTimeout(() => {
+                              options.onSuccess?.("ok");
+                            }, 1000);
+                          }}
+                          className=""
+                        >
+                          <div className="lg:w-[320px] p-4 border border-dashed border-gray-400 rounded-lg flex flex-col items-center justify-center bg-transparent hover:border-primary transition-all duration-300 cursor-pointer">
+                            <p className="text-3xl mb-2">
+                              <img src={AllIcons.upload} alt="" />
+                            </p>
+                            <p className="text-black font-medium">
+                              {field.placeholder}
+                            </p>
+                          </div>
+                        </Upload>
+                      </Form.Item>
+                    ) : (
+                      <ReuseInput
+                        key={index}
+                        name={field.inputName}
+                        label={field.label}
+                        Typolevel={4}
+                        inputType={field.inputType}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        labelClassName="!font-normal !text-sm"
+                        rules={field.rules}
+                        onKeyPress={field.onKeyPress}
+                        inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
+                      />
+                    )}
+                  </>
+                );
+              }
+            )}
 
             <ReuseSelect
               name="month"

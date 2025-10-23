@@ -1,13 +1,13 @@
 import { Form } from "antd";
-import { useAppSelector } from "../../../redux/hooks";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Topbar from "../../../Components/Shared/Topbar";
+import { useUpdateLocationProfileMutation } from "../../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
+import { useAppSelector } from "../../../redux/hooks";
+import tryCatchWrapper from "../../../utils/tryCatchWrapper";
+import ReuseButton from "../../Button/ReuseButton";
 import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
-import ReuseButton from "../../Button/ReuseButton";
-import { useEffect } from "react";
-import { useUpdateLocationProfileMutation } from "../../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
-import tryCatchWrapper from "../../../utils/tryCatchWrapper";
-import { useNavigate } from "react-router-dom";
 
 const EditManagerInfoModal = () => {
   const { collapsed } = useAppSelector((state) => state.auth);
@@ -21,10 +21,10 @@ const EditManagerInfoModal = () => {
     {
       name: "hubUid",
       inputType: "text",
-      placeholder: "Location Name",
+      placeholder: "Hub ID",
       label: "Hub ID",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Location Name is required" }],
+      rules: validationRules.text("Hub ID", 3, 50),
     },
     {
       name: "locationName",
@@ -32,7 +32,7 @@ const EditManagerInfoModal = () => {
       placeholder: "Location Name",
       label: "Location Name",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Location Name is required" }],
+      rules: validationRules.text("Location Name", 3, 100),
     },
     {
       name: "locationId",
@@ -40,7 +40,7 @@ const EditManagerInfoModal = () => {
       label: "Location ID",
       placeholder: "Location ID",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Location ID is required" }],
+      rules: validationRules.text("Location ID", 3, 50),
     },
     {
       name: "email",
@@ -48,7 +48,7 @@ const EditManagerInfoModal = () => {
       label: "Email",
       placeholder: "Email",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Email is required" }],
+      rules: validationRules.email,
     },
     {
       name: "address",
@@ -56,23 +56,23 @@ const EditManagerInfoModal = () => {
       label: "Address",
       placeholder: "Address",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Address is required" }],
+      rules: validationRules.address,
     },
     {
       name: "phoneNumber",
       inputType: "text",
       label: "Phone Number",
-      placeholder: "Phone Number",
+      placeholder: "Phone Number (e.g., +96512345678)",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Phone Number is required" }],
+      rules: validationRules.phoneNumber,
     },
     {
       name: "currency",
       inputType: "text",
       label: "Currency",
-      placeholder: "Currency",
+      placeholder: "Currency (e.g., USD, KWD)",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Currency is required" }],
+      rules: validationRules.text("Currency", 3, 10),
     },
     {
       name: "excelFormula",
@@ -80,7 +80,7 @@ const EditManagerInfoModal = () => {
       label: "Excel Formula",
       placeholder: "Excel Formula",
       labelClassName: "!font-normal !text-sm",
-      rules: [{ required: true, message: "Excel Formula is required" }],
+      rules: validationRules.text("Excel Formula", 1, 200),
     },
   ];
 

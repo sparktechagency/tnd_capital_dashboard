@@ -17,7 +17,7 @@ const AdminOverviewCard = ({
     <div
       className={cn(
         // "flex flex-col lg:flex-row gap-1 lg:gap-x-10 mb-5",
-        "grid lg:grid-cols-4 grid-cols-2 gap-6 mb-5", 
+        "grid lg:grid-cols-4 grid-cols-2 gap-6 mb-5",
         className
       )}
     >
@@ -32,12 +32,12 @@ const AdminOverviewCard = ({
           <div
             className={cn("flex items-center p-6 w-full gap-x-6", subClassName)}
           >
-            <div className="">{item.icon}</div>
-            <div className=" w-fit ">
-              <p className="text-lg sm:text-xl lg:text-[36px] font-semibold text-secondary-color capitalize tracking-wider">
+            <div className="flex-shrink-0">{item.icon}</div>
+            <div className="flex-1 min-w-0">
+              <p className="text-lg sm:text-xl lg:text-[28px] font-semibold text-secondary-color capitalize tracking-wider truncate">
                 {item.name === "Earnings" ? `${item.count} KWD` : item.count}
               </p>
-              <p className="text-lg text-base-color mb-1  tracking-tight">
+              <p className="text-sm sm:text-base text-base-color mb-1 tracking-tight truncate">
                 {item.name}
               </p>
             </div>

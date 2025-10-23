@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Modal, Upload } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { AllIcons } from "../../../../public/images/AllImages";
 import { getInput } from "../../../pages/FieldOfficer/utils";
@@ -55,6 +56,23 @@ const EditLoanApplication = ({
     }
   }, [currentRecord, form]);
 
+  // Handle form value changes to auto-fill endDate
+  const handleValuesChange = (changedValues: any, allValues: any) => {
+    // Check if startDate or term changed
+    if (changedValues.startDate || changedValues.term) {
+      const { startDate, term } = allValues;
+      if (startDate && term) {
+        // Extract the number of months from term (e.g., "6 Months" -> 6)
+        const months = parseInt(term.split(" ")[0]);
+        if (!isNaN(months)) {
+          // Calculate end date
+          const endDate = dayjs(startDate).add(months, "month");
+          form.setFieldsValue({ endDate: endDate });
+        }
+      }
+    }
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = async (values: any) => {
     const startDate = new Date(values.startDate);
@@ -104,6 +122,7 @@ const EditLoanApplication = ({
           <ReusableForm
             form={form}
             handleFinish={onFinish}
+            onValuesChange={handleValuesChange}
             className="!px-8 !mt-10"
           >
             <div className="grid grid-cols-2 gap-x-6">
@@ -198,7 +217,7 @@ const EditLoanApplication = ({
                 htmlType="submit"
                 className="!py-6 !px-9 !font-bold rounded-lg !w-full"
               >
-                Submit Application
+                Submit
               </ReuseButton>
             </div>
           </ReusableForm>

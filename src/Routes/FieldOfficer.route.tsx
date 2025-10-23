@@ -94,7 +94,7 @@ export const fieldOfficerPath = [
     icon: repayments,
   },
   {
-    path: "repayments/monthly-re-payment",
+    path: "repayments/monthly-repayment",
     element: <FieldOfficerMonthlyRepayments />,
     key: "repayments",
   },
