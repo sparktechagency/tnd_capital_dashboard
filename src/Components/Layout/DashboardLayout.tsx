@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Layout, Menu } from "antd";
+import { Drawer, Layout, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
 import Cookies from "js-cookie";
@@ -78,8 +78,8 @@ const DashboardLayout = () => {
     return 350; // Default width for larger screens
   };
 
-  // Check if sidebar should overlay (laptop and smaller devices)
-  const shouldOverlay = window.innerWidth <= 1300;
+  // Check if should use drawer (laptop and smaller devices)
+  const shouldUseDrawer = window.innerWidth <= 1300;
 
   const activeKeys = getActiveKeys(normalizedPath);
   let menuItems: any = [];
@@ -118,57 +118,50 @@ const DashboardLayout = () => {
       <ScrollRestoration />
 
       <Layout className="flex !bg-primary-color">
-        <Sider
-          theme="light"
-          width={getSidebarWidth()}
-          trigger={null}
-          breakpoint="lg"
-          collapsedWidth="0"
-          collapsible
-          collapsed={collapsed}
-          style={{
-            position: shouldOverlay ? "fixed" : "sticky",
-            top: 0,
-            left: 0,
-            zIndex: shouldOverlay ? 1000 : "auto",
-            paddingLeft: "10px",
-            height: "100vh",
-            overflowY: "auto",
-            transition: shouldOverlay
-              ? "transform 0.3s ease"
-              : "width 0.3s ease",
-            transform: shouldOverlay
-              ? collapsed
-                ? "translateX(-100%)"
-                : "translateX(0)"
-              : "none",
-            boxShadow: shouldOverlay ? "2px 0 8px rgba(0,0,0,0.25)" : "none",
-          }}
-          className=""
-        >
-          <Link to="/">
-            <img
-              src={AllImages.logo}
-              alt="logo"
-              className="w-[80%] mx-auto h-auto my-8"
-            />
-          </Link>
-
-          <Menu
-            mode="inline"
-            openKeys={openKeys} // Bind openKeys state
-            onOpenChange={onOpenChange} // Handle open/close
-            defaultSelectedKeys={activeKeys}
-            selectedKeys={activeKeys}
+        {/* Desktop: Use Sider */}
+        {!shouldUseDrawer && (
+          <Sider
+            theme="light"
+            width={getSidebarWidth()}
+            trigger={null}
+            breakpoint="lg"
+            collapsedWidth="0"
+            collapsible
+            collapsed={collapsed}
             style={{
-              backgroundColor: "transparent",
-              border: "none",
-              paddingLeft: "6px",
-              paddingRight: "6px",
+              position: "sticky",
+              top: 0,
+              paddingLeft: "10px",
+              height: "100vh",
+              overflowY: "auto",
             }}
-            items={menuItems}
-          />
-        </Sider>
+            className=""
+          >
+            <Link to="/">
+              <img
+                src={AllImages.logo}
+                alt="logo"
+                className="w-[80%] mx-auto h-auto my-8"
+              />
+            </Link>
+
+            <Menu
+              mode="inline"
+              openKeys={openKeys}
+              onOpenChange={onOpenChange}
+              defaultSelectedKeys={activeKeys}
+              selectedKeys={activeKeys}
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                paddingLeft: "6px",
+                paddingRight: "6px",
+              }}
+              items={menuItems}
+            />
+          </Sider>
+        )}
+
         <Layout>
           <Content>
             <div className="bg-primary-color px-2 xl:px-5 pb-4 xl:pb-5">
@@ -177,13 +170,40 @@ const DashboardLayout = () => {
           </Content>
         </Layout>
 
-        {/* Overlay for sidebar - only on smaller devices */}
-        {!collapsed && shouldOverlay && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-20 z-999"
-            onClick={() => dispatch(setCollapsed(true))}
-            style={{ zIndex: 999 }}
-          />
+        {/* Laptop/Tablet/Mobile: Use Drawer */}
+        {shouldUseDrawer && (
+          <Drawer
+            title={
+              <Link to="/">
+                <img
+                  src={AllImages.logo}
+                  alt="logo"
+                  className="w-[80%] mx-auto h-auto my-4"
+                />
+              </Link>
+            }
+            placement="left"
+            onClose={() => dispatch(setCollapsed(true))}
+            open={!collapsed}
+            width={280}
+            bodyStyle={{ padding: 0 }}
+            headerStyle={{ padding: "16px 24px" }}
+          >
+            <Menu
+              mode="inline"
+              openKeys={openKeys}
+              onOpenChange={onOpenChange}
+              defaultSelectedKeys={activeKeys}
+              selectedKeys={activeKeys}
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+                paddingLeft: "6px",
+                paddingRight: "6px",
+              }}
+              items={menuItems}
+            />
+          </Drawer>
         )}
       </Layout>
     </div>
