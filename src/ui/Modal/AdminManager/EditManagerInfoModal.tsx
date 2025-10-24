@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Topbar from "../../../Components/Shared/Topbar";
 import { useUpdateLocationProfileMutation } from "../../../redux/features/admin/adminLocationProfile/adminLocationProfileApi";
 import { useAppSelector } from "../../../redux/hooks";
+import { validationRules } from "../../../utils/formValidations";
 import tryCatchWrapper from "../../../utils/tryCatchWrapper";
 import ReuseButton from "../../Button/ReuseButton";
 import ReusableForm from "../../Form/ReuseForm";

@@ -25,6 +25,7 @@ type TInputProps = {
   labelClassName?: string;
   inputClassName?: string;
   readOnly?: boolean;
+  onKeyPress?: (e: React.KeyboardEvent) => void;
 };
 
 const ReuseInput = ({
@@ -46,6 +47,7 @@ const ReuseInput = ({
   labelClassName,
   inputClassName,
   readOnly = false,
+  onKeyPress,
 }: TInputProps) => {
   return (
     <div className={cn(wrapperClassName)}>
@@ -110,19 +112,22 @@ const ReuseInput = ({
             placeholder={placeholder}
             type={type}
             disabled={disabled}
-            onKeyPress={(e) => {
-              // Prevent non-numeric input for number fields
-              if (
-                type === "number" &&
-                !/[0-9+\-\s()]/.test(e.key) &&
-                e.key !== "Backspace" &&
-                e.key !== "Delete" &&
-                e.key !== "Tab" &&
-                e.key !== "Enter"
-              ) {
-                e.preventDefault();
-              }
-            }}
+            onKeyPress={
+              onKeyPress ||
+              ((e) => {
+                // Prevent non-numeric input for number fields
+                if (
+                  type === "number" &&
+                  !/[0-9+\-\s()]/.test(e.key) &&
+                  e.key !== "Backspace" &&
+                  e.key !== "Delete" &&
+                  e.key !== "Tab" &&
+                  e.key !== "Enter"
+                ) {
+                  e.preventDefault();
+                }
+              })
+            }
           />
         )}
       </Form.Item>

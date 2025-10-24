@@ -13,6 +13,7 @@ import AddLeadsFeaturesModal from "../../ui/Modal/AdminLoads/AddLeadsFeaturesMod
 import { useNavigate } from "react-router-dom";
 import { useGetAllLeadsRelatedFieldQuery } from "../../redux/features/admin/adminLeads/adminLeadsApi";
 import Loading from "../../ui/Loading";
+import { applyValidationToFields } from "../../utils/fieldValidation";
 
 const AdminLeadInformation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);

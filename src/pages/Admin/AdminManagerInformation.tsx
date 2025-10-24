@@ -13,6 +13,7 @@ import ReuseInput from "../../ui/Form/ReuseInput";
 import ReuseSelect from "../../ui/Form/ReuseSelect";
 import Loading from "../../ui/Loading";
 import AdminHRFeaturesModal from "../../ui/Modal/AdminHR/AdminHRFeaturesModal";
+import { applyValidationToFields } from "../../utils/fieldValidation";
 
 const AdminManagerInformation = () => {
   const { collapsed } = useAppSelector((state) => state.auth);

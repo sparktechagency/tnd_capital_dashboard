@@ -4,6 +4,7 @@ import ReusableForm from "../../Form/ReuseForm";
 import ReuseInput from "../../Form/ReuseInput";
 // import { RiShieldUserFill, RiSchoolFill } from "react-icons/ri";
 // import { FaPhone } from "react-icons/fa6";
+import { validationRules } from "../../../utils/formValidations";
 import ReuseButton from "../../Button/ReuseButton";
 
 interface AddAdminModalProps {

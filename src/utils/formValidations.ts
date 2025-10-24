@@ -3,6 +3,8 @@
  * These validations use Ant Design's Form validation API
  */
 
+import type { Rule } from "antd/es/form";
+
 export const validationRules = {
     // Email validation
     email: [
@@ -12,7 +14,7 @@ export const validationRules = {
             pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             message: "Invalid email format"
         }
-    ],
+    ] as Rule[],
 
     // Phone number validation (international format)
     phoneNumber: [
@@ -23,7 +25,7 @@ export const validationRules = {
         },
         { min: 8, message: "Phone number must be at least 8 digits" },
         { max: 16, message: "Phone number must not exceed 16 characters" }
-    ],
+    ] as Rule[],
 
     // Name validation
     fullName: [

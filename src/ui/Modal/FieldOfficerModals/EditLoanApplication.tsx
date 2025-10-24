@@ -166,7 +166,7 @@ const EditLoanApplication = ({
                         inputType={input.inputType}
                         placeholder={input.placeholder}
                         labelClassName={input.labelClassName}
-                        rules={input.rules}
+                        rules={input.rules as any}
                         inputClassName="!bg-[#F2F2F2] !border-none !rounded-lg !h-12 !text-sm placeholder:!text-[#B4BCC9] !placeholder:text-xs"
                       />
                     </>
