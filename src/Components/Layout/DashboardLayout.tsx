@@ -2,6 +2,7 @@
 import { Layout, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link, Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
@@ -17,7 +18,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { changeRole } from "../../redux/slice";
 import getActiveKeys from "../../utils/activeKey";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
-import Cookies from "js-cookie";
 
 const DashboardLayout = () => {
   const dispatch = useAppDispatch();
@@ -51,7 +51,6 @@ const DashboardLayout = () => {
   const defaultUrl = userRole?.role === "admin" ? "/admin" : "/";
   const normalizedPath = location.pathname.replace(defaultUrl, "");
 
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -71,6 +70,16 @@ const DashboardLayout = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [dispatch]);
+
+  // Dynamic sidebar width based on screen size
+  const getSidebarWidth = () => {
+    if (collapsed) return 0;
+    if (window.innerWidth <= 1300) return 280; // Smaller width for tablets and small monitors
+    return 350; // Default width for larger screens
+  };
+
+  // Check if sidebar should overlay (laptop and smaller devices)
+  const shouldOverlay = window.innerWidth <= 1300;
 
   const activeKeys = getActiveKeys(normalizedPath);
   let menuItems: any = [];
@@ -111,18 +120,29 @@ const DashboardLayout = () => {
       <Layout className="flex !bg-primary-color">
         <Sider
           theme="light"
-          width={350}
+          width={getSidebarWidth()}
           trigger={null}
           breakpoint="lg"
           collapsedWidth="0"
           collapsible
           collapsed={collapsed}
           style={{
-            position: "sticky",
+            position: shouldOverlay ? "fixed" : "sticky",
             top: 0,
+            left: 0,
+            zIndex: shouldOverlay ? 1000 : "auto",
             paddingLeft: "10px",
             height: "100vh",
             overflowY: "auto",
+            transition: shouldOverlay
+              ? "transform 0.3s ease"
+              : "width 0.3s ease",
+            transform: shouldOverlay
+              ? collapsed
+                ? "translateX(-100%)"
+                : "translateX(0)"
+              : "none",
+            boxShadow: shouldOverlay ? "2px 0 8px rgba(0,0,0,0.25)" : "none",
           }}
           className=""
         >
@@ -156,6 +176,15 @@ const DashboardLayout = () => {
             </div>
           </Content>
         </Layout>
+
+        {/* Overlay for sidebar - only on smaller devices */}
+        {!collapsed && shouldOverlay && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-20 z-999"
+            onClick={() => dispatch(setCollapsed(true))}
+            style={{ zIndex: 999 }}
+          />
+        )}
       </Layout>
     </div>
   );

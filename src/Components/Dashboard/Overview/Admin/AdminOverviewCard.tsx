@@ -34,7 +34,7 @@ const AdminOverviewCard = ({
           >
             <div className="flex-shrink-0">{item.icon}</div>
             <div className="flex-1 min-w-0">
-              <p className="text-lg sm:text-xl lg:text-[28px] font-semibold text-secondary-color capitalize tracking-wider truncate">
+              <p className="dashboard-number text-lg sm:text-xl lg:text-[28px] font-semibold text-secondary-color capitalize tracking-wider truncate">
                 {item.name === "Earnings" ? `${item.count} KWD` : item.count}
               </p>
               <p className="text-sm sm:text-base text-base-color mb-1 tracking-tight truncate">

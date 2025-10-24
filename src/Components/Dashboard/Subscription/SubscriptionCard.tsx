@@ -33,7 +33,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         <h3 className="text-xl md:text-2xl lg:text-3xl text-start text-secondary-color font-bold mb-2">
           {sub?.planName}
         </h3>
-        <p className="text-xl sm:text-2xl lg:text-4xl xl:text-5xl text-start font-bold mb-5">
+        <p className="dashboard-number text-xl sm:text-2xl lg:text-4xl xl:text-5xl text-start font-bold mb-5">
           {sub?.price} KWD/
           <span className="text-lg sm:text-xl lg:text-2xl">
             {sub?.timeline}

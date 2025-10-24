@@ -61,7 +61,7 @@ const OverviewCard = () => {
               <p className="text-base  font-semibold text-base-color mb-1  tracking-tight">
                 {item.name}
               </p>
-              <p className="text-lg  font-bold text-base-color capitalize tracking-wider">
+              <p className="dashboard-number text-lg  font-bold text-base-color capitalize tracking-wider">
                 {item.count}
               </p>
             </div>
