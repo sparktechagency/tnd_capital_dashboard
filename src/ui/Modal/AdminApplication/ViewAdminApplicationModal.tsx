@@ -87,15 +87,15 @@ const ViewAdminApplicationModal = ({
             <ModalItemStyle title="Application ID" value={currentRecord?.uid} />
 
             <ModalItemStyle
-              title="Purpose of Financing"
+              title="Financing Request"
               value={currentRecord?.purposeOfFinancing}
             />
             <ModalItemStyle
-              title="Type of Financing Requested"
+              title="Requested Type of Financing"
               value={currentRecord?.typeofFinancingRequested}
             />
             <ModalItemStyle
-              title="Loan Amount Requested"
+              title="Requested Amount "
               value={currentRecord?.loanAmountRequested}
             />
             <ModalItemStyle
