@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Upload } from "antd";
+import { useNavigate } from "react-router-dom";
 import { AllIcons } from "../../../public/images/AllImages";
 import Topbar from "../../Components/Shared/Topbar";
-import { useAppSelector } from "../../redux/hooks";
-import ReuseButton from "../../ui/Button/ReuseButton";
-import ReusableForm from "../../ui/Form/ReuseForm";
-import ReuseInput from "../../ui/Form/ReuseInput";
 import {
   useCreateUserMutation,
   useGetAllUsersRelatedFieldQuery,
 } from "../../redux/features/admin/adminUsers/adminUsers";
-import tryCatchWrapper from "../../utils/tryCatchWrapper";
+import { useAppSelector } from "../../redux/hooks";
+import ReuseButton from "../../ui/Button/ReuseButton";
+import ReusableForm from "../../ui/Form/ReuseForm";
+import ReuseInput from "../../ui/Form/ReuseInput";
 import Loading from "../../ui/Loading";
-import { useNavigate } from "react-router-dom";
+import tryCatchWrapper from "../../utils/tryCatchWrapper";
 
 const HRAddOfficer = () => {
   const [form] = Form.useForm();
@@ -25,7 +25,6 @@ const HRAddOfficer = () => {
   const [createUser] = useCreateUserMutation();
   const { data: userField, isLoading } = useGetAllUsersRelatedFieldQuery({});
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = async (values: any) => {
     console.log("HR information:", values);
 
@@ -122,7 +121,9 @@ const HRAddOfficer = () => {
                       inputType={field.inputType}
                       placeholder={field.placeholder}
                       labelClassName="!font-normal !text-sm"
-                      rules={field.rules}
+                      rules={[
+                        { required: true, message: `${field.label} is required` },
+                      ]}
                       inputClassName="!bg-[#F2F2F2] !border-none !rounded-xl !h-[52px] placeholder:!text-[#B4BCC9] placeholder:text-xs"
                     />
                   )}
