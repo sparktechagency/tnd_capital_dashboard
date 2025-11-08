@@ -42,9 +42,9 @@ export const validationRules = {
     nid: [
         { required: true, message: "NID is required" },
         {
-            pattern: /^[0-9]{8,20}$/,
-            message: "NID must be 8-20 digits"
-        }
+            pattern: /^[a-zA-Z0-9]{6,20}$/,
+            message: "NID must be 6-20 characters",
+        },
     ],
 
     // Address validation
