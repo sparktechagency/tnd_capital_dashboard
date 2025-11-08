@@ -61,7 +61,10 @@ export const getInput = (applicantStatus: string) => {
                     labelClassName: "!font-normal !text-sm",
                     rules: [
                         { required: true, message: "NID is required" },
-                        { pattern: /^[0-9]{8,20}$/, message: "NID must be 8-20 digits" }
+                        {
+                            pattern: /^[a-zA-Z0-9]{6,20}$/,
+                            message: "NID must be 6-20 characters",
+                        },
                     ],
                 },
             ]
@@ -232,6 +235,10 @@ export const getInput = (applicantStatus: string) => {
                 {
                     label: "8 Months",
                     value: "8 Months",
+                },
+                {
+                    label: "10 Months",
+                    value: "10 Months",
                 },
                 {
                     label: "12 Months",
