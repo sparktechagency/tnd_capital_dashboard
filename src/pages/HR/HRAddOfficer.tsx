@@ -36,6 +36,7 @@ const HRAddOfficer = () => {
       formData.append("cv", values?.cv?.file?.originFileObj);
     }
     const data = {
+      uid: values.uid,
       name: values?.name,
       email: values?.email,
       phoneNumber: values?.phoneNumber,
